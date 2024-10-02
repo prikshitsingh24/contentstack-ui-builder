@@ -1,0 +1,11 @@
+{
+    "id": "text1",
+    "type": "Text",
+    "content": "Welcome to our website!",
+    "style": {
+      "fontSize": "24px",
+      "fontWeight": "bold",
+      "color": "#000000",
+      "textAlign": "center"
+    }
+  }

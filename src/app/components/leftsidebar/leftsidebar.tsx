@@ -1,6 +1,9 @@
+"use client"
 
+import { Draggable } from "../draggable/draggable";
 
-export default function Leftsidebar(){
+export default function Leftsidebar({data}:any){
+   
     return(
         <div className="grid grid-rows-[3fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
             <div className=" h-full grid grid-rows-[0.5fr_3fr]" >
@@ -13,7 +16,8 @@ export default function Leftsidebar(){
                 </div>
             </div>
             <div className="flex flex-col overflow-y-scroll border-t-2 mt-2 border-b-2 text-gray-500 border-gray-300 h-full pl-3 pt-3">
-            <div className="mb-3 hover:cursor-pointer">Text</div>
+            
+            <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="text" data={"text"}><div className="w-full ">Text</div></Draggable></div>
             <div className="mb-3 hover:cursor-pointer">Image</div>
             <div className="mb-3 hover:cursor-pointer">Button</div>
             </div>
