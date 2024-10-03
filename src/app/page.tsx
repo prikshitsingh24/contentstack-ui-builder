@@ -46,7 +46,7 @@ export default function Home() {
       const content = active.data.current.data.content;
       const id = active.id; // Use the item's id
       setDroppedItems((prevItems: any) => {
-        const existingItemIndex = prevItems.findIndex((item:any) => item.id == id+"canvas");
+        const existingItemIndex = prevItems.findIndex((item:any) => item.id == id);
         if (existingItemIndex !== -1) {
           const updatedItems = [...prevItems];
           updatedItems[existingItemIndex] = { ...updatedItems[existingItemIndex], position };
