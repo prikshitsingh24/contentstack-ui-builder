@@ -14,7 +14,8 @@ export function Draggable(props: any) {
   });
 
   const style = {
-
+    touchAction: 'none',
+    cursor: isDragging ? 'grabbing' : 'grab',
   };
 
   return (

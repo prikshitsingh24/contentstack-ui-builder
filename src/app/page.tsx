@@ -16,7 +16,6 @@ interface DraggableItem {
 export default function Home() {
   const [ui, setUi] = useState<any>(() => data);
   const [droppedItems,setDroppedItems]=useState<DraggableItem[]>([]);
-  const canvasRef = useRef<HTMLDivElement>(null);
 
     const [
       mousePosition,
@@ -38,8 +37,7 @@ export default function Home() {
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-    console.log(event)
-    if (over && over.data.current.accepts.includes(active.data.current.type)) {
+    if (over) {
       const x=(mousePosition.x-event.over.rect.left);
       const y=(mousePosition.y-event.over.rect.top);
       const position = {x,y}
