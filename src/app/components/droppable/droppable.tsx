@@ -9,7 +9,7 @@ export function Droppable(props: any) {
   });
 
   const style = {
-    color: isOver ? 'green' : undefined,
+    backgroundColor: isOver ? 'rgba(140, 255, 50, 0.5)' : 'grey',
     height: '100%', // Ensure the height is 100% of the parent container
   };
 
