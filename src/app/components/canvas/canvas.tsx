@@ -3,7 +3,6 @@
 import { Droppable } from "../droppable/droppable";
 
 export default function Canvas({ items }: any) {
-  console.log(items);
 
   return (
     <div className="w-full h-full bg-gray-300">
@@ -18,6 +17,7 @@ export default function Canvas({ items }: any) {
                     position: 'absolute',
                     left: `${item.position.x}px`, // Apply x position
                     top: `${item.position.y}px`,  // Apply y position
+                    transform: 'translate(-50%, -50%)'
                   }}
                 >
                   {item.content}

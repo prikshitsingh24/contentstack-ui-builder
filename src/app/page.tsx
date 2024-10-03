@@ -5,6 +5,7 @@ import Rightsidebar from "./components/rightsidebar/rightsidebar";
 import data from "../../data.json";
 import { useRef, useState } from "react";
 import {DndContext} from '@dnd-kit/core';
+import React from "react";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -17,27 +18,43 @@ export default function Home() {
   const [droppedItems,setDroppedItems]=useState<DraggableItem[]>([]);
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const handleDragEnd=(event:any)=>{
-    const {active,over}=event
+    const [
+      mousePosition,
+      setMousePosition
+    ] = React.useState({ x: 0, y: 0 });
+  
+    React.useEffect(() => {
+      const updateMousePosition = ev => {
+        setMousePosition({ x: ev.clientX, y: ev.clientY });
+      };
+      
+      window.addEventListener('mousemove', updateMousePosition);
+  
+      return () => {
+        window.removeEventListener('mousemove', updateMousePosition);
+      };
+    }, []);
+  
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    console.log("Mouse Position:", mousePosition);
     if (over && over.data.current.accepts.includes(active.data.current.type)) {
-      const canvasRect = canvasRef?.current?.getBoundingClientRect();
-      const x =  active.rect.current.translated.left
-      const y =  active.rect.current.translated.top
-      const position = { x: x, y: y };
-      console.log(active)
+      const x=(mousePosition.x-event.over.rect.left);
+      const y=(mousePosition.y-event.over.rect.top);
+      const position = {x,y}
       const content = active.data.current.data.content;
       const id = active.id; // Use the item's id
-
-     
-      setDroppedItems((prevItems:any) => [
+  
+      setDroppedItems((prevItems: any) => [
         ...prevItems,
         { id, content, position },
       ]);
     }
-  }
+  };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragEnd={handleDragEnd} >
       <div className="grid grid-cols-[1fr_6fr_1.5fr] gap-3 h-screen">
         {/* Left sidebar with draggable items */}
         <div>

@@ -17,9 +17,9 @@ export default function Leftsidebar({data}:any){
             </div>
             <div className="flex flex-col overflow-y-scroll border-t-2 mt-2 border-b-2 text-gray-500 border-gray-300 h-full pl-3 pt-3">
             
-            <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="text" data={"text"}><div className="w-full ">Text</div></Draggable></div>
-            <div className="mb-3 hover:cursor-pointer">Image</div>
-            <div className="mb-3 hover:cursor-pointer">Button</div>
+            <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="text" data={"Text"}><div className="w-full ">Text</div></Draggable></div>
+            <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="image" data={"Image"}><div className="w-full ">Image</div></Draggable></div>
+            <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="button" data={"Button"}><div className="w-full ">Button</div></Draggable></div>
             </div>
             </div>
             <div className=" h-full pl-3 pt-5 pr-3 ">
