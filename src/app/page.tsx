@@ -56,7 +56,7 @@ export default function Home() {
           const updatedId=id+"canvas";
           return [
             ...prevItems,
-            { updatedId, content, position },
+            { id:updatedId, content, position },
           ];
         }
       });

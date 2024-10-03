@@ -4,13 +4,12 @@ import { Draggable } from "../draggable/draggable";
 import { Droppable } from "../droppable/droppable";
 
 export default function Canvas({ items }: any) {
-
   return (
     <div className="w-full h-full bg-gray-300">
       <div className="h-96 bg-blue-200 w-96 relative">
         <Droppable>
           {items.length > 0 && (
-            items.map((item, index) => {
+            items.map((item:any, index:number) => {
               return (
                 
                    <div
