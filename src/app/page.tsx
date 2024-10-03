@@ -5,6 +5,7 @@ import Rightsidebar from "./components/rightsidebar/rightsidebar";
 import data from "../../data.json";
 import { useRef, useState } from "react";
 import {DndContext} from '@dnd-kit/core';
+import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 
 interface DraggableItem {
@@ -51,7 +52,8 @@ export default function Home() {
           return updatedItems;
         } else {
           // Insert new item
-          const updatedId=id+"canvas";
+          const updatedId=id+`${uuidv4()}`;
+          console.log(updatedId)
           return [
             ...prevItems,
             { id:updatedId, content, position },
