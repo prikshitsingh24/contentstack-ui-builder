@@ -53,10 +53,11 @@ export default function Home() {
         } else {
           // Insert new item
           const updatedId=id+`${uuidv4()}`;
-          console.log(updatedId)
+          const droppableId=event.over.id;
+          console.log(droppableId)
           return [
             ...prevItems,
-            { id:updatedId, content, position },
+            { id:updatedId, content, position, droppableId },
           ];
         }
       });
