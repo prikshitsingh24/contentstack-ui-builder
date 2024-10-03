@@ -52,7 +52,7 @@ export default function Home() {
           return updatedItems;
         } else {
           // Insert new item
-          const updatedId=id+`${uuidv4()}`;
+          const updatedId=id+`-${uuidv4()}`;
   
           return [
             ...prevItems,

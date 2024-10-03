@@ -8,6 +8,7 @@ import { DndContext } from '@dnd-kit/core';
 import { CanvasDraggable } from '../draggable/canvasDraggable';
 
 export default function Canvas({ items }: any) {
+  
   return (
  
       <div  className="w-full h-full bg-gray-300">
