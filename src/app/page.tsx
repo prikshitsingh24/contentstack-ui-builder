@@ -53,11 +53,10 @@ export default function Home() {
         } else {
           // Insert new item
           const updatedId=id+`${uuidv4()}`;
-          const droppableId=event.over.id;
-          console.log(droppableId)
+  
           return [
             ...prevItems,
-            { id:updatedId, content, position, droppableId },
+            { id:updatedId, content, position },
           ];
         }
       });
@@ -72,7 +71,7 @@ export default function Home() {
           <Leftsidebar data={ui}/>
         </div>
         {/* Canvas to drop the item */}
-        <div className="mb-2 mt-2 ">
+        <div className="mb-5 mt-5 border-2">
           <Canvas items={droppedItems}/>
         </div>
         <div>

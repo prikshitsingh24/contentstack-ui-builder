@@ -2,7 +2,7 @@ import { useDroppable } from '@dnd-kit/core';
 
 export function Droppable(props: any) {
   const { isOver, setNodeRef } = useDroppable({
-    id: props.id,
+    id: "canvas",
     data: {
       accepts: ['items'],
     },
