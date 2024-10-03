@@ -24,7 +24,7 @@ export default function Home() {
     ] = React.useState({ x: 0, y: 0 });
   
     React.useEffect(() => {
-      const updateMousePosition = ev => {
+      const updateMousePosition = (ev:any) => {
         setMousePosition({ x: ev.clientX, y: ev.clientY });
       };
       
@@ -38,18 +38,28 @@ export default function Home() {
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-    console.log("Mouse Position:", mousePosition);
+    console.log(event)
     if (over && over.data.current.accepts.includes(active.data.current.type)) {
       const x=(mousePosition.x-event.over.rect.left);
       const y=(mousePosition.y-event.over.rect.top);
       const position = {x,y}
       const content = active.data.current.data.content;
       const id = active.id; // Use the item's id
-  
-      setDroppedItems((prevItems: any) => [
-        ...prevItems,
-        { id, content, position },
-      ]);
+      setDroppedItems((prevItems: any) => {
+        const existingItemIndex = prevItems.findIndex((item:any) => item.id == id+"canvas");
+        if (existingItemIndex !== -1) {
+          const updatedItems = [...prevItems];
+          updatedItems[existingItemIndex] = { ...updatedItems[existingItemIndex], position };
+          return updatedItems;
+        } else {
+          // Insert new item
+          const updatedId=id+"canvas";
+          return [
+            ...prevItems,
+            { updatedId, content, position },
+          ];
+        }
+      });
     }
   };
 

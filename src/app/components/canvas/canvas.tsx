@@ -1,5 +1,6 @@
 "use client"
 
+import { Draggable } from "../draggable/draggable";
 import { Droppable } from "../droppable/droppable";
 
 export default function Canvas({ items }: any) {
@@ -11,7 +12,8 @@ export default function Canvas({ items }: any) {
           {items.length > 0 && (
             items.map((item, index) => {
               return (
-                <div
+                
+                   <div
                   key={index}
                   style={{
                     position: 'absolute',
@@ -20,8 +22,12 @@ export default function Canvas({ items }: any) {
                     transform: 'translate(-50%, -50%)'
                   }}
                 >
+                  <Draggable id={item.id} data={item.content}>
                   {item.content}
+                  </Draggable>
                 </div>
+             
+               
               );
             })
           )}
