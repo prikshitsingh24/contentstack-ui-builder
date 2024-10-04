@@ -40,9 +40,14 @@ export default function Home() {
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
+    console.log(event)
+    console.log(mousePosition.x);
+    console.log(mousePosition.y)
     if (over) {
       const x=(mousePosition.x-event.over.rect.left);
       const y=(mousePosition.y-event.over.rect.top);
+      console.log(x)
+      console.log(y)
       const position = {x,y}
       const content = active.data.current.data.content;
       const id = active.id; // Use the item's id
@@ -61,6 +66,7 @@ export default function Home() {
             { id:updatedId,
               type:content.type,
               content:content.content,
+              over:event.over.id,
               style:content.style,
               position:position 
               },

@@ -12,6 +12,7 @@ interface Content {
   id?: string;
   type?: string;
   content?: string;
+  over?:string;
   style?: Style;
 }
 
@@ -19,6 +20,7 @@ interface DroppedContent {
   id?: string;
   type?: string;
   content?: string;
+  over?:string;
   style?: Style;
   position?:{x:number,y:number}
 }
