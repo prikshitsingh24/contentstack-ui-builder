@@ -32,12 +32,14 @@ export function CanvasDraggable(props: any) {
     const handleItemSelected = () => {
         if (selected && selected.id === props.id) {
             // If the item is already selected, unselect it (optional behavior)
-            setSelected({id:"",content:""});
+            setSelected({id:"",type:"",content:""});
         } else {
             // Select the current item
             setSelected({
                 id: props.id,
-                content: props.data
+                type: props.data.type,
+                content: props.data.content,
+                style:props.data.style
             });
         }
     };

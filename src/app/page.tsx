@@ -7,6 +7,8 @@ import { useRef, useState } from "react";
 import {DndContext} from '@dnd-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 import React from "react";
+import { useRecoilState } from "recoil";
+import canvasState from "./states/canvasState";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -16,7 +18,7 @@ interface DraggableItem {
 
 export default function Home() {
   const [ui, setUi] = useState<any>(() => data);
-  const [droppedItems,setDroppedItems]=useState<DraggableItem[]>([]);
+  const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
 
     const [
       mousePosition,
@@ -56,7 +58,12 @@ export default function Home() {
   
           return [
             ...prevItems,
-            { id:updatedId, content, position },
+            { id:updatedId,
+              type:content.type,
+              content:content.content,
+              style:content.style,
+              position:position 
+              },
           ];
         }
       });

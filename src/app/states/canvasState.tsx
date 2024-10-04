@@ -1,15 +1,36 @@
 import { atom } from "recoil";
 
+interface Style {
+  fontSize?: string;
+  fontStyle?: string;
+  fontWeight?:string;
+  color?: string;
+  textAlign?: string;
+}
 
-const selectedItemState = atom({
-    key: 'selectedItemState', 
-    default: 
-      {
-        id:"",
-        content:"",
+interface Content {
+  id?: string;
+  type?: string;
+  content?: string;
+  style?: Style;
+}
 
-      }
-    , 
-  });
+interface DroppedContent {
+  id?: string;
+  type?: string;
+  content?: string;
+  style?: Style;
+  position?:{x:number,y:number}
+}
 
-export default {selectedItemState}
+const selectedItemState = atom<Content>({
+  key: 'selectedItemState',
+  default:{}
+});
+
+const droppedItemState = atom<DroppedContent[]>({
+  key: 'droppedItemState',
+  default: []
+});
+
+export default {selectedItemState,droppedItemState}
