@@ -28,6 +28,14 @@ interface DroppedContent {
   position?:{x:number,y:number}
 }
 
+interface Section {
+  id?:string;
+  headerBackgroundColor?:string;
+  contentBackgroundColor?:string;
+  footerBackgroundColor?:string;
+  children?:DroppedContent[]
+}
+
 const selectedItemState = atom<Content>({
   key: 'selectedItemState',
   default:{}
@@ -38,6 +46,10 @@ const droppedItemState = atom<DroppedContent[]>({
   default: []
 });
 
+const selectedSectionState=atom<Section>({
+  key: 'selectedSectionState',
+  default:{}
+});
 
 const gridVisibilityStatus=atom({
   key: 'gridVisibilityStatus',
@@ -45,4 +57,4 @@ const gridVisibilityStatus=atom({
 })
 
 
-export default {selectedItemState,droppedItemState,gridVisibilityStatus}
+export default {selectedItemState,droppedItemState,gridVisibilityStatus,selectedSectionState}

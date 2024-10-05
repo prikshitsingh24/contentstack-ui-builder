@@ -19,10 +19,12 @@ export default function Canvas({ items }: any) {
   const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
   const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
+  const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
 
-  const handleCanvasClick = (e: React.MouseEvent) => {
+  const handleCanvasClick = (e: React.MouseEvent,section:any) => {
     // Prevent deselection if clicking on an actual item
     if ((e.target as HTMLElement).closest('.draggable-item')) return;
+    setSelectedSection(section);
     setSelected({});
   };
 
@@ -41,7 +43,7 @@ export default function Canvas({ items }: any) {
     }else{
       const updatedSections = sections.map((section, index) => {
         // Update the last section (the most recently added one)
-        if (index === sections.length - 1) {
+        if (section.id === selectedSection.id) {
           return {
             ...section,
             headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
@@ -86,7 +88,7 @@ export default function Canvas({ items }: any) {
   return (
     <div className='w-full h-full overflow-y-scroll'>
        {sections.map(section => (
-         <div  className="w-full h-full border-2 mb-20 "  onClick={handleCanvasClick}>
+         <div  className={`w-full h-full border-2 mb-20 ${selectedSection.id==section.id?'border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
          <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] " >
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
            <Droppable id={`${section.id}header-column-1`}>
