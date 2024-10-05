@@ -1,13 +1,14 @@
 import { useRecoilState } from "recoil";
 import canvasState from "@/app/states/canvasState";
-import { SketchPicker } from "react-color";
-import { useState } from "react";
 import colorPickerState from "@/app/states/colorPickerState";
+import { useState } from "react";
+import { SketchPicker } from "react-color";
 
-export default function TextDesign() {
+export default function InputDesign() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
   const [colorPicker,setColorPicker]=useRecoilState(colorPickerState.colorPickerState);
+  const [backgroundColorPicker,setBackgroundColorPicker]=useRecoilState(colorPickerState.backgroundColorPickerState);
   const [color, setColor] = useState("#000000");
   // Function to handle font size change
   const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -29,13 +30,6 @@ export default function TextDesign() {
     setDroppedItems(updatedItems); 
   };
   const handleFontStyleChange=(style:string)=>{
-    const updatedItems = droppedItems.map((item) =>
-    item.id === selected.id
-      ? { ...item, style: { ...item.style, fontStyle: style } }  // Update the style for the matching item
-      : item  // Return the other items unchanged
-  );
-
-  setDroppedItems(updatedItems); 
     setSelected({
         ...selected,
         style: {
@@ -43,7 +37,13 @@ export default function TextDesign() {
           fontStyle: style,  // Update font size in the selected item state
         },
       });
-     
+      const updatedItems = droppedItems.map((item) =>
+        item.id === selected.id
+          ? { ...item, style: { ...item.style, fontStyle: style } }  // Update the style for the matching item
+          : item  // Return the other items unchanged
+      );
+  
+      setDroppedItems(updatedItems); 
   }
 
   const handleFontWeightChange=(event: React.ChangeEvent<HTMLSelectElement>)=>{
@@ -79,6 +79,27 @@ export default function TextDesign() {
     const updatedItems = droppedItems.map((item) =>
       item.id === selected.id
         ? { ...item, style: { ...item.style, color: newColor } }
+        : item
+    );
+
+    setDroppedItems(updatedItems);
+  };
+
+  const handleBackgroundColorChange = (newColor: string) => {
+    setColor(newColor);  // Update color state
+
+    // Update color in selected item and dropped items
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        backgroundColor: newColor,  // Apply color to the selected item
+      },
+    });
+
+    const updatedItems = droppedItems.map((item) =>
+      item.id === selected.id
+        ? { ...item, style: { ...item.style, backgroundColor: newColor } }
         : item
     );
 
@@ -150,6 +171,17 @@ export default function TextDesign() {
         <button onClick={()=>setColorPicker(false)}>Close</button>
       ):(
         <button onClick={()=>setColorPicker(true)}>Pick a color</button>
+      )}
+      </div>
+      <div>
+      <div className="text-sm mb-2">Background color</div>
+      {backgroundColorPicker &&(
+        <div className="fixed right-20 mt-10"><SketchPicker color={color} onChangeComplete={(color) => handleBackgroundColorChange(color.hex)}/></div>
+      )}
+      {backgroundColorPicker?(
+        <button onClick={()=>setBackgroundColorPicker(false)}>Close</button>
+      ):(
+        <button onClick={()=>setBackgroundColorPicker(true)}>Pick a color</button>
       )}
       </div>
     </div>

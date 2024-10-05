@@ -3,6 +3,9 @@
 import canvasState from "@/app/states/canvasState";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import BackgroundDesign from "../design/backgroundDesign";
+import ButtonDesign from "../design/buttonDesign";
+import InputDesign from "../design/inputDesign";
 import TextDesign from "../design/textDesign";
 
 
@@ -17,8 +20,17 @@ export default function Rightsidebar(){
                  Design
                 </div>
                 <div className="mt-2">
+                    {!selected.type&&(
+                        <BackgroundDesign></BackgroundDesign>
+                    )}
                     {selected.type=="Text"&&(
                         <TextDesign></TextDesign>
+                    )}
+                     {selected.type=="Button"&&(
+                        <ButtonDesign></ButtonDesign>
+                    )}
+                     {selected.type=="Input"&&(
+                        <InputDesign></InputDesign>
                     )}
                 </div>
                 </div>

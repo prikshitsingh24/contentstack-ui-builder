@@ -44,8 +44,8 @@ export default function Canvas({ items }: any) {
   }, [selected]);
   return (
  
-      <div  className="w-full h-full bg-gray-300" onClick={handleCanvasClick}>
-      <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] ">
+      <div  className="w-full h-full"  onClick={handleCanvasClick}>
+      <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] " >
         <div className='border-r-2 border-b-2 border-dashed relative'>
         <Droppable id="header-column-1">
         {items.length > 0 && items.map((item: any) => (
@@ -62,9 +62,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+                {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -87,9 +97,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -112,9 +132,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -137,9 +167,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -162,9 +202,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -187,9 +237,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -212,9 +272,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -237,9 +307,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )
@@ -262,9 +342,19 @@ export default function Canvas({ items }: any) {
               className="draggable-item"
             >
               <CanvasDraggable id={item.id} data={item}>
-                <div style={item.style}>
-                {item.content}
-                </div>
+              {item.type=="Text" &&(
+                  <div style={item.style}>
+                  {item.content}
+                  </div>
+                )}
+                {item.type=="Button" &&(
+                  <button style={item.style}>
+                  {item.content}
+                  </button>
+                )}
+                {item.type=="Input" &&(
+                  <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                )}
               </CanvasDraggable>
             </div>
               )

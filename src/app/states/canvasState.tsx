@@ -1,6 +1,9 @@
 import { atom } from "recoil";
 
 interface Style {
+  value?:string;
+  placeholder?:string;
+  backgroundColor?:string;
   fontSize?: string;
   fontStyle?: string;
   fontWeight?:string;
@@ -35,4 +38,9 @@ const droppedItemState = atom<DroppedContent[]>({
   default: []
 });
 
-export default {selectedItemState,droppedItemState}
+const sectionBackgroundColorState=atom({
+  key: 'sectionBackgroundColorState',
+  default: "#FFFFFF"
+})
+
+export default {selectedItemState,droppedItemState,sectionBackgroundColorState}

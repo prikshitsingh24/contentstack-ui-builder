@@ -1,5 +1,6 @@
-[{
-    "id": "text1",
+[
+  {
+    "id": "text",
     "type": "Text",
     "content": "Text",
     "style": {
@@ -9,4 +10,39 @@
       "color": "#000000",
       "textAlign": "left"
     }
-  }]
+  },
+    {
+      "id": "button",
+      "type": "Button",
+      "content": "Button",
+      "style": {
+        "fontSize": "16px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "color": "#000000",
+        "textAlign": "center",
+        "backgroundColor": "white",
+        "borderColor": "#000000",
+        "borderWidth": "1px",
+        "borderRadius": "5px",
+        "padding": "8px"
+      }
+    },
+    {
+      "id": "input",
+      "type": "Input",
+      "placeholder": "Enter text",
+      "value": "Enter Text",
+      "style": {
+        "fontSize": "16px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "color": "#000000",
+        "backgroundColor": "white",
+        "borderColor": "#000000",
+        "borderWidth": "1px",
+        "borderRadius": "5px",
+        "padding": "8px"
+      }
+    } 
+]
