@@ -106,6 +106,16 @@ export default function ButtonDesign() {
     setDroppedItems(updatedItems);
   };
 
+  const handleColorPickerClick = ()=>{
+    setBackgroundColorPicker(false);
+    setColorPicker(true);
+  }
+
+  const handleBackgroundColorPickerClick = ()=>{
+    setColorPicker(false);
+    setBackgroundColorPicker(true);
+   
+  }
 
   return (
     <div className="grid grid-cols-2 gap-4">
@@ -171,7 +181,7 @@ export default function ButtonDesign() {
       {colorPicker?(
         <button onClick={()=>setColorPicker(false)}>Close</button>
       ):(
-        <button onClick={()=>setColorPicker(true)}>Pick a color</button>
+        <button onClick={handleColorPickerClick}>Pick a color</button>
       )}
       </div>
       <div>
@@ -182,7 +192,7 @@ export default function ButtonDesign() {
       {backgroundColorPicker?(
         <button onClick={()=>setBackgroundColorPicker(false)}>Close</button>
       ):(
-        <button onClick={()=>setBackgroundColorPicker(true)}>Pick a color</button>
+        <button onClick={handleBackgroundColorPickerClick}>Pick a color</button>
       )}
       </div>
     </div>
