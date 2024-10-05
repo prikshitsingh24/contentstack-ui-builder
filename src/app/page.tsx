@@ -40,9 +40,6 @@ export default function Home() {
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-    console.log(event)
-    console.log(mousePosition.x);
-    console.log(mousePosition.y)
     if (over) {
       const x=(mousePosition.x-event.over.rect.left);
       const y=(mousePosition.y-event.over.rect.top);
@@ -60,7 +57,6 @@ export default function Home() {
         } else {
           // Insert new item
           const updatedId=id+`-${uuidv4()}`;
-  
           return [
             ...prevItems,
             { id:updatedId,
@@ -78,13 +74,13 @@ export default function Home() {
 
   return (
     <DndContext onDragEnd={handleDragEnd} >
-      <div className="grid grid-cols-[1fr_6fr_1.5fr] gap-3 h-screen">
+      <div className="grid grid-cols-[1fr_6fr_1.5fr] gap-3 h-screen overflow-hidden">
         {/* Left sidebar with draggable items */}
         <div>
           <Leftsidebar data={ui}/>
         </div>
         {/* Canvas to drop the item */}
-        <div className="mb-5 mt-5 border-2">
+        <div className="mt-2 w-full h-full overflow-hidden">
           <Canvas items={droppedItems}/>
         </div>
         <div>

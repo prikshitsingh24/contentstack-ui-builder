@@ -38,9 +38,11 @@ const droppedItemState = atom<DroppedContent[]>({
   default: []
 });
 
-const sectionBackgroundColorState=atom({
-  key: 'sectionBackgroundColorState',
-  default: "#FFFFFF"
+
+const gridVisibilityStatus=atom({
+  key: 'gridVisibilityStatus',
+  default: true
 })
 
-export default {selectedItemState,droppedItemState,sectionBackgroundColorState}
+
+export default {selectedItemState,droppedItemState,gridVisibilityStatus}

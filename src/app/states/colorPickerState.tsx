@@ -10,4 +10,19 @@ const colorPickerState = atom({
     default: false
   });
   
-  export default {colorPickerState,backgroundColorPickerState}
+  const headerBackgroundColorPickerState = atom({
+    key: 'headerBackgroundColorPickerState',
+    default: false
+  });
+
+  const contentBackgroundColorPickerState = atom({
+    key: 'contentBackgroundColorPickerState',
+    default: false
+  });
+
+  const footerBackgroundColorPickerState = atom({
+    key: 'footerBackgroundColorPickerState',
+    default: false
+  });
+  
+  export default {colorPickerState,backgroundColorPickerState,headerBackgroundColorPickerState,contentBackgroundColorPickerState,footerBackgroundColorPickerState}
