@@ -15,7 +15,6 @@ import pageState from '@/app/states/pageState';
 export default function Canvas({ items }: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
-  const [sections, setSections] = useRecoilState(sectionState.sectionState);
   const [pages,setPages]=useRecoilState(pageState.pageState);
   const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
   const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
@@ -32,7 +31,7 @@ export default function Canvas({ items }: any) {
   };
 
   useEffect(()=>{
-    if(sections.length==0 && pages.length==0){
+    if(pages.length==0){
       const updatedSection = {
         id: "section-"+`${uuidv4()}`,
         headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
@@ -40,8 +39,7 @@ export default function Canvas({ items }: any) {
         footerBackgroundColor: footerBackgroundColor,
         children: droppedItems,
       };
-      // Update the sectionState
-      setSections([updatedSection]);
+    
       const updatedPage={
         id:"page-"+"home",
         children:[updatedSection]
@@ -80,7 +78,7 @@ export default function Canvas({ items }: any) {
       });
     }
     
-  }, [headerBackgroundColor,contentBackgroundColor,footerBackgroundColor, droppedItems, setSections])
+  }, [headerBackgroundColor,contentBackgroundColor,footerBackgroundColor, droppedItems])
 
   const handleDelete = () => {
     if (selected.id) {

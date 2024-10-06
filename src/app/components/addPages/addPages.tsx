@@ -10,7 +10,6 @@ export default function AddPages(){
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [input,setInput]=useState(false);
     const [pageName,setPageName]=useState("");
-    const [sections, setSections] = useRecoilState(sectionState.sectionState);
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
 
     const handleAddPageClick=()=>{
@@ -30,9 +29,6 @@ export default function AddPages(){
                 footerBackgroundColor: "#FFFFFF",
                 children: [], // Assumed to be an array of dropped items
               };
-              
-              // Update the sections state by appending the new section to the existing sections
-              setSections(prevSections => [...prevSections, newSection]);
               
               // Create a new page object
               const newPage = {

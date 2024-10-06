@@ -10,7 +10,6 @@ import addPage from "@/app/states/addPage";
 
 export default function Leftsidebar({data}:any){
     const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
-    const [sections, setSections] = useRecoilState(sectionState.sectionState);
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
     const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
     const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -28,8 +27,6 @@ export default function Leftsidebar({data}:any){
           children: [],  // Empty children array, can be filled later
         };
       
-        // Update the sections state by appending the new section
-        setSections((prevSections) => [...prevSections, newSection]);
         const updatedPage=pages.map((page,index)=>{
             if(page.id === selectedPage.id){
               return{
