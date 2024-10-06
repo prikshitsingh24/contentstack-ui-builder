@@ -10,16 +10,19 @@ import { useRecoilState } from 'recoil';
 import canvasState from '@/app/states/canvasState';
 import sectionState from '@/app/states/sectionState';
 import { v4 as uuidv4 } from 'uuid';
+import pageState from '@/app/states/pageState';
 
 export default function Canvas({ items }: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
   const [sections, setSections] = useRecoilState(sectionState.sectionState);
+  const [pages,setPages]=useRecoilState(pageState.pageState);
   const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
   const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
   const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+  const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
 
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
     // Prevent deselection if clicking on an actual item
@@ -29,34 +32,52 @@ export default function Canvas({ items }: any) {
   };
 
   useEffect(()=>{
-    if(sections.length==0){
+    if(sections.length==0 && pages.length==0){
       const updatedSection = {
-        id: "section-"+`${uuidv4()}-`,
+        id: "section-"+`${uuidv4()}`,
         headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
         contentBackgroundColor:contentBackgroundColor,
         footerBackgroundColor: footerBackgroundColor,
         children: droppedItems,
       };
-  
       // Update the sectionState
       setSections([updatedSection]);
+      const updatedPage={
+        id:"page-"+"home",
+        children:[updatedSection]
+      }
+      setPages([updatedPage])
+      setSelectedPage(updatedPage);
     }else{
-      const updatedSections = sections.map((section, index) => {
-        // Update the last section (the most recently added one)
-        if (section.id === selectedSection.id) {
+      const updatedSection= selectedPage.children?.map((section,index)=>{
+        if(section.id===selectedSection.id){
           return {
-            ...section,
-            headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
-            contentBackgroundColor: contentBackgroundColor,
-            footerBackgroundColor: footerBackgroundColor,
-            children: droppedItems,
-          };
+                  ...section,
+                  headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
+                  contentBackgroundColor: contentBackgroundColor,
+                  footerBackgroundColor: footerBackgroundColor,
+                  children: droppedItems,
+                };
         }
         return section;
+      })
+      // Step 2: Update the selected page to include the updated section
+      const updatedPages = pages.map((page) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            children: updatedSection, // Update only the children of the selected page
+          };
+        }
+        return page; // Return other pages unchanged
       });
 
-      // Update the state with the modified sections array
-      setSections(updatedSections);
+      // Step 3: Update the selectedPage state with the updated sections
+      setPages(updatedPages);
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedSection, // Update the selectedPage's children with the updated section
+      });
     }
     
   }, [headerBackgroundColor,contentBackgroundColor,footerBackgroundColor, droppedItems, setSections])
@@ -87,7 +108,7 @@ export default function Canvas({ items }: any) {
   }, [selected]);
   return (
     <div className='w-full h-full overflow-y-scroll'>
-       {sections.map(section => (
+       {selectedPage?.children?.map((section:any) => (
          <div  className={`w-full h-full border-2 mb-20 ${selectedSection.id==section.id?'border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
          <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] " >
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>

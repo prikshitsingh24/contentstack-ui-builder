@@ -9,6 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import { useRecoilState } from "recoil";
 import canvasState from "./states/canvasState";
+import AddPages from "./components/addPages/addPages";
+import addPage from "./states/addPage";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -19,7 +21,7 @@ interface DraggableItem {
 export default function Home() {
   const [ui, setUi] = useState<any>(() => data);
   const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
-
+  const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
     const [
       mousePosition,
       setMousePosition
@@ -43,8 +45,6 @@ export default function Home() {
     if (over) {
       const x=(mousePosition.x-event.over.rect.left);
       const y=(mousePosition.y-event.over.rect.top);
-      console.log(x)
-      console.log(y)
       const position = {x,y}
       const content = active.data.current.data.content;
       const id = active.id; // Use the item's id
@@ -78,6 +78,9 @@ export default function Home() {
         {/* Left sidebar with draggable items */}
         <div>
           <Leftsidebar data={ui}/>
+          {addPagePanel &&(
+            <div className="h-full fixed bottom-0 left-60 z-20 "><AddPages></AddPages></div>
+          )}
         </div>
         {/* Canvas to drop the item */}
         <div className="mt-2 w-full h-full overflow-hidden">

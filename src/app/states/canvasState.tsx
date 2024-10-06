@@ -36,6 +36,13 @@ interface Section {
   children?:DroppedContent[]
 }
 
+
+interface Page{
+  id?:string;
+  children?:Section[]
+}
+
+
 const selectedItemState = atom<Content>({
   key: 'selectedItemState',
   default:{}
@@ -51,10 +58,15 @@ const selectedSectionState=atom<Section>({
   default:{}
 });
 
+const selectedPageState=atom<Page>({
+  key: 'selectedPageState',
+  default:{}
+});
+
 const gridVisibilityStatus=atom({
   key: 'gridVisibilityStatus',
   default: true
 })
 
 
-export default {selectedItemState,droppedItemState,gridVisibilityStatus,selectedSectionState}
+export default {selectedItemState,droppedItemState,gridVisibilityStatus,selectedSectionState,selectedPageState}
