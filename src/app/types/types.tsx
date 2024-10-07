@@ -8,6 +8,8 @@ export interface Style {
     fontWeight?:string;
     color?: string;
     textAlign?: string;
+    width?:number;
+    height?:number;
   }
   
 export  interface Content {
@@ -16,8 +18,7 @@ export  interface Content {
     content?: string;
     over?:string;
     style?: Style;
-    width?:number;
-    height?:number;
+    
   }
   
   export  interface DroppedContent {
@@ -27,8 +28,6 @@ export  interface Content {
     over?:string;
     style?: Style;
     position?:{x:number,y:number}
-    width?:number;
-    height?:number;
   }
   
   export  interface Section {

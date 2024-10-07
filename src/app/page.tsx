@@ -176,7 +176,7 @@ export default function Home() {
         </div>
         {/* Canvas to drop the item */}
         <div className="mt-2 w-full h-full overflow-hidden">
-          <Canvas items={droppedItems}/>
+          <Canvas/>
         </div>
         <div>
           <Rightsidebar />

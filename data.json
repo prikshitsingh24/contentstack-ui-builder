@@ -25,7 +25,10 @@
         "borderColor": "#000000",
         "borderWidth": "1px",
         "borderRadius": "5px",
-        "padding": "8px"
+        "padding": "8px",
+        "width":"100px",
+        "height":"40px"
+       
       }
     },
     {

@@ -1,50 +1,6 @@
 import { atom } from "recoil";
+import { Content, DroppedContent, Page, Section } from "../types/types";
 
-interface Style {
-  value?:string;
-  placeholder?:string;
-  backgroundColor?:string;
-  fontSize?: string;
-  fontStyle?: string;
-  fontWeight?:string;
-  color?: string;
-  textAlign?: string;
-}
-
-interface Content {
-  id?: string;
-  type?: string;
-  content?: string;
-  over?:string;
-  style?: Style;
-  width?:number;
-  height?:number;
-}
-
-interface DroppedContent {
-  id?: string;
-  type?: string;
-  content?: string;
-  over?:string;
-  style?: Style;
-  position?:{x:number,y:number}
-  width?:number;
-  height?:number;
-}
-
-interface Section {
-  id?:string;
-  headerBackgroundColor?:string;
-  contentBackgroundColor?:string;
-  footerBackgroundColor?:string;
-  children?:DroppedContent[]
-}
-
-
-interface Page{
-  id?:string;
-  children?:Section[]
-}
 
 
 const selectedItemState = atom<Content>({

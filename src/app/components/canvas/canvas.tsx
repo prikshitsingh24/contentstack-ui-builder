@@ -12,7 +12,7 @@ import sectionState from '@/app/states/sectionState';
 import { v4 as uuidv4 } from 'uuid';
 import pageState from '@/app/states/pageState';
 
-export default function Canvas({ items }: any) {
+export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
@@ -84,7 +84,7 @@ export default function Canvas({ items }: any) {
   return (
     <div className='w-full h-full overflow-y-scroll'>
        {selectedPage?.children?.map((section:any) => (
-         <div  className={`w-full h-full border-2 mb-20 ${selectedSection.id==section.id?'border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
+         <div  className={`w-full h-full border-4 rounded-md mb-20 ${selectedSection.id==section.id?'border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
          <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] " >
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
            <Droppable id={`${section.id}header-column-1`}>
@@ -238,8 +238,6 @@ export default function Canvas({ items }: any) {
                    left: `${item.position?.x}px`,
                    top: `${item.position?.y}px`,
                    transform:'translate(-50%, -50%)',
-                    width:item.width,
-                    height:item.height,
                  }}
                  className="draggable-item"
                >
@@ -341,7 +339,6 @@ export default function Canvas({ items }: any) {
                  key={item.id}
                  style={{
                    position: 'absolute',
-                   zIndex:10,
                    left: `${item.position?.x}px`,
                    top: `${item.position?.y}px`,
                    transform: 'translate(-50%, -50%)',

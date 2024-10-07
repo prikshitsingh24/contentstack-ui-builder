@@ -4,14 +4,15 @@ import { CSS } from '@dnd-kit/utilities';
 import { useRecoilState } from 'recoil';
 import canvasState from '@/app/states/canvasState';
 import { Resizable } from 're-resizable';
+import pageState from '@/app/states/pageState';
 
 export function CanvasDraggable(props: any) {
   // Recoil state for the selected item and dimensions of the resizable element
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
-  const [width, setWidth] = useState(200);
-  const [height, setHeight] = useState(100);
-  const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
-
+  const [width, setWidth] = useState(100);
+  const [height, setHeight] = useState(40);
+  const [selectedPage, setSelectedPage] = useRecoilState(canvasState.selectedPageState);
+  const [pages, setPages] = useRecoilState(pageState.pageState);
   // State to track if resizing mode is active
   const [isResizingMode, setResizingMode] = useState(false);
 
@@ -46,24 +47,15 @@ export function CanvasDraggable(props: any) {
     data: {
       type: 'items',
       data: { content: props.data },
-      
     },
   });
-
-  const style = {
-    cursor: isResizingMode ? 'nwse-resize' : isDragging ? 'grabbing' : 'grab', // Change cursor based on mode
-    opacity: isResizingMode ? 0.7 : isDragging ? 0.5 : 1, // Change opacity based on mode
-    borderRadius: selected && selected.id === props.id ? '3px' : '0',
-  };
 
   const dragstyle = {
     cursor: isResizingMode ? 'nwse-resize' : isDragging ? 'grabbing' : 'grab', // Change cursor based on mode
     opacity: isResizingMode ? 0.7 : isDragging ? 0.5 : 1, // Change opacity based on mode
     borderRadius: selected && selected.id === props.id ? '3px' : '0',
     transform: CSS.Translate.toString(transform),
-    border:'2px solid blue',
-    width:width,
-    height:height
+    border: '2px solid blue' 
   };
 
   const handleItemSelected = () => {
@@ -79,51 +71,67 @@ export function CanvasDraggable(props: any) {
     }
   };
 
-  // Handling resize
-  const onResizeStop = (e: any, direction: any, ref: any, d: any) => {
-    // Calculate the new width and height after resize
-    const newWidth = width + d.width;
-    const newHeight = height + d.height;
+  // Handling resize (real-time update)
+  const onResize = (e: any, direction: any, ref: any, d: any) => {
+    // Using ref to directly access the element's current size during resizing
+    const newWidth = ref.offsetWidth;
+    const newHeight = ref.offsetHeight;
+
+    // Update width and height during resize (real-time)
     setWidth(newWidth);
-    setHeight(newHeight)
+    setHeight(newHeight);
 
-    // Update the selected state with the new dimensions
+    // Update the selected state with the new dimensions in real-time
     setSelected({
-        ...selected,
-        width: newWidth,
-        height: newHeight,
+      ...selected,
+      style: {
+        ...selected.style,
+        width: newWidth,  // Real-time width
+        height: newHeight,  // Real-time height
+      },
     });
 
-    // Now, we will update the selectedPage with the new width and height in the correct section and item
+    // Now, update the selectedPage with the new width and height in real-time
     const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-        // If the section contains the item (i.e., the item is in this section's children)
-        const updatedChildren = section.children.map((item: any) => {
-            if (item.id === props.id) {
-                // If the item matches, update its width and height
-                return {
-                    ...item,
-                    width: newWidth,  // Update width
-                    height: newHeight,  // Update height
-                };
-            }
-            // Otherwise, return the item as is
-            return item;
-        });
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === props.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              width: newWidth,  // Real-time width
+              height: newHeight,  // Real-time height
+            },
+          };
+        }
+        return item;
+      });
 
-        return {
-            ...section,
-            children: updatedChildren, // Update section's children with modified items
-        };
+      return {
+        ...section,
+        children: updatedChildren,
+      };
     });
 
-    // Update the selectedPage state with the modified children
+    // Update selectedPage state with real-time updates
     setSelectedPage({
-        ...selectedPage,
-        children: updatedSelectedPage, // The updated sections with updated item dimensions
+      ...selectedPage,
+      children: updatedSelectedPage,
     });
-};
 
-  const childrenStyle = {};
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,
+        };
+      }
+      return page;
+    });
+
+    // Update pages state
+    setPages(updatedPages);
+  };
 
   return (
     <>
@@ -136,19 +144,16 @@ export function CanvasDraggable(props: any) {
           // Resizable mode enabled
           <Resizable
             size={{ width: width, height: height }}
-            onResizeStop={onResizeStop}
+            onResize={onResize} // Real-time resize handler
             style={{
-              border: '2px solid blue',
-              cursor: 'nwse-resize', // Show resize cursor when resizing
+              cursor: 'nwse-resize',
+                // Border applied to Resizable
             }}
+           // Set a minimum height
           >
-            <div
-              ref={setNodeRef}
-              style={style}
-            >
-              <div style={childrenStyle}>
-                {props.children}
-              </div>
+            {/* Inside div does not need a border anymore */}
+            <div style={{border: '3px solid blue'}}>
+              {props.children}
             </div>
           </Resizable>
         ) : (
@@ -159,7 +164,7 @@ export function CanvasDraggable(props: any) {
             {...listeners}
             {...attributes}
           >
-            <div style={childrenStyle}>
+            <div >
               {props.children}
             </div>
           </div>
