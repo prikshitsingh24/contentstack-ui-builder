@@ -7,13 +7,11 @@ import { Resizable } from 're-resizable';
 import pageState from '@/app/states/pageState';
 
 export function CanvasDraggable(props: any) {
-  // Recoil state for the selected item and dimensions of the resizable element
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [width, setWidth] = useState(100);
   const [height, setHeight] = useState(40);
   const [selectedPage, setSelectedPage] = useRecoilState(canvasState.selectedPageState);
   const [pages, setPages] = useRecoilState(pageState.pageState);
-  // State to track if resizing mode is active
   const [isResizingMode, setResizingMode] = useState(false);
 
   // Event listener for the "R" key to toggle resizing mode
@@ -30,18 +28,15 @@ export function CanvasDraggable(props: any) {
       }
     };
 
-    // Add event listeners for keydown and keyup
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      // Clean up the event listeners when the component is unmounted
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
 
-  // Draggable hook setup
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: props.id,
     data: {
@@ -51,11 +46,12 @@ export function CanvasDraggable(props: any) {
   });
 
   const dragstyle = {
-    cursor: isResizingMode ? 'nwse-resize' : isDragging ? 'grabbing' : 'grab', // Change cursor based on mode
-    opacity: isResizingMode ? 0.7 : isDragging ? 0.5 : 1, // Change opacity based on mode
+    cursor: isResizingMode ? 'nwse-resize' : isDragging ? 'grabbing' : 'grab',
+    opacity: isResizingMode ? 0.7 : isDragging ? 0.5 : 1,
     borderRadius: selected && selected.id === props.id ? '3px' : '0',
     transform: CSS.Translate.toString(transform),
-    border: '2px solid blue' 
+    border: '2px solid blue',
+    zIndex: 1,
   };
 
   const handleItemSelected = () => {
@@ -71,27 +67,22 @@ export function CanvasDraggable(props: any) {
     }
   };
 
-  // Handling resize (real-time update)
   const onResize = (e: any, direction: any, ref: any, d: any) => {
-    // Using ref to directly access the element's current size during resizing
     const newWidth = ref.offsetWidth;
     const newHeight = ref.offsetHeight;
 
-    // Update width and height during resize (real-time)
     setWidth(newWidth);
     setHeight(newHeight);
 
-    // Update the selected state with the new dimensions in real-time
     setSelected({
       ...selected,
       style: {
         ...selected.style,
-        width: newWidth,  // Real-time width
-        height: newHeight,  // Real-time height
+        width: newWidth,
+        height: newHeight,
       },
     });
 
-    // Now, update the selectedPage with the new width and height in real-time
     const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
       const updatedChildren = section.children.map((item: any) => {
         if (item.id === props.id) {
@@ -99,8 +90,8 @@ export function CanvasDraggable(props: any) {
             ...item,
             style: {
               ...item.style,
-              width: newWidth,  // Real-time width
-              height: newHeight,  // Real-time height
+              width: newWidth,
+              height: newHeight,
             },
           };
         }
@@ -113,7 +104,6 @@ export function CanvasDraggable(props: any) {
       };
     });
 
-    // Update selectedPage state with real-time updates
     setSelectedPage({
       ...selectedPage,
       children: updatedSelectedPage,
@@ -129,7 +119,6 @@ export function CanvasDraggable(props: any) {
       return page;
     });
 
-    // Update pages state
     setPages(updatedPages);
   };
 
@@ -141,30 +130,30 @@ export function CanvasDraggable(props: any) {
         </button>
       ) : (
         isResizingMode ? (
-          // Resizable mode enabled
-          <Resizable
+          <div style={{border:'2px solid red',height:height+3,width:width+3}}>
+            <Resizable
             size={{ width: width, height: height }}
             onResize={onResize} // Real-time resize handler
             style={{
               cursor: 'nwse-resize',
-                // Border applied to Resizable
             }}
-           // Set a minimum height
+            minWidth={50} // Minimum width to prevent the box from resizing too small
+            minHeight={50} // Minimum height to prevent the box from resizing too small
           >
-            {/* Inside div does not need a border anymore */}
-            <div style={{border: '3px solid blue'}}>
+            <div>
               {props.children}
             </div>
           </Resizable>
+          </div>
+          
         ) : (
-          // Normal draggable mode
           <div
             ref={setNodeRef}
             style={dragstyle}
             {...listeners}
             {...attributes}
           >
-            <div >
+            <div style={{ width: '100%', height: '100%' }}>
               {props.children}
             </div>
           </div>
