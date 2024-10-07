@@ -17,6 +17,8 @@ interface Content {
   content?: string;
   over?:string;
   style?: Style;
+  width?:number;
+  height?:number;
 }
 
 interface DroppedContent {
@@ -26,6 +28,8 @@ interface DroppedContent {
   over?:string;
   style?: Style;
   position?:{x:number,y:number}
+  width?:number;
+  height?:number;
 }
 
 interface Section {

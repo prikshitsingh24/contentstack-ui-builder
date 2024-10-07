@@ -15,14 +15,11 @@ import pageState from '@/app/states/pageState';
 export default function Canvas({ items }: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
-  const [pages,setPages]=useRecoilState(pageState.pageState);
-  const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
-  const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
-  const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
-
+  const [pages,setPages]=useRecoilState(pageState.pageState);
+  
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
     // Prevent deselection if clicking on an actual item
     if ((e.target as HTMLElement).closest('.draggable-item')) return;
@@ -30,64 +27,44 @@ export default function Canvas({ items }: any) {
     setSelected({});
   };
 
-  useEffect(()=>{
-    if(pages.length==0){
-      const updatedSection = {
-        id: "section-"+`${uuidv4()}`,
-        headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
-        contentBackgroundColor:contentBackgroundColor,
-        footerBackgroundColor: footerBackgroundColor,
-        children: droppedItems,
-      };
-    
-      const updatedPage={
-        id:"page-"+"home",
-        children:[updatedSection]
-      }
-      setPages([updatedPage])
-      setSelectedPage(updatedPage);
-    }else{
-      const updatedSection= selectedPage.children?.map((section,index)=>{
-        if(section.id===selectedSection.id){
-          return {
-                  ...section,
-                  headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
-                  contentBackgroundColor: contentBackgroundColor,
-                  footerBackgroundColor: footerBackgroundColor,
-                  children: droppedItems,
-                };
-        }
-        return section;
-      })
-      // Step 2: Update the selected page to include the updated section
-      const updatedPages = pages.map((page) => {
-        if (page.id === selectedPage.id) {
-          return {
-            ...page,
-            children: updatedSection, // Update only the children of the selected page
-          };
-        }
-        return page; // Return other pages unchanged
-      });
-
-      // Step 3: Update the selectedPage state with the updated sections
-      setPages(updatedPages);
-      setSelectedPage({
-        ...selectedPage,
-        children: updatedSection, // Update the selectedPage's children with the updated section
-      });
-    }
-    
-  }, [headerBackgroundColor,contentBackgroundColor,footerBackgroundColor, droppedItems])
+ 
 
   const handleDelete = () => {
     if (selected.id) {
-      // Filter out the selected item from dropped items
-      const updatedItems = droppedItems.filter(item => item.id !== selected.id);
-      setDroppedItems(updatedItems); // Update the state with the remaining items
-      setSelected({}); // Clear the selected item
+      // Update selectedPage by filtering out the selected item from its children
+      const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+        const updatedChildren = section.children.filter((item: any) => item.id !== selected.id);
+  
+        return {
+          ...section,
+          children: updatedChildren,  // Update section's children by removing the selected item
+        };
+      });
+  
+      // Update the selectedPage state
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedSelectedPage,  // Set the updated children for the selectedPage
+      });
+  
+      // Update the pages state
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            children: updatedSelectedPage,  // Update the selectedPage children in this page
+          };
+        }
+        return page;
+      });
+  
+      setPages(updatedPages);
+  
+      // Clear the selected item state
+      setSelected({});
     }
   };
+  
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -104,6 +81,7 @@ export default function Canvas({ items }: any) {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [selected]);
+
   return (
     <div className='w-full h-full overflow-y-scroll'>
        {selectedPage?.children?.map((section:any) => (
@@ -111,7 +89,7 @@ export default function Canvas({ items }: any) {
          <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] " >
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
            <Droppable id={`${section.id}header-column-1`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}header-column-1` && (
                    <div
                  key={item.id}
@@ -146,7 +124,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
            <Droppable id={`${section.id}header-column-2`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}header-column-2` && (
                    <div
                  key={item.id}
@@ -181,7 +159,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
            <Droppable id={`${section.id}header-column-3`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}header-column-3` && (
                    <div
                  key={item.id}
@@ -216,7 +194,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.contentBackgroundColor}}>
            <Droppable id={`${section.id}content-column-1`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}content-column-1` && (
                    <div
                  key={item.id}
@@ -251,7 +229,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor}}>
            <Droppable id={`${section.id}content-column-2`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}content-column-2` && (
                    <div
                  key={item.id}
@@ -260,7 +238,9 @@ export default function Canvas({ items }: any) {
                    zIndex:10,
                    left: `${item.position?.x}px`,
                    top: `${item.position?.y}px`,
-                   transform: 'translate(-50%, -50%)',
+                   transform:'translate(-50%, -50%)',
+                    width:item.width,
+                    height:item.height,
                  }}
                  className="draggable-item"
                >
@@ -286,7 +266,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor}}>
            <Droppable id={`${section.id}content-column-3`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}content-column-3` && (
                    <div
                  key={item.id}
@@ -321,7 +301,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className={` ${gridVisibility?'border-r-2  border-dashed':''} relative`}  style={{backgroundColor:section.footerBackgroundColor}}>
            <Droppable id={`${section.id}footer-column-1`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}footer-column-1` && (
                    <div
                  key={item.id}
@@ -356,7 +336,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-dashed':''} relative`} style={{backgroundColor:section.footerBackgroundColor}}>
            <Droppable id={`${section.id}footer-column-2`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}footer-column-2` && (
                    <div
                  key={item.id}
@@ -391,7 +371,7 @@ export default function Canvas({ items }: any) {
            </div>
            <div className='relative' style={{backgroundColor:section.footerBackgroundColor}}>
            <Droppable id={`${section.id}footer-column-3`}>
-           {items.length > 0 && items.map((item: any) => (
+           {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}footer-column-3` && (
                    <div
                  key={item.id}

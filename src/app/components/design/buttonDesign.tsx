@@ -3,17 +3,20 @@ import canvasState from "@/app/states/canvasState";
 import colorPickerState from "@/app/states/colorPickerState";
 import { useState } from "react";
 import { SketchPicker } from "react-color";
+import pageState from "@/app/states/pageState";
 
 export default function ButtonDesign() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
-  const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
   const [colorPicker,setColorPicker]=useRecoilState(colorPickerState.colorPickerState);
   const [backgroundColorPicker,setBackgroundColorPicker]=useRecoilState(colorPickerState.backgroundColorPickerState);
   const [color, setColor] = useState("#000000");
+  const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
+  const [pages,setPages]=useRecoilState(pageState.pageState);
   // Function to handle font size change
   const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newFontSize = event.target.value;
-
+  
+    // Update the selected item's font size
     setSelected({
       ...selected,
       style: {
@@ -21,90 +24,252 @@ export default function ButtonDesign() {
         fontSize: newFontSize,  // Update font size in the selected item state
       },
     });
-    const updatedItems = droppedItems.map((item) =>
-      item.id === selected.id
-        ? { ...item, style: { ...item.style, fontSize: newFontSize } }  // Update the style for the matching item
-        : item  // Return the other items unchanged
-    );
-
-    setDroppedItems(updatedItems); 
+  
+    // Update font size in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              fontSize: newFontSize,  // Update font size in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
+      return {
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
+      };
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
   };
-  const handleFontStyleChange=(style:string)=>{
-    setSelected({
-        ...selected,
-        style: {
-          ...selected.style,
-          fontStyle: style,  // Update font size in the selected item state
-        },
-      });
-      const updatedItems = droppedItems.map((item) =>
-        item.id === selected.id
-          ? { ...item, style: { ...item.style, fontStyle: style } }  // Update the style for the matching item
-          : item  // Return the other items unchanged
-      );
   
-      setDroppedItems(updatedItems); 
-  }
+  const handleFontStyleChange = (style: string) => {
+    // Update the selected item's font style
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        fontStyle: style,  // Update font style in the selected item state
+      },
+    });
+  
+    // Update font style in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              fontStyle: style,  // Update font style in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
+      return {
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
+      };
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
+  };
+  
 
-  const handleFontWeightChange=(event: React.ChangeEvent<HTMLSelectElement>)=>{
-    const newfontWeight = event.target.value;
-    setSelected({
-        ...selected,
-        style: {
-          ...selected.style,
-          fontWeight: newfontWeight,  // Update font size in the selected item state
-        },
-      });
-      const updatedItems = droppedItems.map((item) =>
-        item.id === selected.id
-          ? { ...item, style: { ...item.style, fontWeight: newfontWeight } }  // Update the style for the matching item
-          : item  // Return the other items unchanged
-      );
+  const handleFontWeightChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newFontWeight = event.target.value;
   
-      setDroppedItems(updatedItems); 
-  }
+    // Update the selected item's font weight
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        fontWeight: newFontWeight,  // Update font weight in the selected item state
+      },
+    });
+  
+    // Update font weight in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              fontWeight: newFontWeight,  // Update font weight in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
+      return {
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
+      };
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
+  };
+  
 
   const handleColorChange = (newColor: string) => {
-    setColor(newColor);  // Update color state
-
-    // Update color in selected item and dropped items
+    // Update color in the selected item
     setSelected({
       ...selected,
       style: {
         ...selected.style,
-        color: newColor,  // Apply color to the selected item
+        color: newColor,  // Update color in the selected item state
       },
     });
-
-    const updatedItems = droppedItems.map((item) =>
-      item.id === selected.id
-        ? { ...item, style: { ...item.style, color: newColor } }
-        : item
-    );
-
-    setDroppedItems(updatedItems);
+  
+    // Update color in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              color: newColor,  // Update color in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
+      return {
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
+      };
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
   };
+  
 
   const handleBackgroundColorChange = (newColor: string) => {
-    setColor(newColor);  // Update color state
-
-    // Update color in selected item and dropped items
+    // Update background color in the selected item
     setSelected({
       ...selected,
       style: {
         ...selected.style,
-        backgroundColor: newColor,  // Apply color to the selected item
+        backgroundColor: newColor,  // Update background color in the selected item state
       },
     });
-
-    const updatedItems = droppedItems.map((item) =>
-      item.id === selected.id
-        ? { ...item, style: { ...item.style, backgroundColor: newColor } }
-        : item
-    );
-
-    setDroppedItems(updatedItems);
+  
+    // Update background color in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              backgroundColor: newColor,  // Update background color in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
+      return {
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
+      };
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
   };
+  
 
   const handleColorPickerClick = ()=>{
     setBackgroundColorPicker(false);

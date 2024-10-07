@@ -9,7 +9,6 @@ import pageState from "@/app/states/pageState";
 import addPage from "@/app/states/addPage";
 
 export default function Leftsidebar({data}:any){
-    const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
     const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
     const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
