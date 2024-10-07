@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import BackgroundDesign from "../design/backgroundDesign";
 import ButtonDesign from "../design/buttonDesign";
+import ImageDesign from "../design/imageDesign";
 import InputDesign from "../design/inputDesign";
 import TextDesign from "../design/textDesign";
 
@@ -31,6 +32,9 @@ export default function Rightsidebar(){
                     )}
                      {selected.type=="Input"&&(
                         <InputDesign></InputDesign>
+                    )}
+                     {selected.type=="Image"&&(
+                        <ImageDesign></ImageDesign>
                     )}
                 </div>
                 </div>

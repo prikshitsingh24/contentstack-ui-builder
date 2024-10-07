@@ -11,6 +11,7 @@ import canvasState from '@/app/states/canvasState';
 import sectionState from '@/app/states/sectionState';
 import { v4 as uuidv4 } from 'uuid';
 import pageState from '@/app/states/pageState';
+import colorPickerState from '@/app/states/colorPickerState';
 
 export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -18,9 +19,21 @@ export default function Canvas() {
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
   const [pages,setPages]=useRecoilState(pageState.pageState);
+  const [colorPicker,setColorPicker]=useRecoilState(colorPickerState.colorPickerState);
+  const [backgroundColorPicker,setBackgroundColorPicker]=useRecoilState(colorPickerState.backgroundColorPickerState);
+  const [borderColorPicker,setBorderColorPicker]=useRecoilState(colorPickerState.borderColorPickerState)
+  const [headerbackgroundColorPicker,setheaderBackgroundColorPicker]=useRecoilState(colorPickerState.headerBackgroundColorPickerState);
+  const [contentbackgroundColorPicker,setContentBackgroundColorPicker]=useRecoilState(colorPickerState.contentBackgroundColorPickerState);
+  const [footerbackgroundColorPicker,setFooterBackgroundColorPicker]=useRecoilState(colorPickerState.footerBackgroundColorPickerState);
 
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
     // Prevent deselection if clicking on an actual item
+    setBackgroundColorPicker(false);
+    setBorderColorPicker(false);
+    setColorPicker(false);
+    setContentBackgroundColorPicker(false);
+    setFooterBackgroundColorPicker(false);
+    setheaderBackgroundColorPicker(false);
     if ((e.target as HTMLElement).closest('.draggable-item')) return;
     setSelectedSection(section);
     setSelected({});
@@ -65,21 +78,21 @@ export default function Canvas() {
   };
   
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Delete' || event.key === 'Backspace') {
-        handleDelete();
-      }
-    };
+  // useEffect(() => {
+  //   const handleKeyDown = (event: KeyboardEvent) => {
+  //     if (event.key === 'Delete' || event.key === 'Backspace') {
+  //       handleDelete();
+  //     }
+  //   };
 
-    // Attach the event listener
-    window.addEventListener('keydown', handleKeyDown);
+  //   // Attach the event listener
+  //   window.addEventListener('keydown', handleKeyDown);
 
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [selected]);
+  //   // Clean up the event listener on component unmount
+  //   return () => {
+  //     window.removeEventListener('keydown', handleKeyDown);
+  //   };
+  // }, [selected]);
 
   return (
     <div className='w-full h-full overflow-y-scroll'>
@@ -87,7 +100,7 @@ export default function Canvas() {
          <div  className={`w-full h-full border-4 rounded-md mb-20 ${selectedSection.id==section.id?'border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
          <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] " >
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
-           <Droppable id={`${section.id}header-column-1`}>
+           <Droppable id={`${section.id}header-column-1`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}header-column-1` && (
                    <div
@@ -115,6 +128,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                     {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -122,7 +138,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
-           <Droppable id={`${section.id}header-column-2`}>
+           <Droppable id={`${section.id}header-column-2`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}header-column-2` && (
                    <div
@@ -150,6 +166,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                     {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -157,7 +176,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
-           <Droppable id={`${section.id}header-column-3`}>
+           <Droppable id={`${section.id}header-column-3`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}header-column-3` && (
                    <div
@@ -185,6 +204,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                     {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -192,7 +214,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.contentBackgroundColor}}>
-           <Droppable id={`${section.id}content-column-1`}>
+           <Droppable id={`${section.id}content-column-1`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}content-column-1` && (
                    <div
@@ -220,6 +242,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                     {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -227,7 +252,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor}}>
-           <Droppable id={`${section.id}content-column-2`}>
+           <Droppable id={`${section.id}content-column-2`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}content-column-2` && (
                    <div
@@ -255,6 +280,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                   {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -262,7 +290,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor}}>
-           <Droppable id={`${section.id}content-column-3`}>
+           <Droppable id={`${section.id}content-column-3`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}content-column-3` && (
                    <div
@@ -290,6 +318,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                    {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -297,7 +328,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2  border-dashed':''} relative`}  style={{backgroundColor:section.footerBackgroundColor}}>
-           <Droppable id={`${section.id}footer-column-1`}>
+           <Droppable id={`${section.id}footer-column-1`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}footer-column-1` && (
                    <div
@@ -325,6 +356,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                     {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -332,7 +366,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-dashed':''} relative`} style={{backgroundColor:section.footerBackgroundColor}}>
-           <Droppable id={`${section.id}footer-column-2`}>
+           <Droppable id={`${section.id}footer-column-2`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}footer-column-2` && (
                    <div
@@ -359,6 +393,9 @@ export default function Canvas() {
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
+                     {item.type=="Image" &&(
+                    <img style={item.style}></img>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -366,7 +403,7 @@ export default function Canvas() {
            </Droppable>
            </div>
            <div className='relative' style={{backgroundColor:section.footerBackgroundColor}}>
-           <Droppable id={`${section.id}footer-column-3`}>
+           <Droppable id={`${section.id}footer-column-3`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}footer-column-3` && (
                    <div
@@ -393,6 +430,9 @@ export default function Canvas() {
                    )}
                    {item.type=="Input" &&(
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
+                   )}
+                     {item.type=="Image" &&(
+                    <img style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>

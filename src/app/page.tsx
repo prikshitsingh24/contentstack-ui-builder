@@ -51,7 +51,7 @@ export default function Home() {
 
     const handleDragEnd = (event: any) => {
       const { active, over } = event;
-    
+    console.log(event)
       if (over) {
         // Calculate the drop position relative to the section
         const x = mousePosition.x - event.over.rect.left;

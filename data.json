@@ -47,5 +47,18 @@
         "borderRadius": "5px",
         "padding": "8px"
       }
-    } 
+    },
+    {
+      "id": "image",
+      "type": "Image",
+      "src": "",
+      "alt": "Click to insert image",
+      "style": {
+        "width": "300px",
+        "height": "200px",
+        "borderColor": "#000000",
+        "borderWidth": "1px",
+        "borderRadius": "5px"
+      }
+    }
 ]

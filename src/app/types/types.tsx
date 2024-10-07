@@ -8,8 +8,10 @@ export interface Style {
     fontWeight?:string;
     color?: string;
     textAlign?: string;
-    width?:number;
-    height?:number;
+    borderRadius?:string;
+    borderColor?:string;
+    width?:string;
+    height?:string;
   }
   
 export  interface Content {

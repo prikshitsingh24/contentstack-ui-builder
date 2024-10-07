@@ -8,8 +8,12 @@ import pageState from '@/app/states/pageState';
 
 export function CanvasDraggable(props: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
-  const [width, setWidth] = useState(100);
-  const [height, setHeight] = useState(40);
+  const widthWithUnit = props.data.style?.width;
+  const heightWithUnit = props.data.style?.height;
+  const numericWidth = widthWithUnit ? parseInt(widthWithUnit, 10) : 0;
+  const numericHeight = heightWithUnit ? parseInt(heightWithUnit,10) : 0;
+  const [width, setWidth] = useState(numericWidth || 300);
+  const [height, setHeight] = useState(numericHeight || 200);
   const [selectedPage, setSelectedPage] = useRecoilState(canvasState.selectedPageState);
   const [pages, setPages] = useRecoilState(pageState.pageState);
   const [isResizingMode, setResizingMode] = useState(false);
