@@ -14,12 +14,11 @@ import pageState from '@/app/states/pageState';
 
 export default function Canvas({ items }: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
-  const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
   const [pages,setPages]=useRecoilState(pageState.pageState);
-  
+
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
     // Prevent deselection if clicking on an actual item
     if ((e.target as HTMLElement).closest('.draggable-item')) return;

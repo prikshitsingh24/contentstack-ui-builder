@@ -1,37 +1,6 @@
 import { atom } from "recoil";
+import { Page } from "../types/types";
 
-interface Style {
-    value?:string;
-    placeholder?:string;
-    backgroundColor?:string;
-    fontSize?: string;
-    fontStyle?: string;
-    fontWeight?:string;
-    color?: string;
-    textAlign?: string;
-  }
-
-interface DroppedContent {
-    id?: string;
-    type?: string;
-    content?: string;
-    over?:string;
-    style?: Style;
-    position?:{x:number,y:number}
-  }
-
-interface Section {
-    id?:string;
-    headerBackgroundColor?:string;
-    contentBackgroundColor?:string;
-    footerBackgroundColor?:string;
-    children?:DroppedContent[]
-}
-
-interface Page{
-    id?:string;
-    children?:Section[]
-}
 
 
 const pageState = atom<Page[]>({
