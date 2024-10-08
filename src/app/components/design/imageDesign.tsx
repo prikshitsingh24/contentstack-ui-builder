@@ -15,7 +15,12 @@ export default function ImageDesign() {
   const [pages,setPages]=useRecoilState(pageState.pageState);
   // Function to handle font size change
 
-
+  const handleImageDesignClick=(e:any)=>{
+    if ((e.target as HTMLElement).closest('#picker-1')) return;
+    if ((e.target as HTMLElement).closest('#picker-2')) return;
+    setBackgroundColorPicker(false);
+    setBorderColorPicker(false);
+  }
   
 
   const handleBackgroundColorChange = (newColor: string) => {
@@ -281,16 +286,16 @@ export default function ImageDesign() {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-4" onClick={(e)=>handleImageDesignClick(e)}>
       {/* Font Size Dropdown */}
       <div>
       <div className="text-sm mb-2 font-sans font-light">Background color</div>
       {backgroundColorPicker &&(
-        <div className="fixed right-20 mt-10"><SketchPicker color={color} onChangeComplete={(color) => handleBackgroundColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10" id="picker-1"><SketchPicker color={color} onChangeComplete={(color) => handleBackgroundColorChange(color.hex)}/></div>
       )}
       <div>  
         <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:selected.style?.backgroundColor}} onClick={handleBackgroundColorPickerClick}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selected.style?.backgroundColor}} onClick={handleBackgroundColorPickerClick}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
@@ -306,11 +311,11 @@ export default function ImageDesign() {
       <div>
       <div className="text-sm mb-2 font-sans font-light">Border color</div>
       {borderColorPicker &&(
-        <div className="fixed right-20 mt-10"><SketchPicker color={color} onChangeComplete={(color) => handleBorderColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10" id="picker-2"><SketchPicker color={color} onChangeComplete={(color) => handleBorderColorChange(color.hex)}/></div>
       )}
       <div>  
         <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:selected.style?.borderColor }} onClick={handleBorderColorPickerClick}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-2" style={{backgroundColor:selected.style?.borderColor }} onClick={handleBorderColorPickerClick}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>

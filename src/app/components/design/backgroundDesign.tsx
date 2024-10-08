@@ -12,7 +12,16 @@ export default function BackgroundDesign() {
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
     const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
     const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
-    const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
+    const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus);
+
+  const handleBackgroundDesignClick=(e:any)=>{
+    if ((e.target as HTMLElement).closest('#picker-1')) return;
+    if ((e.target as HTMLElement).closest('#picker-2')) return;
+    if ((e.target as HTMLElement).closest('#picker-3')) return;
+    setContentBackgroundColorPicker(false);
+    setFooterBackgroundColorPicker(false);
+    setheaderBackgroundColorPicker(false);
+  }
 
   const handleHeaderBackgroundColorChange = (newColor: string) => {
     setHeaderBackgroundColor(newColor);
@@ -61,15 +70,15 @@ export default function BackgroundDesign() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-4" onClick={(e)=>handleBackgroundDesignClick(e)}>
      <div>
       <div className="text-sm mb-2 font-sans font-light">Header Background color</div>
       {headerbackgroundColorPicker &&(
-        <div className="fixed right-20 mt-10"><SketchPicker color={headerBackgroundColor} onChangeComplete={(color) => handleHeaderBackgroundColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10" id="picker-1"><SketchPicker color={headerBackgroundColor} onChangeComplete={(color) => handleHeaderBackgroundColorChange(color.hex)}/></div>
       )}
     <div>  
         <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:headerBackgroundColor?headerBackgroundColor:'white'}} onClick={handleHeaderBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:headerBackgroundColor?headerBackgroundColor:'white'}} onClick={handleHeaderBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
@@ -81,11 +90,11 @@ export default function BackgroundDesign() {
       <div>
       <div className="text-sm mb-2 font-sans font-light">Content Background color</div>
       {contentbackgroundColorPicker &&(
-        <div className="fixed right-20 mt-10"><SketchPicker color={contentBackgroundColor} onChangeComplete={(color) => handleContentBackgroundColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10" id="picker-2"><SketchPicker color={contentBackgroundColor} onChangeComplete={(color) => handleContentBackgroundColorChange(color.hex)}/></div>
       )}
      <div>  
         <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:contentBackgroundColor?contentBackgroundColor:'white'}} onClick={handleContentBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-2" style={{backgroundColor:contentBackgroundColor?contentBackgroundColor:'white'}} onClick={handleContentBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
@@ -97,11 +106,11 @@ export default function BackgroundDesign() {
       <div>
       <div className="text-sm mb-2 font-sans font-light">Footer Background color</div>
       {footerbackgroundColorPicker &&(
-        <div className="fixed right-20 mt-10"><SketchPicker color={footerBackgroundColor} onChangeComplete={(color) => handleFooterBackgroundColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10" id="picker-3"><SketchPicker color={footerBackgroundColor} onChangeComplete={(color) => handleFooterBackgroundColorChange(color.hex)}/></div>
       )}
       <div>  
         <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:footerBackgroundColor?footerBackgroundColor:'white'}} onClick={handleFooterBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:footerBackgroundColor?footerBackgroundColor:'white'}} onClick={handleFooterBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
