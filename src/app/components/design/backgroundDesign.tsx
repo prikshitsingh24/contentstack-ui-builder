@@ -48,43 +48,70 @@ export default function BackgroundDesign() {
     setFooterBackgroundColorPicker(true);
   }
 
+  const handleFooterBackgroundChange=(e:any)=>{
+    setFooterBackgroundColor(e.target.value)
+  }
+
+  const handleContentBackgroundChange=(e:any)=>{
+    setContentBackgroundColor(e.target.value)
+  }
+
+  const handleHeaderBackgroundChange=(e:any)=>{
+    setHeaderBackgroundColor(e.target.value)
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4">
      <div>
-      <div className="text-sm mb-2">Header Background color</div>
+      <div className="text-sm mb-2 font-sans font-light">Header Background color</div>
       {headerbackgroundColorPicker &&(
         <div className="fixed right-20 mt-10"><SketchPicker color={headerBackgroundColor} onChangeComplete={(color) => handleHeaderBackgroundColorChange(color.hex)}/></div>
       )}
-      {headerbackgroundColorPicker?(
-        <button onClick={()=>setheaderBackgroundColorPicker(false)}>Close</button>
-      ):(
-        <button onClick={handleHeaderBackgroundColorPicker}>Pick a color</button>
-      )}
+    <div>  
+        <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:headerBackgroundColor?headerBackgroundColor:'white'}} onClick={handleHeaderBackgroundColorPicker}>
+            </div>
+            <div className="border-r-2 h-full mr-1 border-gray-500"></div>
+            <div>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={headerBackgroundColor || ""} onChange={handleHeaderBackgroundChange}/>
+            </div>
+        </div>
+        </div>
       </div>
       <div>
-      <div className="text-sm mb-2">Content Background color</div>
+      <div className="text-sm mb-2 font-sans font-light">Content Background color</div>
       {contentbackgroundColorPicker &&(
         <div className="fixed right-20 mt-10"><SketchPicker color={contentBackgroundColor} onChangeComplete={(color) => handleContentBackgroundColorChange(color.hex)}/></div>
       )}
-      {contentbackgroundColorPicker?(
-        <button onClick={()=>setContentBackgroundColorPicker(false)}>Close</button>
-      ):(
-        <button onClick={handleContentBackgroundColorPicker}>Pick a color</button>
-      )}
+     <div>  
+        <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:contentBackgroundColor?contentBackgroundColor:'white'}} onClick={handleContentBackgroundColorPicker}>
+            </div>
+            <div className="border-r-2 h-full mr-1 border-gray-500"></div>
+            <div>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={contentBackgroundColor || ""} onChange={handleContentBackgroundChange}/>
+            </div>
+        </div>
+        </div>
       </div>
       <div>
-      <div className="text-sm mb-2">Footer Background color</div>
+      <div className="text-sm mb-2 font-sans font-light">Footer Background color</div>
       {footerbackgroundColorPicker &&(
         <div className="fixed right-20 mt-10"><SketchPicker color={footerBackgroundColor} onChangeComplete={(color) => handleFooterBackgroundColorChange(color.hex)}/></div>
       )}
-      {footerbackgroundColorPicker?(
-        <button onClick={()=>setFooterBackgroundColorPicker(false)}>Close</button>
-      ):(
-        <button onClick={handleFooterBackgroundColorPicker}>Pick a color</button>
-      )}
+      <div>  
+        <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" style={{backgroundColor:footerBackgroundColor?footerBackgroundColor:'white'}} onClick={handleFooterBackgroundColorPicker}>
+            </div>
+            <div className="border-r-2 h-full mr-1 border-gray-500"></div>
+            <div>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={footerBackgroundColor || ""} onChange={handleFooterBackgroundChange}/>
+            </div>
+        </div>
+        </div>
       </div>
       <div>
-      <div className="text-sm mb-2">Grid Visibility</div>
+      <div className="text-sm mb-2 font-sans font-light">Grid Visibility</div>
       {gridVisibility?(
         <button onClick={()=>setGridVisibility(false)}>Off</button>
       ):(

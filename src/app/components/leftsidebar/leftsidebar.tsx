@@ -7,6 +7,8 @@ import { Draggable } from "../draggable/draggable";
 import { v4 as uuidv4 } from 'uuid';
 import pageState from "@/app/states/pageState";
 import addPage from "@/app/states/addPage";
+import { useEffect } from "react";
+import { getAllEntries } from "@/app/helper/indext";
 
 export default function Leftsidebar({data}:any){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -15,6 +17,21 @@ export default function Leftsidebar({data}:any){
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
+
+
+    async function fetchData() {
+      try {
+        const response = await getAllEntries();
+        if (!response) throw new Error('Status code 404');
+        console.log(response)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
+    useEffect(() => {
+      fetchData();
+    }, []);
 
     const handleAddSectionClick = () => {
         // Create a new section with a unique id
@@ -50,17 +67,17 @@ export default function Leftsidebar({data}:any){
         <div className="grid grid-rows-[3fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
             <div className=" h-full grid grid-rows-[0.5fr_3fr]" >
             <div className="pl-3 pr-3 pt-5">
-                <div className="text-3xl ">
+                <div className="text-3xl font-sans font-semibold ">
                 Add elements
                 </div>
                 <div className="mt-5">
-                <input type="text" className="border border-gray-500 rounded-xl p-2" placeholder="Search" />
+                <input type="text" className="border border-gray-500 rounded-xl p-2 focus:outline-none" placeholder="Search" />
                 </div>
             </div>
-            <div className="flex flex-col overflow-y-scroll border-t-2 mt-2 border-b-2 text-gray-500 border-gray-300 h-full pl-3 pt-3">
+            <div className="flex flex-col overflow-y-scroll border-t-2 mt-2 border-b-2  border-gray-300 h-full pl-3 pt-3">
             {data.map((item:any)=>{
                 return (
-                    <div className="mb-3 hover:cursor-pointer w-full" key={item.id}><Draggable id={item.id} data={item}><div className="w-full ">{item.type}</div></Draggable></div>
+                    <div className="mb-3 hover:cursor-pointer w-full font-sans" key={item.id}><Draggable id={item.id} data={item}><div className="w-full border-2 p-2 rounded-md shadow-md flex items-start">{item.type}</div></Draggable></div>
                 )
             })}
             {/* <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="text" data={"Text"}><div className="w-full ">Text</div></Draggable></div>
@@ -69,8 +86,8 @@ export default function Leftsidebar({data}:any){
             </div>
             </div>
             <div className=" h-full pl-3 pt-5 pr-3 ">
-                <div className="hover:cursor-pointer mb-5 text-xl" onClick={handleAddSectionClick}>Add section</div>
-                <div className="hover:cursor-pointer mb-5 text-xl" onClick={handleAddPageClick}>Pages</div>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={handleAddSectionClick}>Add section</div>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={handleAddPageClick}>Pages</div>
             </div>
         </div>
     );

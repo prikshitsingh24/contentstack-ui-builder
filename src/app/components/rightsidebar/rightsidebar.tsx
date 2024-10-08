@@ -17,10 +17,10 @@ export default function Rightsidebar(){
         <div className="grid grid-rows-[1.8fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
             <div className="h-full border-b-2 border-grey-400">
             <div className="pl-3 pr-3 pt-5">
-                <div className="text-2xl ">
+                <div className="text-2xl font-sans font-semibold">
                  Design
                 </div>
-                <div className="mt-2">
+                <div className="mt-4">
                     {!selected.type&&(
                         <BackgroundDesign></BackgroundDesign>
                     )}
@@ -41,7 +41,7 @@ export default function Rightsidebar(){
             </div>
             <div>
             <div className="pl-3 pr-3 pt-5">
-                <div className="text-2xl ">
+                <div className="text-2xl font-sans font-semibold ">
                  Data
                 </div>
                 </div>

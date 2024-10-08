@@ -16,6 +16,7 @@ export function Draggable(props: any) {
   const style = {
     touchAction: 'none',
     cursor: isDragging ? 'grabbing' : 'grab',
+    width:'100%',
   };
 
   return (

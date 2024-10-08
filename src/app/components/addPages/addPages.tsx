@@ -42,7 +42,6 @@ export default function AddPages(){
         }
     }
     const handlePageClick=(page:any)=>{
-        console.log("my page",page)
         setSelectedPage(page)
     }
     return(
@@ -57,7 +56,7 @@ export default function AddPages(){
             <div className="flex flex-col border-2 rounded-md mr-2 ml-2 p-2 overflow-y-scroll mb-10">
                 {pages.map((page,index)=>{
                     return(
-                        <div className={`border-2 p-2 rounded-xl mb-2 cursor-pointer ${selectedPage.id==page.id?'bg-blue-100':''}`}  onClick={()=>handlePageClick(page)}>{page.id?.slice(5,)}</div>
+                        <div className={`border-2 p-2 rounded-xl mb-2 cursor-pointer ${selectedPage.id==page.id?'bg-blue-600 text-white':''}`}  onClick={()=>handlePageClick(page)}>{page.id?.slice(5,)}</div>
                     )
                 })}
                {input &&(
