@@ -36,6 +36,7 @@ export default function Canvas() {
     setheaderBackgroundColorPicker(false);
     if ((e.target as HTMLElement).closest('.draggable-item')) return;
     setSelectedSection(section);
+    console.log(selectedPage)
     setSelected({});
   };
 

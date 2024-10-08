@@ -4,6 +4,7 @@ import { SketchPicker } from "react-color";
 import { useState } from "react";
 import colorPickerState from "@/app/states/colorPickerState";
 import sectionState from "@/app/states/sectionState";
+import pageState from "@/app/states/pageState";
 
 export default function BackgroundDesign() {
     const [headerbackgroundColorPicker,setheaderBackgroundColorPicker]=useRecoilState(colorPickerState.headerBackgroundColorPickerState);
@@ -13,7 +14,10 @@ export default function BackgroundDesign() {
     const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
     const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
     const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus);
-
+    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+    const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
+    const [pages,setPages]=useRecoilState(pageState.pageState);
+    const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const handleBackgroundDesignClick=(e:any)=>{
     if ((e.target as HTMLElement).closest('#picker-1')) return;
     if ((e.target as HTMLElement).closest('#picker-2')) return;
@@ -25,17 +29,114 @@ export default function BackgroundDesign() {
 
   const handleHeaderBackgroundColorChange = (newColor: string) => {
     setHeaderBackgroundColor(newColor);
- 
+    setSelectedSection({
+      ...selectedSection,
+      headerBackgroundColor:newColor
+    });
+  
+    // Update background color in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      if(selectedSection.id == section.id){
+        return {
+          ...section,
+          headerBackgroundColor:newColor
+        }
+      }
+      return section
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
   };
 
   
   const handleContentBackgroundColorChange = (newColor: string) => {
     setContentBackgroundColor(newColor);
- 
+    setSelectedSection({
+      ...selectedSection,
+      contentBackgroundColor:newColor
+    });
+  
+    // Update background color in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      if(selectedSection.id == section.id){
+        return {
+          ...section,
+          contentBackgroundColor:newColor
+        }
+      }
+      return section
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
   };
 
   const handleFooterBackgroundColorChange = (newColor: string) => {
     setFooterBackgroundColor(newColor);
+    setSelectedSection({
+      ...selectedSection,
+      footerBackgroundColor:newColor
+    });
+  
+    // Update background color in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      if(selectedSection.id == section.id){
+        return {
+          ...section,
+          footerBackgroundColor:newColor
+        }
+      }
+      return section
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
  
   };
   const handleHeaderBackgroundColorPicker=()=>{
@@ -78,11 +179,11 @@ export default function BackgroundDesign() {
       )}
     <div>  
         <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:headerBackgroundColor?headerBackgroundColor:'white'}} onClick={handleHeaderBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selectedSection?.headerBackgroundColor || 'white'}} onClick={handleHeaderBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={headerBackgroundColor || ""} onChange={handleHeaderBackgroundChange}/>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.headerBackgroundColor || ""} onChange={handleHeaderBackgroundChange}/>
             </div>
         </div>
         </div>
@@ -94,11 +195,11 @@ export default function BackgroundDesign() {
       )}
      <div>  
         <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-2" style={{backgroundColor:contentBackgroundColor?contentBackgroundColor:'white'}} onClick={handleContentBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-2" style={{backgroundColor:selectedSection?.contentBackgroundColor || "white"}} onClick={handleContentBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={contentBackgroundColor || ""} onChange={handleContentBackgroundChange}/>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.contentBackgroundColor  || ""} onChange={handleContentBackgroundChange}/>
             </div>
         </div>
         </div>
@@ -110,11 +211,11 @@ export default function BackgroundDesign() {
       )}
       <div>  
         <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:footerBackgroundColor?footerBackgroundColor:'white'}} onClick={handleFooterBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:selectedSection?.footerBackgroundColor || "white"}} onClick={handleFooterBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={footerBackgroundColor || ""} onChange={handleFooterBackgroundChange}/>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.footerBackgroundColor || ""} onChange={handleFooterBackgroundChange}/>
             </div>
         </div>
         </div>
