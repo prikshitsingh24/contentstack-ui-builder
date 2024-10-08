@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import canvasState from '@/app/states/canvasState';
 import { Resizable } from 're-resizable';
 import pageState from '@/app/states/pageState';
+import contextMenuState from '@/app/states/contextMenuState';
 
 export function CanvasDraggable(props: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -16,7 +17,7 @@ export function CanvasDraggable(props: any) {
   const [height, setHeight] = useState(numericHeight || 200);
   const [selectedPage, setSelectedPage] = useRecoilState(canvasState.selectedPageState);
   const [pages, setPages] = useRecoilState(pageState.pageState);
-  const [isResizingMode, setResizingMode] = useState(false);
+  const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
 
   // Event listener for the "R" key to toggle resizing mode
   useEffect(() => {
@@ -138,6 +139,7 @@ export function CanvasDraggable(props: any) {
             <Resizable
             size={{ width: width, height: height }}
             onResize={onResize} // Real-time resize handler
+            onResizeStop={()=>setResizingMode(false)}
             style={{
               cursor: 'nwse-resize',
             }}

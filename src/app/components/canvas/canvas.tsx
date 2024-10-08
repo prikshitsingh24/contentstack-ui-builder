@@ -12,6 +12,8 @@ import sectionState from '@/app/states/sectionState';
 import { v4 as uuidv4 } from 'uuid';
 import pageState from '@/app/states/pageState';
 import colorPickerState from '@/app/states/colorPickerState';
+import contextMenuState from '@/app/states/contextMenuState';
+import ContextMenu from '../contextMenu/contextMenu';
 
 export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -25,6 +27,10 @@ export default function Canvas() {
   const [headerbackgroundColorPicker,setheaderBackgroundColorPicker]=useRecoilState(colorPickerState.headerBackgroundColorPickerState);
   const [contentbackgroundColorPicker,setContentBackgroundColorPicker]=useRecoilState(colorPickerState.contentBackgroundColorPickerState);
   const [footerbackgroundColorPicker,setFooterBackgroundColorPicker]=useRecoilState(colorPickerState.footerBackgroundColorPickerState);
+  const [contextMenu,setContextMenu]=useRecoilState(contextMenuState.contextMenuState);
+  const [positionX,setPositionX]=useState(0);
+  const [positionY,setPositionY]=useState(0);
+  const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
 
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
     // Prevent deselection if clicking on an actual item
@@ -79,24 +85,39 @@ export default function Canvas() {
   };
   
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event: KeyboardEvent) => {
-  //     if (event.key === 'Delete' || event.key === 'Backspace') {
-  //       handleDelete();
-  //     }
-  //   };
+useEffect(() => {
+    const handleRightClick = (event: MouseEvent) => {
+      event.preventDefault(); // Prevent the browser's default right-click menu
+      console.log('Right click detected at', event.clientX, event.clientY);
+      setPositionX(event.clientX);
+      setPositionY(event.clientY);
+      setContextMenu(true)
+      // You can handle the context menu here, such as showing a custom menu
+    };
+    // Attach the right-click event listener
+    if(selected && selected.id){
+      window.addEventListener('contextmenu', handleRightClick);
+    }
+    setContextMenu(false)
 
-  //   // Attach the event listener
-  //   window.addEventListener('keydown', handleKeyDown);
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('contextmenu', handleRightClick);
+    };
+  }, [selected]);
 
-  //   // Clean up the event listener on component unmount
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, [selected]);
+  const handleResizeClick=()=>{
+    setResizingMode(true);
+    setContextMenu(false);
+  }
 
   return (
     <div className='w-full h-full overflow-y-scroll'>
+      {contextMenu && (
+        <div style={{position:'fixed',left:`${positionX}px`,top:`${positionY}px`,zIndex:'100'}}>
+          <ContextMenu onDelete={handleDelete} onResize={handleResizeClick} ></ContextMenu>
+          </div>
+      )}
        {selectedPage?.children?.map((section:any) => (
          <div  className={`w-full h-full border-4 rounded-md mb-20 ${selectedSection.id==section.id?'border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
          <div  className="h-full w-full grid grid-cols-[0.5fr_3fr_0.5fr] grid-rows-[0.3fr_3fr_0.5fr] " >
