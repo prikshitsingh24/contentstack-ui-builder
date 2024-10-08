@@ -98,7 +98,7 @@ export default function Canvas() {
     <div className='w-full h-full overflow-y-scroll'>
        {selectedPage?.children?.map((section:any) => (
          <div  className={`w-full h-full border-4 rounded-md mb-20 ${selectedSection.id==section.id?'border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
-         <div  className="h-full w-full grid grid-cols-[1fr_3fr_1fr] grid-rows-[1fr_3fr_1fr] " >
+         <div  className="h-full w-full grid grid-cols-[0.5fr_3fr_0.5fr] grid-rows-[0.5fr_3fr_0.8fr] " >
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.headerBackgroundColor}}>
            <Droppable id={`${section.id}header-column-1`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (

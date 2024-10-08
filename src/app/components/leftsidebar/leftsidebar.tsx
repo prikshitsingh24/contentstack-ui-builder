@@ -74,10 +74,10 @@ export default function Leftsidebar({data}:any){
                 <input type="text" className="border border-gray-500 rounded-xl p-2 focus:outline-none" placeholder="Search" />
                 </div>
             </div>
-            <div className="flex flex-col overflow-y-scroll border-t-2 mt-2 border-b-2  border-gray-300 h-full pl-3 pt-3">
+            <div className="flex flex-col overflow-y-scroll border-t-2 border-gray-400 mt-2 border-b-2   h-full pl-3 pt-3">
             {data.map((item:any)=>{
                 return (
-                    <div className="mb-3 hover:cursor-pointer w-full font-sans" key={item.id}><Draggable id={item.id} data={item}><div className="w-full border-2 p-2 rounded-md shadow-md flex items-start">{item.type}</div></Draggable></div>
+                    <div className="mb-3 hover:cursor-pointer w-full font-sans" key={item.id}><Draggable id={item.id} data={item}><div className="w-full border-2 border-gray-500 p-2 rounded-md shadow-md flex items-start">{item.type}</div></Draggable></div>
                 )
             })}
             {/* <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="text" data={"Text"}><div className="w-full ">Text</div></Draggable></div>

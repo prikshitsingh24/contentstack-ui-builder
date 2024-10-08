@@ -46,22 +46,22 @@ export default function AddPages(){
     }
     return(
         <div className="bg-white w-96 h-full border-2 rounded-xl shadow-md grid grid-rows-[0fr_0.2fr_4fr]">
-            <div className="p-2 border-b-2 pt-2 pb-2">
+            <div className="p-2 border-b-2 pt-2 pb-2 font-sans font-semibold">
                 Site pages and menu
             </div>
-            <div className="p-2 flex flex-row justify-between mr-2 ml-2">
+            <div className="p-2 flex flex-row justify-between mr-2 ml-2 font-sans font-normal">
                 <div>Site menu</div>
-                <div className="text-blue-600 cursor-pointer" onClick={handleAddPageClick}>Add pages</div>
+                <div className="text-blue-600 cursor-pointer font-sans font-semibold" onClick={handleAddPageClick}>Add pages</div>
             </div>
-            <div className="flex flex-col border-2 rounded-md mr-2 ml-2 p-2 overflow-y-scroll mb-10">
+            <div className="flex flex-col border-2 border-gray-500 rounded-md mr-2 ml-2 p-2 overflow-y-scroll mb-10">
                 {pages.map((page,index)=>{
                     return(
-                        <div className={`border-2 p-2 rounded-xl mb-2 cursor-pointer ${selectedPage.id==page.id?'bg-blue-600 text-white':''}`}  onClick={()=>handlePageClick(page)}>{page.id?.slice(5,)}</div>
+                        <div className={`border-2 p-2 rounded-xl mb-2  cursor-pointer ${selectedPage.id==page.id?'bg-blue-400 text-white':''}`}  onClick={()=>handlePageClick(page)}>{page.id?.slice(5,)}</div>
                     )
                 })}
                {input &&(
                  <div className="flex flex-row items-center justify-between ">
-                    <input type="text" className="border-2 p-2 rounded-xl mb-2 w-full" placeholder="Page name.." onChange={handleAddPageName}/>
+                    <input type="text" className="border-2 p-2 rounded-xl mb-2 w-full focus:outline-none" placeholder="Page name.." onChange={handleAddPageName}/>
                     <div className="p-2 border-2 mb-1 rounded-xl bg-blue-600 text-white cursor-pointer" onClick={handleDoneClick}>Done</div>
                  </div>
                )}
