@@ -571,25 +571,30 @@ export default function ButtonDesign() {
         </select>
       </div>
       <div>
-        <div className="text-sm mb-2 font-sans font-light">Font style</div>
-        <div className="flex flex-row border-2 w-14  rounded-lg justify-between border-gray-500">
-            <div
-              className={`cursor-pointer px-2 rounded-lg ${
-                selected.style?.fontStyle === "normal" ? "bg-blue-600 text-white" : ""
-              }`}
-              onClick={() => handleFontStyleChange("normal")}
-            >
-              <span>N</span>
-            </div>
-            <div
-            className={`cursor-pointer px-2 rounded-lg ${
-                selected.style?.fontStyle === "italic" ? "bg-blue-600 text-white" : ""
-              }`}
-              onClick={() => handleFontStyleChange("italic")}
-            ><i>I</i>
-            </div>
-        </div>
+      <div className="text-sm mb-2 font-sans font-light">Font style</div>
+      <div className="flex flex-row border-2 border-gray-500 w-14 rounded-lg overflow-hidden">
+        <button
+          className={`flex-1 py-1 transition-colors duration-200 ease-in-out ${
+            selected.style?.fontStyle === "normal" 
+              ? "bg-blue-600 text-white" 
+              : "bg-white text-gray-700 hover:bg-gray-100"
+          }`}
+          onClick={() => handleFontStyleChange("normal")}
+        >
+          N
+        </button>
+        <button
+          className={`flex-1 py-1 transition-colors duration-200 ease-in-out ${
+            selected.style?.fontStyle === "italic" 
+              ? "bg-blue-600 text-white" 
+              : "bg-white text-gray-700 hover:bg-gray-100"
+          }`}
+          onClick={() => handleFontStyleChange("italic")}
+        >
+          <i>I</i>
+        </button>
       </div>
+    </div>
       <div>
         <div className="text-sm mb-2 font-sans font-light">Font weight</div>
         <select

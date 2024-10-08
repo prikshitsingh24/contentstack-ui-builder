@@ -175,7 +175,7 @@ export default function BackgroundDesign() {
      <div>
       <div className="text-sm mb-2 font-sans font-light">Header Background color</div>
       {headerbackgroundColorPicker &&(
-        <div className="fixed right-20 mt-10" id="picker-1"><SketchPicker color={headerBackgroundColor} onChangeComplete={(color) => handleHeaderBackgroundColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10 z-10" id="picker-1"><SketchPicker color={headerBackgroundColor} onChangeComplete={(color) => handleHeaderBackgroundColorChange(color.hex)}/></div>
       )}
     <div>  
         <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
@@ -191,7 +191,7 @@ export default function BackgroundDesign() {
       <div>
       <div className="text-sm mb-2 font-sans font-light">Content Background color</div>
       {contentbackgroundColorPicker &&(
-        <div className="fixed right-20 mt-10" id="picker-2"><SketchPicker color={contentBackgroundColor} onChangeComplete={(color) => handleContentBackgroundColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10 z-10" id="picker-2"><SketchPicker color={contentBackgroundColor} onChangeComplete={(color) => handleContentBackgroundColorChange(color.hex)}/></div>
       )}
      <div>  
         <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
@@ -207,7 +207,7 @@ export default function BackgroundDesign() {
       <div>
       <div className="text-sm mb-2 font-sans font-light">Footer Background color</div>
       {footerbackgroundColorPicker &&(
-        <div className="fixed right-20 mt-10" id="picker-3"><SketchPicker color={footerBackgroundColor} onChangeComplete={(color) => handleFooterBackgroundColorChange(color.hex)}/></div>
+        <div className="fixed right-20 mt-10 z-10" id="picker-3"><SketchPicker color={footerBackgroundColor} onChangeComplete={(color) => handleFooterBackgroundColorChange(color.hex)}/></div>
       )}
       <div>  
         <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
@@ -220,14 +220,29 @@ export default function BackgroundDesign() {
         </div>
         </div>
       </div>
-      <div>
-      <div className="text-sm mb-2 font-sans font-light">Grid Visibility</div>
-      {gridVisibility?(
-        <button onClick={()=>setGridVisibility(false)}>Off</button>
-      ):(
-        <button onClick={()=>setGridVisibility(true)}>On</button>
-      )}
+         <label className="flex items-center cursor-pointer">
+         <div className="mr-3 text-gray-700 font-medium">
+        Grid
       </div>
+      <div className="relative">
+        <input
+          type="checkbox"
+          className="sr-only"
+          checked={gridVisibility}
+          onChange={()=>setGridVisibility(!gridVisibility)}
+        />
+        <div
+          className={`block w-10 h-6 rounded-full ${
+            gridVisibility ? 'bg-blue-600' : 'bg-gray-600'
+          }`}
+        ></div>
+        <div
+          className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 ease-in-out ${
+            gridVisibility ? 'transform translate-x-full' : ''
+          }`}
+        ></div>
+      </div>
+    </label>
     </div>
   );
 }
