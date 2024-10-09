@@ -351,7 +351,7 @@ const handleColorTextChange=(e:any)=>{
       )}
       <div>  
         <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selected.style?.color}} onClick={()=>setColorPicker(true)}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selected.style?.color}} onClick={()=>setColorPicker(!colorPicker)}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>

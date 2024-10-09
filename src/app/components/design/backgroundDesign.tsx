@@ -142,20 +142,20 @@ export default function BackgroundDesign() {
   const handleHeaderBackgroundColorPicker=()=>{
     setContentBackgroundColorPicker(false);
     setFooterBackgroundColorPicker(false);
-    setheaderBackgroundColorPicker(true);
+    setheaderBackgroundColorPicker(!headerbackgroundColorPicker);
   }
   const handleContentBackgroundColorPicker=()=>{
   
     setFooterBackgroundColorPicker(false);
     setheaderBackgroundColorPicker(false);
-    setContentBackgroundColorPicker(true);
+    setContentBackgroundColorPicker(!contentbackgroundColorPicker);
   }
 
   const handleFooterBackgroundColorPicker=()=>{
   
     setheaderBackgroundColorPicker(false);
     setContentBackgroundColorPicker(false);
-    setFooterBackgroundColorPicker(true);
+    setFooterBackgroundColorPicker(!footerbackgroundColorPicker);
   }
 
   const handleFooterBackgroundChange=(e:any)=>{

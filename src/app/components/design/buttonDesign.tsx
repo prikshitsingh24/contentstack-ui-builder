@@ -287,20 +287,20 @@ export default function ButtonDesign() {
   const handleColorPickerClick = ()=>{
     setBackgroundColorPicker(false);
     setBorderColorPicker(false);
-    setColorPicker(true);
+    setColorPicker(!colorPicker);
   }
 
   const handleBackgroundColorPickerClick = ()=>{
     setColorPicker(false);
     setBorderColorPicker(false);
-    setBackgroundColorPicker(true);
+    setBackgroundColorPicker(!backgroundColorPicker);
    
   }
 
   const handleBorderColorPickerClick=()=>{
     setColorPicker(false);
     setBackgroundColorPicker(false);
-    setBorderColorPicker(true);
+    setBorderColorPicker(!borderColorPicker);
   }
 
   const handleBorderRadiusChange=(e:any)=>{

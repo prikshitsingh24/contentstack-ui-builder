@@ -74,15 +74,20 @@ export default function Leftsidebar({data}:any){
                 <input type="text" className="border border-gray-500 rounded-xl p-2 focus:outline-none" placeholder="Search" />
                 </div>
             </div>
-            <div className="flex flex-col overflow-y-scroll border-t-2 border-gray-400 mt-2 border-b-2   h-full pl-3 pt-3">
+            <div className="flex flex-col overflow-y-scroll border-t-2 border-gray-400 mt-2 border-b-2  h-full pl-3 pt-3">
+              <div className="grid grid-cols-2 gap-2">
             {data.map((item:any)=>{
                 return (
-                    <div className="mb-3 hover:cursor-pointer w-full font-sans" key={item.id}><Draggable id={item.id} data={item}><div className="w-full border-2 border-gray-500 p-2 rounded-md shadow-md flex items-start">{item.type}</div></Draggable></div>
+                    <div className="mb-3 hover:cursor-pointer w-full " key={item.id}><Draggable id={item.id} data={item}><div className="w-full h-28 border-2 border-gray-500 p-2 rounded-md shadow-md flex flex-col items-start">
+                      <div className="w-full h-20 border-2 rounded-xl">hi</div>
+                     <div className="flex flex-row w-full justify-center items-center font-sans"> {item.type}</div>
+                      </div></Draggable></div>
                 )
             })}
             {/* <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="text" data={"Text"}><div className="w-full ">Text</div></Draggable></div>
             <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="image" data={"Image"}><div className="w-full ">Image</div></Draggable></div>
             <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="button" data={"Button"}><div className="w-full ">Button</div></Draggable></div> */}
+            </div>
             </div>
             </div>
             <div className=" h-full pl-3 pt-5 pr-3 ">

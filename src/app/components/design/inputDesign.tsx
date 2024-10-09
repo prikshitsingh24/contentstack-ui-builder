@@ -285,19 +285,21 @@ export default function InputDesign() {
   
   const handleColorPickerClick = ()=>{
     setBackgroundColorPicker(false);
-    setColorPicker(true);
+    setBorderColorPicker(false);
+    setColorPicker(!colorPicker);
   }
 
   const handleBackgroundColorPickerClick = ()=>{
     setColorPicker(false);
-    setBackgroundColorPicker(true);
+    setBorderColorPicker(false);
+    setBackgroundColorPicker(!backgroundColorPicker);
    
   }
 
   const handleBorderColorPickerClick=()=>{
     setColorPicker(false);
     setBackgroundColorPicker(false);
-    setBorderColorPicker(true);
+    setBorderColorPicker(!borderColorPicker);
   }
 
   const handleBorderRadiusChange=(e:any)=>{

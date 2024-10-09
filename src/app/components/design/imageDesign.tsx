@@ -77,14 +77,13 @@ export default function ImageDesign() {
 
   const handleBackgroundColorPickerClick = ()=>{
     setColorPicker(false);
-    setBackgroundColorPicker(true);
+    setBackgroundColorPicker(!backgroundColorPicker);
    
   }
 
   const handleBorderColorPickerClick=()=>{
-    setColorPicker(false);
     setBackgroundColorPicker(false);
-    setBorderColorPicker(true);
+    setBorderColorPicker(!borderColorPicker);
   }
 
   const handleBorderRadiusChange=(e:any)=>{
