@@ -175,7 +175,7 @@ export default function Home() {
           )}
         </div>
         {/* Canvas to drop the item */}
-        <div className="mt-2 w-full h-full overflow-hidden">
+        <div className="mt-2 w-full max-h-fit overflow-hidden">
           <Canvas/>
         </div>
         <div>

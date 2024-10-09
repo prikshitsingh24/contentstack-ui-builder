@@ -29,25 +29,10 @@ export default function BackgroundDesign() {
 
   const handleHeaderBackgroundColorChange = (newColor: string) => {
     setHeaderBackgroundColor(newColor);
-    setSelectedSection({
-      ...selectedSection,
-      headerBackgroundColor:newColor
-    });
-  
-    // Update background color in the selectedPage state
-    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-      if(selectedSection.id == section.id){
-        return {
-          ...section,
-          headerBackgroundColor:newColor
-        }
-      }
-      return section
-    });
   
     setSelectedPage({
       ...selectedPage,
-      children: updatedSelectedPage,
+      headerBackgroundColor:newColor
     });
   
     // Update pages if selectedPage exists
@@ -55,7 +40,7 @@ export default function BackgroundDesign() {
       if (page.id === selectedPage.id) {
         return {
           ...page,
-          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+          headerBackgroundColor:newColor  // Update this page's children with the updated selectedPage
         };
       }
       return page;
@@ -106,23 +91,11 @@ export default function BackgroundDesign() {
     setFooterBackgroundColor(newColor);
     setSelectedSection({
       ...selectedSection,
-      footerBackgroundColor:newColor
-    });
-  
-    // Update background color in the selectedPage state
-    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-      if(selectedSection.id == section.id){
-        return {
-          ...section,
-          footerBackgroundColor:newColor
-        }
-      }
-      return section
     });
   
     setSelectedPage({
       ...selectedPage,
-      children: updatedSelectedPage,
+      footerBackgroundColor:newColor
     });
   
     // Update pages if selectedPage exists
@@ -130,7 +103,7 @@ export default function BackgroundDesign() {
       if (page.id === selectedPage.id) {
         return {
           ...page,
-          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+          footerBackgroundColor:newColor  // Update this page's children with the updated selectedPage
         };
       }
       return page;
@@ -179,11 +152,11 @@ export default function BackgroundDesign() {
       )}
     <div>  
         <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selectedSection?.headerBackgroundColor || 'white'}} onClick={handleHeaderBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selectedPage?.headerBackgroundColor || 'white'}} onClick={handleHeaderBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.headerBackgroundColor || ""} onChange={handleHeaderBackgroundChange}/>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedPage?.headerBackgroundColor || ""} onChange={handleHeaderBackgroundChange}/>
             </div>
         </div>
         </div>
@@ -211,11 +184,11 @@ export default function BackgroundDesign() {
       )}
       <div>  
         <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
-            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:selectedSection?.footerBackgroundColor || "white"}} onClick={handleFooterBackgroundColorPicker}>
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:selectedPage?.footerBackgroundColor || "white"}} onClick={handleFooterBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.footerBackgroundColor || ""} onChange={handleFooterBackgroundChange}/>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedPage?.footerBackgroundColor || ""} onChange={handleFooterBackgroundChange}/>
             </div>
         </div>
         </div>

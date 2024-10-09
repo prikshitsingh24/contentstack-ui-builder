@@ -34,14 +34,16 @@ export  interface Content {
   
   export  interface Section {
     id?:string;
-    headerBackgroundColor?:string;
-    contentBackgroundColor?:string;
-    footerBackgroundColor?:string;
     children?:DroppedContent[]
+    contentBackgroundColor?:string;
   }
   
   
   export  interface Page{
     id?:string;
-    children?:Section[]
+    children?:Section[];
+    header?:DroppedContent[];
+    footer?:DroppedContent[];
+    headerBackgroundColor?:string;
+    footerBackgroundColor?:string;
   }
