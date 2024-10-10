@@ -63,6 +63,25 @@ export default function Leftsidebar({data}:any){
       const handleAddPageClick=()=>{
         setAddPagePanel(!addPagePanel);
       }
+      const exportToJson = () => {
+        // Step 1: Convert the `pages` array to a JSON string
+        const jsonString = JSON.stringify(pages, null, 2);  // `null, 2` is used for pretty-printing the JSON
+      
+        // Step 2: Create a Blob containing the JSON string
+        const blob = new Blob([jsonString], { type: 'application/json' });
+      
+        // Step 3: Create a download link (anchor element)
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'pages.json';  // Name the file "pages.json" when downloading
+      
+        // Step 4: Programmatically trigger the download by clicking the anchor element
+        a.click();
+      
+        // Cleanup: Revoke the object URL after the download
+        URL.revokeObjectURL(url);
+      };
     return(
         <div className="grid grid-rows-[3fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
             <div className=" h-full grid grid-rows-[0.5fr_3fr]" >
@@ -74,7 +93,7 @@ export default function Leftsidebar({data}:any){
                 <input type="text" className="border border-gray-500 rounded-xl p-2 focus:outline-none" placeholder="Search" />
                 </div>
             </div>
-            <div className="flex flex-col overflow-y-scroll border-t-2 border-gray-400 mt-2 border-b-2  h-full pl-3 pt-3">
+            <div className="flex flex-col overflow-y-scroll  border-gray-400 mt-2   h-full pl-3 pt-3">
               <div className="grid grid-cols-2 gap-2">
             {data.map((item:any)=>{
                 return (
@@ -93,6 +112,7 @@ export default function Leftsidebar({data}:any){
             <div className=" h-full pl-3 pt-5 pr-3 ">
                 <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={handleAddSectionClick}>Add section</div>
                 <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={handleAddPageClick}>Pages</div>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={exportToJson}>Export</div>
             </div>
         </div>
     );

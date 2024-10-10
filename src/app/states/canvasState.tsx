@@ -28,5 +28,11 @@ const gridVisibilityStatus=atom({
   default: true
 })
 
+const gridColorStatus=atom({
+  key: 'gridColorStatus',
+  default: "#000000"
+})
 
-export default {selectedItemState,droppedItemState,gridVisibilityStatus,selectedSectionState,selectedPageState}
+
+
+export default {selectedItemState,droppedItemState,gridVisibilityStatus,selectedSectionState,selectedPageState,gridColorStatus}

@@ -29,5 +29,10 @@ const colorPickerState = atom({
     key: 'footerBackgroundColorPickerState',
     default: false
   });
+
+  const gridColorPickerState = atom({
+    key: 'gridColorPickerState',
+    default: false
+  });
   
-  export default {colorPickerState,backgroundColorPickerState,headerBackgroundColorPickerState,contentBackgroundColorPickerState,footerBackgroundColorPickerState,borderColorPickerState}
+  export default {colorPickerState,backgroundColorPickerState,headerBackgroundColorPickerState,contentBackgroundColorPickerState,footerBackgroundColorPickerState,borderColorPickerState,gridColorPickerState}

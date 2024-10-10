@@ -10,10 +10,12 @@ export default function BackgroundDesign() {
     const [headerbackgroundColorPicker,setheaderBackgroundColorPicker]=useRecoilState(colorPickerState.headerBackgroundColorPickerState);
     const [contentbackgroundColorPicker,setContentBackgroundColorPicker]=useRecoilState(colorPickerState.contentBackgroundColorPickerState);
     const [footerbackgroundColorPicker,setFooterBackgroundColorPicker]=useRecoilState(colorPickerState.footerBackgroundColorPickerState);
+    const [gridColorPicker,setGridColorPicker]=useRecoilState(colorPickerState.gridColorPickerState)
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
     const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
     const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
     const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus);
+    const [gridColor,setGridColor]=useRecoilState(canvasState.gridColorStatus);
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
@@ -112,23 +114,36 @@ export default function BackgroundDesign() {
     setPages(updatedPages);
  
   };
+
+  const handleGridColorChange=(newColor:string)=>{
+    setGridColor(newColor);
+  }
+
   const handleHeaderBackgroundColorPicker=()=>{
+    setGridColorPicker(false)
     setContentBackgroundColorPicker(false);
     setFooterBackgroundColorPicker(false);
     setheaderBackgroundColorPicker(!headerbackgroundColorPicker);
   }
   const handleContentBackgroundColorPicker=()=>{
-  
+    setGridColorPicker(false)
     setFooterBackgroundColorPicker(false);
     setheaderBackgroundColorPicker(false);
     setContentBackgroundColorPicker(!contentbackgroundColorPicker);
   }
 
   const handleFooterBackgroundColorPicker=()=>{
-  
+    setGridColorPicker(false)
     setheaderBackgroundColorPicker(false);
     setContentBackgroundColorPicker(false);
     setFooterBackgroundColorPicker(!footerbackgroundColorPicker);
+  }
+
+  const handleGridColorPicker=()=>{
+    setheaderBackgroundColorPicker(false);
+    setContentBackgroundColorPicker(false);
+    setFooterBackgroundColorPicker(false);
+    setGridColorPicker(!gridColorPicker)
   }
 
   const handleFooterBackgroundChange=(e:any)=>{
@@ -141,6 +156,10 @@ export default function BackgroundDesign() {
 
   const handleHeaderBackgroundChange=(e:any)=>{
     setHeaderBackgroundColor(e.target.value)
+  }
+
+  const handleGridChange=(e:any)=>{
+    setGridColor(e.target.value)
   }
 
   return (
@@ -216,6 +235,22 @@ export default function BackgroundDesign() {
         ></div>
       </div>
     </label>
+    <div>
+      <div className="text-sm mb-2 font-sans font-light">Grid color</div>
+      {gridColorPicker &&(
+        <div className="fixed right-20 mt-10 z-10" id="picker-3"><SketchPicker color={gridColor} onChangeComplete={(color) => handleGridColorChange(color.hex)}/></div>
+      )}
+      <div>  
+        <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
+            <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:gridColor }} onClick={handleGridColorPicker}>
+            </div>
+            <div className="border-r-2 h-full mr-1 border-gray-500"></div>
+            <div>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={gridColor} onChange={handleGridChange}/>
+            </div>
+        </div>
+        </div>
+      </div>
     </div>
   );
 }
