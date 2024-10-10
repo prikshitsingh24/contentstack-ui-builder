@@ -24,15 +24,15 @@ export default function AddPages(){
         if(pageName){
             const newSection = {
                 id: "section-"+`${uuidv4()}`,
-                headerBackgroundColor: "#FFFFFF", // Optional
                 contentBackgroundColor: "#FFFFFF",
-                footerBackgroundColor: "#FFFFFF",
                 children: [], // Assumed to be an array of dropped items
               };
               
               // Create a new page object
               const newPage = {
                 id: "page-" + pageName, // Modify if you need unique IDs
+                headerBackgroundColor: "#FFFFFF", // Optional
+                footerBackgroundColor: "#FFFFFF",
                 children: [newSection], // Add the newly created section to the children
               };
               
