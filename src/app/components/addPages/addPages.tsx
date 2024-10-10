@@ -4,7 +4,8 @@ import sectionState from "@/app/states/sectionState";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from 'uuid';
-
+import Image from "next/image";
+import addLogo from "../../images/addLogo.png";
 
 export default function AddPages(){
     const [pages,setPages]=useRecoilState(pageState.pageState);
@@ -51,7 +52,10 @@ export default function AddPages(){
             </div>
             <div className="p-2 flex flex-row justify-between mr-2 ml-2 font-sans font-normal">
                 <div>Site menu</div>
-                <div className="text-blue-600 cursor-pointer font-sans font-semibold" onClick={handleAddPageClick}>Add pages</div>
+                <div className="text-blue-600 cursor-pointer font-sans font-semibold flex flex-row justify-center items-center" onClick={handleAddPageClick}>
+                    <div className="h-5 w-5 mr-1"><Image src={addLogo} alt={"add logo"}></Image></div>
+                    Add pages
+                    </div>
             </div>
             <div className="flex flex-col border-2 border-gray-500 rounded-md mr-2 ml-2 p-2 overflow-y-scroll mb-10">
                 {pages.map((page,index)=>{

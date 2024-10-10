@@ -9,6 +9,10 @@ import pageState from "@/app/states/pageState";
 import addPage from "@/app/states/addPage";
 import { useEffect } from "react";
 import { getAllEntries } from "@/app/helper/indext";
+import pagesLogo from "../../images/pagesLogo.png";
+import exportLogo from "../../images/exportLogo.png";
+import addSectionLogo from "../../images/addSectionLogo.png"
+import Image from "next/image";
 
 export default function Leftsidebar({data}:any){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -110,9 +114,18 @@ export default function Leftsidebar({data}:any){
             </div>
             </div>
             <div className=" h-full pl-3 pt-5 pr-3 ">
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={handleAddSectionClick}>Add section</div>
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={handleAddPageClick}>Pages</div>
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold" onClick={exportToJson}>Export</div>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row" onClick={handleAddSectionClick}>
+                <div className="mr-4"><Image src={addSectionLogo} alt="cross" className="w-7"></Image></div>
+                  Add section
+                  </div>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row" onClick={handleAddPageClick}>
+                  <div className="mr-4"><Image src={pagesLogo} alt="cross" className="w-7"></Image></div>
+                  Pages
+                  </div>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row" onClick={exportToJson}>
+                <div className="mr-4"><Image src={exportLogo} alt="cross" className="w-7"></Image></div>
+                  Export
+                  </div>
             </div>
         </div>
     );
