@@ -25,7 +25,7 @@ export default function Leftsidebar({data}:any){
 
     async function fetchData() {
       try {
-        const response = await getAllEntries();
+        const response = await getAllEntries("components");
         if (!response) throw new Error('Status code 404');
         console.log(response)
       } catch (error) {
@@ -114,15 +114,15 @@ export default function Leftsidebar({data}:any){
             </div>
             </div>
             <div className=" h-full pl-3 pt-5 pr-3 ">
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row" onClick={handleAddSectionClick}>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-orange-500/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={handleAddSectionClick}>
                 <div className="mr-4"><Image src={addSectionLogo} alt="cross" className="w-7"></Image></div>
                   Add section
                   </div>
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row" onClick={handleAddPageClick}>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-green-500/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={handleAddPageClick}>
                   <div className="mr-4"><Image src={pagesLogo} alt="cross" className="w-7"></Image></div>
                   Pages
                   </div>
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row" onClick={exportToJson}>
+                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-red-700/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={exportToJson}>
                 <div className="mr-4"><Image src={exportLogo} alt="cross" className="w-7"></Image></div>
                   Export
                   </div>
