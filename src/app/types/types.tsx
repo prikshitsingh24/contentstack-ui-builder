@@ -37,6 +37,7 @@ export  interface Content {
     children?:DroppedContent[]
     contentBackgroundColor?:string;
   }
+
   
   
   export  interface Page{
