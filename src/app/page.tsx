@@ -62,8 +62,124 @@ export default function Home() {
         const content = active.data.current.data.content;
         const id = active.id; // The item's id
     
-        // Update the selectedPage's children (sections) and their respective children (dropped items)
-        const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+        if (over.id === "header-column-1" || over.id === "header-column-2" || over.id === "header-column-3") {
+          // Step 1: Find the index of the item in the header
+          const existingItemIndex:any = selectedPage?.header?.findIndex((item: any) => item.id === id);
+        
+          if (existingItemIndex !== -1) {
+            // Step 2: Item exists, update its position
+            console.log("Updating position for item with id:", id);
+            const updatedHeader = [...selectedPage.header || []]; // Clone the header to update
+            updatedHeader[existingItemIndex] = {
+              ...updatedHeader[existingItemIndex],
+              position, // Update position of the existing item
+            };
+        
+            // Step 3: Update selectedPage with the modified header
+            setSelectedPage({ ...selectedPage, header: updatedHeader });
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header: updatedHeader, // Update the header for the selected page
+                };
+              }
+              return page; // Return other pages unchanged
+            });
+          
+            // Step 7: Update the pages state with the modified pages array
+            setPages(updatedPages);
+        
+          } else {
+            const updatedId = "header-"+id + `-${uuidv4()}`;
+            const newItem = {
+              id: updatedId,
+              type: content.type,
+              content: content.content,
+              over: event.over.id,
+              style: content.style,
+              position, // Set position for the new item
+            };
+        
+            // Clone the header and add the new item to it
+            const updatedHeader = [...selectedPage.header || [], newItem];
+        
+            // Step 5: Update selectedPage with the new header
+            setSelectedPage({ ...selectedPage, header: updatedHeader });
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header: updatedHeader, // Update the header for the selected page
+                };
+              }
+              return page; // Return other pages unchanged
+            });
+          
+            // Step 7: Update the pages state with the modified pages array
+            setPages(updatedPages);
+          }
+        
+        }else if(over.id === "footer-column-1" || over.id === "footer-column-2" || over.id === "footer-column-3"){
+          const existingItemIndex:any = selectedPage?.footer?.findIndex((item: any) => item.id === id);
+        
+          if (existingItemIndex !== -1) {
+            // Step 2: Item exists, update its position
+            console.log("Updating position for item with id:", id);
+            const updatedFooter = [...selectedPage.footer || []]; // Clone the header to update
+            updatedFooter[existingItemIndex] = {
+              ...updatedFooter[existingItemIndex],
+              position, // Update position of the existing item
+            };
+        
+            // Step 3: Update selectedPage with the modified header
+            setSelectedPage({ ...selectedPage, footer: updatedFooter });
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  footer:updatedFooter, // Update the header for the selected page
+                };
+              }
+              return page; // Return other pages unchanged
+            });
+          
+            // Step 7: Update the pages state with the modified pages array
+            setPages(updatedPages);
+        
+          } else {
+            const updatedId = "footer-"+id +`-${uuidv4()}`;
+            const newItem = {
+              id: updatedId,
+              type: content.type,
+              content: content.content,
+              over: event.over.id,
+              style: content.style,
+              position, // Set position for the new item
+            };
+        
+            // Clone the header and add the new item to it
+            const updatedFooter = [...selectedPage.footer || [], newItem];
+        
+            // Step 5: Update selectedPage with the new header
+            setSelectedPage({ ...selectedPage, footer: updatedFooter });
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  footer:updatedFooter // Update the header for the selected page
+                };
+              }
+              return page; // Return other pages unchanged
+            });
+          
+            // Step 7: Update the pages state with the modified pages array
+            setPages(updatedPages);
+          }
+        }
+        
+        else{
+          const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
             const existingItemIndex = section.children.findIndex((item: any) => item.id === id);
     
             if (existingItemIndex !== -1) {
@@ -112,6 +228,8 @@ export default function Home() {
           // Step 3: Update the selectedPage state with the updated sections
           setPages(updatedPages);
         }
+        }
+       
       }
     };
 
@@ -119,14 +237,16 @@ export default function Home() {
       if(pages.length==0){
         const updatedSection = {
           id: "section-"+`${uuidv4()}`,
-          headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
           contentBackgroundColor:contentBackgroundColor,
-          footerBackgroundColor: footerBackgroundColor,
           children: droppedItems,
         };
       
         const updatedPage={
           id:"page-"+"home",
+          headerBackgroundColor:headerBackgroundColor,
+          footerBackgroundColor:footerBackgroundColor,
+          header:droppedItems,
+          footer:droppedItems,
           children:[updatedSection]
         }
         setPages([updatedPage])
@@ -136,9 +256,7 @@ export default function Home() {
           if(section.id===selectedSection.id){
             return {
                     ...section,
-                    headerBackgroundColor: headerBackgroundColor, // Optional, can be modified later
                     contentBackgroundColor: contentBackgroundColor,
-                    footerBackgroundColor: footerBackgroundColor,
                   };
           }
           return section;
@@ -148,6 +266,8 @@ export default function Home() {
           if (page.id === selectedPage.id) {
             return {
               ...page,
+              footerBackgroundColor:footerBackgroundColor,
+              headerBackgroundColor:headerBackgroundColor,
               children: updatedSection, // Update only the children of the selected page
             };
           }
@@ -158,6 +278,8 @@ export default function Home() {
         setPages(updatedPages);
         setSelectedPage({
           ...selectedPage,
+          footerBackgroundColor:footerBackgroundColor,
+          headerBackgroundColor:headerBackgroundColor,
           children: updatedSection, // Update the selectedPage's children with the updated section
         });
       }

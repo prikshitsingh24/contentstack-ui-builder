@@ -24,6 +24,7 @@ export default function ImageDesign() {
   
 
   const handleBackgroundColorChange = (newColor: string) => {
+    setColor(newColor);
     // Update background color in the selected item
     setSelected({
       ...selected,
@@ -32,7 +33,68 @@ export default function ImageDesign() {
         backgroundColor: newColor,  // Update background color in the selected item state
       },
     });
-  
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              backgroundColor: newColor,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              backgroundColor: newColor,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
     // Update background color in the selectedPage state
     const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
       const updatedChildren = section.children.map((item: any) => {
@@ -71,6 +133,7 @@ export default function ImageDesign() {
     });
   
     setPages(updatedPages);
+  }
   };
   
 
@@ -95,7 +158,68 @@ export default function ImageDesign() {
               borderRadius:borderRadius,  // Update background color in the selected item state
             },
           });
-        
+          if (selected.id?.slice(0,6)=="header") {
+            const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+              if(selected.id===item.id){
+                return{
+                  ...item,
+                  style: {
+                    ...item.style,
+                    borderRadius: borderRadius,  // Update font size in selectedPage
+                  },
+              }
+            }
+              return item;
+            });
+      
+            setSelectedPage({
+              ...selectedPage,
+              header:updatedSelectedPage
+            })
+      
+            const updatedPages = pages.map((page: any) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+                };
+              }
+              return page;
+            });
+          
+            setPages(updatedPages);
+          
+          }else if(selected.id?.slice(0,6)=="footer"){
+            const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+              if(selected.id===item.id){
+                return{
+                  ...item,
+                  style: {
+                    ...item.style,
+                    borderRadius: borderRadius,  // Update font size in selectedPage
+                  },
+              }
+            }
+              return item;
+            });
+      
+            setSelectedPage({
+              ...selectedPage,
+              footer:updatedSelectedPage
+            })
+      
+            const updatedPages = pages.map((page: any) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+                };
+              }
+              return page;
+            });
+          
+            setPages(updatedPages);
+          }else{
           // Update background color in the selectedPage state
           const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
             const updatedChildren = section.children.map((item: any) => {
@@ -134,6 +258,7 @@ export default function ImageDesign() {
           });
         
           setPages(updatedPages);
+        }
   }
 
   const handleBorderColorChange=(newColor:string)=>{
@@ -145,6 +270,69 @@ export default function ImageDesign() {
               borderColor:newColor,  // Update background color in the selected item state
             },
           });
+
+          if (selected.id?.slice(0,6)=="header") {
+            const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+              if(selected.id===item.id){
+                return{
+                  ...item,
+                  style: {
+                    ...item.style,
+                    borderColor:newColor,  // Update font size in selectedPage
+                  },
+              }
+            }
+              return item;
+            });
+      
+            setSelectedPage({
+              ...selectedPage,
+              header:updatedSelectedPage
+            })
+      
+            const updatedPages = pages.map((page: any) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+                };
+              }
+              return page;
+            });
+          
+            setPages(updatedPages);
+          
+          }else if(selected.id?.slice(0,6)=="footer"){
+            const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+              if(selected.id===item.id){
+                return{
+                  ...item,
+                  style: {
+                    ...item.style,
+                    borderColor:newColor,  // Update font size in selectedPage
+                  },
+              }
+            }
+              return item;
+            });
+      
+            setSelectedPage({
+              ...selectedPage,
+              footer:updatedSelectedPage
+            })
+      
+            const updatedPages = pages.map((page: any) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+                };
+              }
+              return page;
+            });
+          
+            setPages(updatedPages);
+          }else{
         
           // Update background color in the selectedPage state
           const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
@@ -184,8 +372,9 @@ export default function ImageDesign() {
           });
         
           setPages(updatedPages);
+        }
   }
-  
+
   const handleBorderColorTextChange=(e:any)=>{
     setSelected({
       ...selected,
@@ -194,7 +383,68 @@ export default function ImageDesign() {
         borderColor:e.target.value,  // Update background color in the selected item state
       },
     });
-  
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              borderColor:e.target.value,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              borderColor:e.target.value  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
     // Update background color in the selectedPage state
     const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
       const updatedChildren = section.children.map((item: any) => {
@@ -234,6 +484,7 @@ export default function ImageDesign() {
   
     setPages(updatedPages);
   }
+  }
 
   const handleBackgroundColorTextChange=(e:any)=>{
     setSelected({
@@ -243,7 +494,68 @@ export default function ImageDesign() {
         backgroundColor:e.target.value,  // Update background color in the selected item state
       },
     });
-  
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              backgroundColor:e.target.value,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              backgroundColor:e.target.value  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
     // Update background color in the selectedPage state
     const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
       const updatedChildren = section.children.map((item: any) => {
@@ -283,6 +595,8 @@ export default function ImageDesign() {
   
     setPages(updatedPages);
   }
+  }
+
 
   return (
     <div className="grid grid-cols-2 gap-4" onClick={(e)=>handleImageDesignClick(e)}>

@@ -19,8 +19,8 @@ export default function TextDesign() {
 
   const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newFontSize = event.target.value;
-
-    // Update selected item state with new font size
+  
+    // Update the selected item's font size
     setSelected({
       ...selected,
       style: {
@@ -28,212 +28,453 @@ export default function TextDesign() {
         fontSize: newFontSize,  // Update font size in the selected item state
       },
     });
-
-    // Update the font size within selectedPage.children
-    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-      const updatedChildren = section.children.map((item: any) => {
-          // If the item matches, update its font size
-          if (item.id === selected.id) {
-              return {
-                  ...item,
-                  style: {
-                      ...item.style,
-                      fontSize: newFontSize,  // Update font size
-                  },
-              };
-          }
-          // Otherwise, return the item as is
-          return item;
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              fontSize: newFontSize,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
       });
 
-      return {
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              fontSize: newFontSize,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
+      const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+        const updatedChildren = section.children.map((item: any) => {
+          if (item.id === selected.id) {
+            return {
+              ...item,
+              style: {
+                ...item.style,
+                fontSize: newFontSize,  // Update font size in selectedPage
+              },
+            };
+          }
+          return item; // Return other items unchanged
+        });
+    
+        return {
           ...section,
           children: updatedChildren,  // Update section's children with modified items
-      };
-  });
-
-  // Update the selectedPage state with the modified children
-  setSelectedPage({
-      ...selectedPage,
-      children: updatedSelectedPage,  // The updated sections with updated item styles
-  });
-
-  // Now update the pages object with the new font size in the selectedPage
-  const updatedPages = pages.map((page: any) => {
-    // Find the correct page that matches the selectedPage
-    if (page.id === selectedPage.id) {
-        // If we found the correct page, update its children
-        return {
+        };
+      });
+    
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedSelectedPage,
+      });
+    
+      // Update pages if selectedPage exists
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
             ...page,
-            children: updatedSelectedPage,  // Set updated selectedPage as this page's children
-        };
+            children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
     }
-    return page;  // Otherwise, leave the page unchanged
-  });
-
-  // Finally, update the pages state with the updated pages
-  setPages(updatedPages);
-};
-
-const handleFontStyleChange = (style: string) => {
-  // Update the selected item's font style
-  setSelected({
-    ...selected,
-    style: {
-      ...selected.style,
-      fontStyle: style, // Update font style in the selected item state
-    },
-  });
-
-  // Update the font style in the selectedPage
-  const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-    const updatedChildren = section.children.map((item: any) => {
-      if (item.id === selected.id) {
-        return {
-          ...item,
-          style: {
-            ...item.style,
-            fontStyle: style, // Update font style for matching item in selectedPage
-          },
-        };
-      }
-      return item; // Return other items unchanged
+    // Update font size in the selectedPage state
+    
+  };
+  
+  const handleFontStyleChange = (style: string) => {
+    // Update the selected item's font style
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        fontStyle: style,  // Update font style in the selected item state
+      },
     });
 
-    return {
-      ...section,
-      children: updatedChildren, // Update section's children with modified items
-    };
-  });
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              fontStyle: style,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
 
-  // Update the selectedPage state
-  setSelectedPage({
-    ...selectedPage,
-    children: updatedSelectedPage,
-  });
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
 
-  // Update the pages state if selectedPage is part of it
-  const updatedPages = pages.map((page: any) => {
-    if (page.id === selectedPage.id) {
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              fontStyle: style,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
+      // Update font style in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              fontStyle: style,  // Update font style in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
       return {
-        ...page,
-        children: updatedSelectedPage, // Set updated selectedPage as this page's children
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
       };
-    }
-    return page;
-  });
-
-  setPages(updatedPages);
-};
-
-
-const handleFontWeightChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  const newFontWeight = event.target.value;
-
-  // Update the selected item's font weight
-  setSelected({
-    ...selected,
-    style: {
-      ...selected.style,
-      fontWeight: newFontWeight, // Update font weight in the selected item state
-    },
-  });
-
-  // Update the font weight in the selectedPage
-  const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-    const updatedChildren = section.children.map((item: any) => {
-      if (item.id === selected.id) {
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
         return {
-          ...item,
-          style: {
-            ...item.style,
-            fontWeight: newFontWeight, // Update font weight for matching item in selectedPage
-          },
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
         };
       }
-      return item; // Return other items unchanged
+      return page;
     });
-
-    return {
-      ...section,
-      children: updatedChildren, // Update section's children with modified items
-    };
-  });
-
-  // Update the selectedPage state
-  setSelectedPage({
-    ...selectedPage,
-    children: updatedSelectedPage,
-  });
-
-  // Update the pages state if selectedPage is part of it
-  const updatedPages = pages.map((page: any) => {
-    if (page.id === selectedPage.id) {
-      return {
-        ...page,
-        children: updatedSelectedPage, // Set updated selectedPage as this page's children
-      };
+  
+    setPages(updatedPages);
     }
-    return page;
-  });
+  
+    
+  };
+  
 
-  setPages(updatedPages);
-};
+  const handleFontWeightChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newFontWeight = event.target.value;
+  
+    // Update the selected item's font weight
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        fontWeight: newFontWeight,  // Update font weight in the selected item state
+      },
+    });
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              fontWeight: newFontWeight,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
 
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
 
-const handleColorChange = (newColor: string) => {
-  // Update the color state
-  setColor(newColor);
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              fontWeight: newFontWeight,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
 
-  // Update the selected item's color
-  setSelected({
-    ...selected,
-    style: {
-      ...selected.style,
-      color: newColor, // Apply color to the selected item
-    },
-  });
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
 
-  // Update the color in the selectedPage
-  const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-    const updatedChildren = section.children.map((item: any) => {
-      if (item.id === selected.id) {
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
+    // Update font weight in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              fontWeight: newFontWeight,  // Update font weight in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
+      return {
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
+      };
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
         return {
-          ...item,
-          style: {
-            ...item.style,
-            color: newColor, // Update color for matching item in selectedPage
-          },
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
         };
       }
-      return item; // Return other items unchanged
+      return page;
     });
+  
+    setPages(updatedPages);
+  }
+  };
+  
 
-    return {
-      ...section,
-      children: updatedChildren, // Update section's children with modified items
-    };
-  });
+  const handleColorChange = (newColor: string) => {
+    setColor(newColor);
+    // Update color in the selected item
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        color: newColor,  // Update color in the selected item state
+      },
+    });
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              color: newColor,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
 
-  // Update the selectedPage state
-  setSelectedPage({
-    ...selectedPage,
-    children: updatedSelectedPage,
-  });
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
 
-  // Update the pages state if selectedPage is part of it
-  const updatedPages = pages.map((page: any) => {
-    if (page.id === selectedPage.id) {
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              color: newColor,  // Update font size in selectedPage
+            },
+        }
+      }
+        return item;
+      });
+
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
+    // Update color in the selectedPage state
+    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+      const updatedChildren = section.children.map((item: any) => {
+        if (item.id === selected.id) {
+          return {
+            ...item,
+            style: {
+              ...item.style,
+              color: newColor,  // Update color in selectedPage
+            },
+          };
+        }
+        return item; // Return other items unchanged
+      });
+  
       return {
-        ...page,
-        children: updatedSelectedPage, // Set updated selectedPage as this page's children
+        ...section,
+        children: updatedChildren,  // Update section's children with modified items
       };
-    }
-    return page;
-  });
-
-  setPages(updatedPages);
-};
+    });
+  
+    setSelectedPage({
+      ...selectedPage,
+      children: updatedSelectedPage,
+    });
+  
+    // Update pages if selectedPage exists
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
+  }
+  };
 
 const handleColorTextChange=(e:any)=>{
   setSelected({
@@ -243,7 +484,68 @@ const handleColorTextChange=(e:any)=>{
       color:e.target.value,  // Update background color in the selected item state
     },
   });
+  if (selected.id?.slice(0,6)=="header") {
+    const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+      if(selected.id===item.id){
+        return{
+          ...item,
+          style: {
+            ...item.style,
+            color:e.target.value,  // Update font size in selectedPage
+          },
+      }
+    }
+      return item;
+    });
 
+    setSelectedPage({
+      ...selectedPage,
+      header:updatedSelectedPage
+    })
+
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
+  
+  }else if(selected.id?.slice(0,6)=="footer"){
+    const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+      if(selected.id===item.id){
+        return{
+          ...item,
+          style: {
+            ...item.style,
+            color:e.target.value,  // Update font size in selectedPage
+          },
+      }
+    }
+      return item;
+    });
+
+    setSelectedPage({
+      ...selectedPage,
+      footer:updatedSelectedPage
+    })
+
+    const updatedPages = pages.map((page: any) => {
+      if (page.id === selectedPage.id) {
+        return {
+          ...page,
+          footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+        };
+      }
+      return page;
+    });
+  
+    setPages(updatedPages);
+  }else{
   // Update background color in the selectedPage state
   const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
     const updatedChildren = section.children.map((item: any) => {
@@ -282,6 +584,7 @@ const handleColorTextChange=(e:any)=>{
   });
 
   setPages(updatedPages);
+}
 }
   return (
     <div className="grid grid-cols-2 gap-4" onClick={(e)=>handleTextDesignClick(e)}>

@@ -36,10 +36,8 @@ export default function Leftsidebar({data}:any){
     const handleAddSectionClick = () => {
         // Create a new section with a unique id
         const newSection = {
-            id: "section-"+`${uuidv4()}`,
-          headerBackgroundColor:  "#FFFFFF", // Optional, can be modified later
+            id: "section-"+`${uuidv4()}-`,
           contentBackgroundColor: "#FFFFFF",
-          footerBackgroundColor: "#FFFFFF",
           children: [],  // Empty children array, can be filled later
         };
       
@@ -47,6 +45,8 @@ export default function Leftsidebar({data}:any){
             if(page.id === selectedPage.id){
               return{
                 ...page,
+                headerBackgroundColor:  "#FFFFFF",
+                footerBackgroundColor: "#FFFFFF",
                 children:[...page.children || [], newSection]
               }
             }

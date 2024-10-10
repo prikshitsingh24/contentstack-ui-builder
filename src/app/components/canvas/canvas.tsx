@@ -49,7 +49,57 @@ export default function Canvas() {
  
 
   const handleDelete = () => {
-    if (selected.id) {
+    console.log(selected.id?.slice(0,6))
+    if (selected.id?.slice(0,6)=="header") {
+   
+        const updatedChildren = selectedPage?.header?.filter((item: any) => item.id !== selected.id);
+      if(updatedChildren){
+        setSelectedPage({
+          ...selectedPage,
+          header:updatedChildren
+        });
+        const updatedPages = pages.map((page: any) => {
+          if (page.id === selectedPage.id) {
+            return {
+              ...page,
+              header:updatedChildren
+            };
+          }
+          return page;
+        });
+    
+        setPages(updatedPages);
+    
+        // Clear the selected item state
+        setSelected({});
+      }
+  
+
+      
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedChildren = selectedPage?.footer?.filter((item: any) => item.id !== selected.id);
+      if(updatedChildren){
+        setSelectedPage({
+          ...selectedPage,
+          footer:updatedChildren
+        });
+        const updatedPages = pages.map((page: any) => {
+          if (page.id === selectedPage.id) {
+            return {
+              ...page,
+              footer:updatedChildren
+            };
+          }
+          return page;
+        });
+    
+        setPages(updatedPages);
+    
+        // Clear the selected item state
+        setSelected({});
+      }
+    }
+    else{
       // Update selectedPage by filtering out the selected item from its children
       const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
         const updatedChildren = section.children.filter((item: any) => item.id !== selected.id);
@@ -121,9 +171,9 @@ useEffect(() => {
      <div className='h-full w-full'>
      <div className='h-20 grid grid-cols-[0.5fr_3fr_0.5fr]'>
           <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor}}>
-           <Droppable id={`${selectedPage.id}header-column-1`} key={selectedPage.id}>
-           {selectedPage?.footer?.map((item: any) => (
-                 item.over==`${selectedPage.id}header-column-1` && (
+           <Droppable id={`header-column-1`} key={selectedPage.id}>
+           {selectedPage?.header?.map((item: any) => (
+                 item.over==`header-column-1` && (
                    <div
                  key={item.id}
                  style={{
@@ -159,9 +209,9 @@ useEffect(() => {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor}}>
-           <Droppable id={`${selectedPage.id}header-column-2`} key={selectedPage.id}>
-           {selectedPage?.footer?.map((item: any) => (
-                 item.over==`${selectedPage.id}header-column-2` && (
+           <Droppable id={`header-column-2`} key={selectedPage.id}>
+           {selectedPage?.header?.map((item: any) => (
+                 item.over==`header-column-2` && (
                    <div
                  key={item.id}
                  style={{
@@ -197,9 +247,9 @@ useEffect(() => {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor}}>
-           <Droppable id={`${selectedPage.id}header-column-3`} key={selectedPage.id}>
-           {selectedPage?.footer?.map((item: any) => (
-                 item.over==`${selectedPage.id}header-column-3` && (
+           <Droppable id={`header-column-3`} key={selectedPage.id}>
+           {selectedPage?.header?.map((item: any) => (
+                 item.over==`header-column-3` && (
                    <div
                  key={item.id}
                  style={{
@@ -239,9 +289,9 @@ useEffect(() => {
          <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-2 border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
            <div className='h-full w-full grid grid-cols-[0.5fr_3fr_0.5fr]'>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.contentBackgroundColor}}>
-           <Droppable id={`${section.id}content-column-1`} key={section.id}>
+           <Droppable id={`${section.id}-content-column-1`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
-                 item.over==`${section.id}content-column-1` && (
+                 item.over==`${section.id}-content-column-1` && (
                    <div
                  key={item.id}
                  style={{
@@ -277,9 +327,9 @@ useEffect(() => {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor}}>
-           <Droppable id={`${section.id}content-column-2`} key={section.id}>
+           <Droppable id={`${section.id}-content-column-2`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
-                 item.over==`${section.id}content-column-2` && (
+                 item.over==`${section.id}-content-column-2` && (
                    <div
                  key={item.id}
                  style={{
@@ -315,9 +365,9 @@ useEffect(() => {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor}}>
-           <Droppable id={`${section.id}content-column-3`} key={section.id}>
+           <Droppable id={`${section.id}-content-column-3`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
-                 item.over==`${section.id}content-column-3` && (
+                 item.over==`${section.id}-content-column-3` && (
                    <div
                  key={item.id}
                  style={{
@@ -358,9 +408,9 @@ useEffect(() => {
       ))}
       <div className='h-32 w-full grid grid-cols-[0.5fr_3fr_0.5fr] '>
            <div className={` ${gridVisibility?'border-r-2  border-dashed':''} relative`}  style={{backgroundColor:selectedPage.footerBackgroundColor}}>
-           <Droppable id={`${selectedPage.id}footer-column-1`} key={selectedPage.id}>
+           <Droppable id={`footer-column-1`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
-                 item.over==`${selectedPage.id}footer-column-1` && (
+                 item.over==`footer-column-1` && (
                    <div
                  key={item.id}
                  style={{
@@ -396,9 +446,9 @@ useEffect(() => {
            </Droppable>
            </div>
            <div className={` ${gridVisibility?'border-r-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor}}>
-           <Droppable id={`${selectedPage.id}footer-column-2`} key={selectedPage.id}>
+           <Droppable id={`footer-column-2`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
-                 item.over==`${selectedPage.id}footer-column-2` && (
+                 item.over==`footer-column-2` && (
                    <div
                  key={item.id}
                  style={{
@@ -433,9 +483,9 @@ useEffect(() => {
            </Droppable>
            </div>
            <div className='relative' style={{backgroundColor:selectedPage.footerBackgroundColor}}>
-           <Droppable id={`${selectedPage.id}footer-column-3`} key={selectedPage.id}>
+           <Droppable id={`footer-column-3`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
-                 item.over==`${selectedPage.id}footer-column-3` && (
+                 item.over==`footer-column-3` && (
                    <div
                  key={item.id}
                  style={{

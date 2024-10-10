@@ -88,44 +88,110 @@ export function CanvasDraggable(props: any) {
       },
     });
 
-    const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
-      const updatedChildren = section.children.map((item: any) => {
-        if (item.id === props.id) {
+      if (selected.id?.slice(0,6)=="header") {
+        const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+          if(selected.id===item.id){
+            return{
+              ...item,
+              style: {
+                ...item.style,
+                width:newWidth,
+                height:newHeight
+              },
+          }
+        }
+          return item;
+        });
+  
+        setSelectedPage({
+          ...selectedPage,
+          header:updatedSelectedPage
+        })
+  
+        const updatedPages = pages.map((page: any) => {
+          if (page.id === selectedPage.id) {
+            return {
+              ...page,
+              header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+            };
+          }
+          return page;
+        });
+      
+        setPages(updatedPages);
+      
+      }else if(selected.id?.slice(0,6)=="footer"){
+        const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+          if(selected.id===item.id){
+            return{
+              ...item,
+              style: {
+                ...item.style,
+                width:newWidth,
+                height:newHeight
+              },
+          }
+        }
+          return item;
+        });
+  
+        setSelectedPage({
+          ...selectedPage,
+          footer:updatedSelectedPage
+        })
+  
+        const updatedPages = pages.map((page: any) => {
+          if (page.id === selectedPage.id) {
+            return {
+              ...page,
+              footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+            };
+          }
+          return page;
+        });
+      
+        setPages(updatedPages);
+      }else{
+      const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+        const updatedChildren = section.children.map((item: any) => {
+          if (item.id === props.id) {
+            return {
+              ...item,
+              style: {
+                ...item.style,
+                width: newWidth,
+                height: newHeight,
+              },
+            };
+          }
+          return item;
+        });
+  
+        return {
+          ...section,
+          children: updatedChildren,
+        };
+      });
+  
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedSelectedPage,
+      });
+  
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
           return {
-            ...item,
-            style: {
-              ...item.style,
-              width: newWidth,
-              height: newHeight,
-            },
+            ...page,
+            children: updatedSelectedPage,
           };
         }
-        return item;
+        return page;
       });
-
-      return {
-        ...section,
-        children: updatedChildren,
-      };
-    });
-
-    setSelectedPage({
-      ...selectedPage,
-      children: updatedSelectedPage,
-    });
-
-    const updatedPages = pages.map((page: any) => {
-      if (page.id === selectedPage.id) {
-        return {
-          ...page,
-          children: updatedSelectedPage,
-        };
-      }
-      return page;
-    });
-
-    setPages(updatedPages);
-  };
+  
+      setPages(updatedPages);
+    };
+    }
+    
 
   return (
     <>
