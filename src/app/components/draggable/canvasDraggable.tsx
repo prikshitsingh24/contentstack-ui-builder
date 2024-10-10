@@ -7,6 +7,10 @@ import { Resizable } from 're-resizable';
 import pageState from '@/app/states/pageState';
 import contextMenuState from '@/app/states/contextMenuState';
 
+const ResizeHandle = ({ className }:any) => (
+  <div className={`resize-handle ${className}`} />
+);
+
 export function CanvasDraggable(props: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const widthWithUnit = props.data.style?.width;
@@ -191,7 +195,7 @@ export function CanvasDraggable(props: any) {
       setPages(updatedPages);
     };
     }
-    
+    const handleClasses = "absolute w-3 h-3 bg-white border-2 border-blue-500 rounded-full";
 
   return (
     <>
@@ -201,7 +205,7 @@ export function CanvasDraggable(props: any) {
         </button>
       ) : (
         isResizingMode ? (
-          <div style={{border:'2px solid red',height:height+3,width:width+3}}>
+          <div style={{border:'2px solid blue',height:height+3,width:width+3}}>
             <Resizable
             size={{ width: width, height: height }}
             onResize={onResize} // Real-time resize handler
@@ -211,6 +215,22 @@ export function CanvasDraggable(props: any) {
             }}
             minWidth={50} // Minimum width to prevent the box from resizing too small
             minHeight={50} // Minimum height to prevent the box from resizing too small
+            handleStyles={{
+              topRight: { zIndex: 10 },
+              bottomRight: { zIndex: 10 },
+              bottomLeft: { zIndex: 10 },
+              topLeft: { zIndex: 10 },
+            }}
+            handleComponent={{
+              topRight: <div className={`${handleClasses} top-0 right-0 cursor-ne-resize`} />,
+              bottomRight: <div className={`${handleClasses} -bottom-0 -right-0 cursor-se-resize`} />,
+              bottomLeft: <div className={`${handleClasses} -bottom-0 -left-0 cursor-sw-resize`} />,
+              topLeft: <div className={`${handleClasses} -top-0 -left-0 cursor-nw-resize`} />,
+              top: <div className={`${handleClasses} -top-2 left-1/2 -translate-x-1/2 cursor-n-resize`} />,
+              right: <div className={`${handleClasses} -right-2 top-1/2 -translate-y-1/2 cursor-e-resize`} />,
+              bottom: <div className={`${handleClasses} -bottom-2 left-1/2 -translate-x-1/2 cursor-s-resize`} />,
+              left: <div className={`${handleClasses} -left-2 top-1/2 -translate-y-1/2 cursor-w-resize`} />,
+            }}
           >
             <div>
               {props.children}

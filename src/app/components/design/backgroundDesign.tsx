@@ -191,7 +191,7 @@ export default function BackgroundDesign() {
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.contentBackgroundColor  || ""} onChange={handleContentBackgroundChange}/>
+                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.contentBackgroundColor} onChange={handleContentBackgroundChange}/>
             </div>
         </div>
         </div>
