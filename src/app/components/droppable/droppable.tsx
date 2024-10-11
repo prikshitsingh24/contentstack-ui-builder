@@ -12,7 +12,8 @@ export function Droppable(props: any) {
 
   const style = {
     height: '100%', // Ensure the height is 100% of the parent container
-    width:'100%'
+    width:'100%',
+    backgroundColor:isOver?'#F9EBA0':''
   };
 
   return (

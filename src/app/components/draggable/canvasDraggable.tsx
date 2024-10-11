@@ -205,7 +205,7 @@ export function CanvasDraggable(props: any) {
       setPages(updatedPages);
     };
     }
-    const handleClasses = "absolute w-3 h-3 bg-white border-2 border-blue-500 rounded-full";
+    const handleClasses = "absolute w-3 h-3 bg-white border-2 border-red-400 rounded-full";
 
   return (
     <>
@@ -215,7 +215,7 @@ export function CanvasDraggable(props: any) {
         </button>
       ) : (
         isResizingMode ? (
-          <div style={{border:'2px solid blue',height:height+3,width:width+3}}>
+          <div style={{border:'2px solid red',height:height+3,width:width+3}}>
             <Resizable
             size={{ width: width, height: height }}
             onResize={onResize} // Real-time resize handler

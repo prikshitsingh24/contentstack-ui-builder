@@ -43,8 +43,9 @@ export default function Leftsidebar({data}:any){
 
     const handleAddSectionClick = () => {
         // Create a new section with a unique id
+        const sectionId="section-"+`${uuidv4()}-`;
         const newSection = {
-            id: "section-"+`${uuidv4()}-`,
+            id: sectionId,
           contentBackgroundColor: "#FFFFFF",
           children: [],  // Empty children array, can be filled later
         };
@@ -124,9 +125,6 @@ export default function Leftsidebar({data}:any){
                       </div></Draggable></div>
                 )
             })}
-            {/* <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="text" data={"Text"}><div className="w-full ">Text</div></Draggable></div>
-            <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="image" data={"Image"}><div className="w-full ">Image</div></Draggable></div>
-            <div className="mb-3 hover:cursor-pointer w-full"><Draggable id="button" data={"Button"}><div className="w-full ">Button</div></Draggable></div> */}
             </div>
             </div>
             </div>

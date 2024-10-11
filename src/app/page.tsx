@@ -196,9 +196,7 @@ export default function Home() {
             } else {
               // The item doesn't exist, create a new one and add it to section's children
               const updatedId = id + `-${uuidv4()}`;
-              console.log(id)
               if(id==="image"){
-                console.log("asdfdf")
                 return {
                   ...section,
                   children: [
