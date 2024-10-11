@@ -318,46 +318,72 @@ export default function Rightsidebar(){
                 )}
                 </div>
             
-            {content &&(
-                  <div className="w-full mt-5 h-72 border-2 border-gray-500 overflow-y-scroll">
-                {Object.entries(content).map(([key, value]: any) => {
-                    // If the key starts with "image", handle it separately
+                {content && (
+                <div  className={`w-full mt-5 h-72 border-2 border-gray-300 overflow-y-scroll bg-white rounded-lg shadow-md transition-opacity duration-300 ease-in-out ${
+                  !selected.id ? "cursor-not-allowed bg-gray-200 text-gray-500 opacity-60 " : ""
+                }`}>
+                  {Object.entries(content).map(([key, value]: any) => {
+                    
+                    // Handle images separately (if key starts with "image")
                     if (key.startsWith("image")) {
-                        return (
-                            <div
-                                key={key}
-                                className="border-b-2 h-auto pl-2 font-sans font-semibold cursor-pointer hover:bg-gray-200 transition-colors duration-300"
-                                onClick={() =>  handleInsertImageOnClick(value.url)}
-                            >
-                                {renderImage(value)}
+                      return (
+                        <div
+                          key={key}
+                          className="border-b-2 h-auto pl-4 py-3 cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+                          onClick={() => handleInsertImageOnClick(value.url)}
+                        >
+                          <div className="flex items-center space-x-4">
+                            {/* Image Thumbnail */}
+                            <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
+                              {value.url ? (
+                                <img src={value.url} alt="Preview" className="object-cover w-full h-full" />
+                              ) : (
+                                <span className="text-gray-400">No image available</span>
+                              )}
                             </div>
-                        );
+                            {/* Image Info */}
+                            <div className="flex flex-col">
+                              <p className="font-sans font-semibold text-base text-gray-800">Image: {(value.title).slice(0,20)}...</p>
+                              {selected.id && (
+                                <span className="text-gray-500 font-sans font-semibold  text-sm">Click to insert</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
                     }
 
                     // Skip rendering if the key is "uid"
                     if (key === "uid") {
-                        return null;
+                      return null;
                     }
 
-                    // For other content types
+                    // For other content types (text or numbers)
                     return (
-                        <div
-                            key={key}
-                            className="border-b-2 h-auto pl-2 font-sans font-semibold cursor-pointer hover:bg-gray-200 transition-colors duration-300"
-                            onClick={() => handleInsertTextOnClick(value)}
-                        >
-                            {typeof value === 'string' || typeof value === 'number' ? (
-                                <p>
-                                    {typeof value === 'string' ? sliceText(value, 8) : value}
-                                </p>
-                            ) : (
-                                <div></div>
+                      <div
+                        key={key}
+                        className="border-b-2 h-auto pl-4 py-3 cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+                        onClick={() => handleInsertTextOnClick(value)}
+                      >
+                        <div className="flex items-center space-x-4">
+                          {/* Content Info */}
+                          <div className="flex flex-col">
+                            <p className="font-semibold font-sans text-gray-800">
+                              {typeof value === "string"
+                                ? sliceText(value, 8)
+                                : "No preview"}
+                            </p>
+                            {selected.id&&(
+                              <span className="text-gray-500 font-sans font-semibold text-sm">Click to insert</span>
                             )}
+                          </div>
                         </div>
+                      </div>
                     );
-                })}
+                  })}
                 </div>
-            )}
+              )}
+
        
 
                 </div>
