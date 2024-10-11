@@ -67,12 +67,22 @@ export function CanvasDraggable(props: any) {
     if (selected && selected.id === props.id) {
       setSelected({ id: '', type: '', content: '' });
     } else {
-      setSelected({
-        id: props.id,
-        type: props.data.type,
-        content: props.data.content,
-        style: props.data.style,
-      });
+      console.log((props.id).slice(0,5))
+      if((props.id).slice(0,5)==="image"){
+        setSelected({
+          id: props.id,
+          type: props.data.type,
+          src:props.src,
+          style: props.data.style,
+        });
+      }else{
+        setSelected({
+          id: props.id,
+          type: props.data.type,
+          content: props.data.content,
+          style: props.data.style,
+        });
+      }
     }
   };
 

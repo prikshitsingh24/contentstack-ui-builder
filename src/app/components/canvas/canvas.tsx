@@ -163,14 +163,14 @@ useEffect(() => {
   }
 
   return (
-    <div className='w-full h-full overflow-y-scroll border-4 rounded-md '>
+    <div className='w-full h-full overflow-y-scroll border-2 rounded-md '>
       {contextMenu && (
         <div style={{position:'fixed',left:`${positionX}px`,top:`${positionY}px`,zIndex:'100'}}>
           <ContextMenu onDelete={handleDelete} onResize={handleResizeClick} ></ContextMenu>
           </div>
       )}
      <div className='h-full w-full'>
-     <div className='h-20 grid grid-cols-[0.5fr_3fr_0.5fr]'>
+     <div className='h-24 grid grid-cols-[0.5fr_3fr_0.5fr]'>
           <div className={` ${gridVisibility?`border-r-2 border-b-2 border-dashed`:''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`header-column-1`} key={selectedPage.id}>
            {selectedPage?.header?.map((item: any) => (
@@ -201,7 +201,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -239,7 +239,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -277,7 +277,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -319,7 +319,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -357,7 +357,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                    {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -395,7 +395,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                     {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -438,7 +438,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -475,7 +475,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>
@@ -513,7 +513,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img style={item.style}></img>
+                    <img src={item.src} style={item.style}></img>
                    )}
                  </CanvasDraggable>
                </div>

@@ -20,6 +20,7 @@ export  interface Content {
     content?: string;
     over?:string;
     style?: Style;
+    src?:string;
     
   }
   

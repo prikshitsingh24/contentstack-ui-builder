@@ -2,6 +2,7 @@
 
 import { getAllContentTypes, getAllEntries } from "@/app/helper/indext";
 import canvasState from "@/app/states/canvasState";
+import pageState from "@/app/states/pageState";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import BackgroundDesign from "../design/backgroundDesign";
@@ -15,7 +16,9 @@ export default function Rightsidebar(){
     const [selected,setSelected]=useRecoilState(canvasState.selectedItemState);
     const [contentTypes,setContentTypes]=useState<any>([]);
     const [selectedContentType, setSelectedContentType] = useState<string>("");
-    const [content,setContent]=useState()
+    const [content,setContent]=useState<any>();
+    const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
+    const [pages,setPages]=useRecoilState(pageState.pageState);
 
     async function fetchContentTypes() {
         try {
@@ -23,7 +26,8 @@ export default function Rightsidebar(){
           if (!response) throw new Error('Status code 404');
           if(response){
             console.log(response)
-            setContentTypes(response.content_types)
+            setContentTypes(response.content_types);
+
           }
         } catch (error) {
           console.error(error);
@@ -55,6 +59,212 @@ export default function Rightsidebar(){
         }
         
       },[selectedContentType])
+
+      const handleInsertTextOnClick=(value:string)=>{
+        setSelected({
+          ...selected,
+          content:value
+        })
+        if (selected.id?.slice(0,6)=="header") {
+          const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+            if(selected.id===item.id){
+              return{
+                ...item,
+                content:value
+            }
+          }
+            return item;
+          });
+    
+          setSelectedPage({
+            ...selectedPage,
+            header:updatedSelectedPage
+          })
+    
+          const updatedPages = pages.map((page: any) => {
+            if (page.id === selectedPage.id) {
+              return {
+                ...page,
+                header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+              };
+            }
+            return page;
+          });
+        
+          setPages(updatedPages);
+        
+        }else if(selected.id?.slice(0,6)=="footer"){
+          const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+            if(selected.id===item.id){
+              return{
+                ...item,
+                content:value
+            }
+          }
+            return item;
+          });
+    
+          setSelectedPage({
+            ...selectedPage,
+            footer:updatedSelectedPage
+          })
+    
+          const updatedPages = pages.map((page: any) => {
+            if (page.id === selectedPage.id) {
+              return {
+                ...page,
+                footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+              };
+            }
+            return page;
+          });
+        
+          setPages(updatedPages);
+        }else{
+        const updatedItems=selectedPage?.children?.map((section)=>{
+          const updatedChildren=section?.children?.map((item)=>{
+            if(selected.id===item.id){
+              return {
+                ...item,
+                content:value
+              }
+            }
+            return item
+          })
+          return {
+            ...section,
+            children: updatedChildren,  // Update section's children with modified items
+          };
+        })
+         
+
+        setSelectedPage({
+          ...selectedPage,
+          children:updatedItems
+        })
+
+        const updatePages=pages.map((item)=>{
+          if(selectedPage.id===item.id){
+            return {
+              ...item,
+              children:updatedItems
+            }
+          }
+          return item
+        })
+
+        setPages(updatePages)
+      }
+        
+      }
+
+      const handleInsertImageOnClick=(imageUrl:string)=>{
+        setSelected({
+          ...selected,
+          src:imageUrl
+        })
+        if (selected.id?.slice(0,6)=="header") {
+          const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+            if(selected.id===item.id){
+              return{
+                ...item,
+                src:imageUrl
+            }
+          }
+            return item;
+          });
+    
+          setSelectedPage({
+            ...selectedPage,
+            header:updatedSelectedPage
+          })
+    
+          const updatedPages = pages.map((page: any) => {
+            if (page.id === selectedPage.id) {
+              return {
+                ...page,
+                header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+              };
+            }
+            return page;
+          });
+        
+          setPages(updatedPages);
+        
+        }else if(selected.id?.slice(0,6)=="footer"){
+          const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+            if(selected.id===item.id){
+              return{
+                ...item,
+                src:imageUrl
+            }
+          }
+            return item;
+          });
+    
+          setSelectedPage({
+            ...selectedPage,
+            footer:updatedSelectedPage
+          })
+    
+          const updatedPages = pages.map((page: any) => {
+            if (page.id === selectedPage.id) {
+              return {
+                ...page,
+                footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+              };
+            }
+            return page;
+          });
+        
+          setPages(updatedPages);
+        }else{
+        const updatedItems=selectedPage?.children?.map((section)=>{
+          const updatedChildren=section?.children?.map((item)=>{
+            if(selected.id===item.id){
+              return {
+                ...item,
+                src:imageUrl
+              }
+            }
+            return item
+          })
+          return {
+            ...section,
+            children: updatedChildren,  // Update section's children with modified items
+          };
+        })
+         
+
+        setSelectedPage({
+          ...selectedPage,
+          children:updatedItems
+        })
+
+        const updatePages=pages.map((item)=>{
+          if(selectedPage.id===item.id){
+            return {
+              ...item,
+              children:updatedItems
+            }
+          }
+          return item
+        })
+
+        setPages(updatePages)
+      }
+      }
+
+      function sliceText(text: string, wordLimit: number) {
+        const words = text.split(' '); // Split the string into words
+    
+        // If the word count exceeds the limit, slice and add ellipsis
+        if (words.length > wordLimit) {
+            return words.slice(0, wordLimit).join(' ') + '...';
+        } else {
+            return text; // Return the full text if it's within the word limit
+        }
+    }
 
     return(
         <div className="grid grid-rows-[1.2fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
@@ -107,11 +317,63 @@ export default function Rightsidebar(){
                     <div></div>
                 )}
                 </div>
-                <div className="w-full mt-5 h-72 border-2 border-gray-500 overflow-y-scroll">
-                        
+            
+            {content &&(
+                  <div className="w-full mt-5 h-72 border-2 border-gray-500 overflow-y-scroll">
+                {Object.entries(content).map(([key, value]: any) => {
+                    // If the key starts with "image", handle it separately
+                    if (key.startsWith("image")) {
+                        return (
+                            <div
+                                key={key}
+                                className="border-b-2 h-auto pl-2 font-sans font-semibold cursor-pointer hover:bg-gray-200 transition-colors duration-300"
+                                onClick={() =>  handleInsertImageOnClick(value.url)}
+                            >
+                                {renderImage(value)}
+                            </div>
+                        );
+                    }
+
+                    // Skip rendering if the key is "uid"
+                    if (key === "uid") {
+                        return null;
+                    }
+
+                    // For other content types
+                    return (
+                        <div
+                            key={key}
+                            className="border-b-2 h-auto pl-2 font-sans font-semibold cursor-pointer hover:bg-gray-200 transition-colors duration-300"
+                            onClick={() => handleInsertTextOnClick(value)}
+                        >
+                            {typeof value === 'string' || typeof value === 'number' ? (
+                                <p>
+                                    {typeof value === 'string' ? sliceText(value, 8) : value}
+                                </p>
+                            ) : (
+                                <div></div>
+                            )}
+                        </div>
+                    );
+                })}
                 </div>
+            )}
+       
+
                 </div>
             </div>
         </div>
     );
+}
+
+function renderImage(value: any) {
+  if (typeof value === 'object' && value?.url) {
+      return (
+          <div className="p-2">
+              <img src={value.url} alt="image content" className="w-32 h-32" />
+          </div>
+      );
+  } else {
+      return <div className="p-2">Image URL not available</div>;
+  }
 }

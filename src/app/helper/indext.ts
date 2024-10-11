@@ -8,8 +8,7 @@ export const getAllEntries = async (contentType:string): Promise<any> => {
       referenceFieldPath: undefined,
       jsonRtePath: undefined,
     }));
-      console.log("asdfdaf",response)
-    return response[0];
+    return response[0]['0'];
   };
 
   export const getAllContentTypes = async () => {

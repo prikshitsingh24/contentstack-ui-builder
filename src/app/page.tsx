@@ -196,20 +196,39 @@ export default function Home() {
             } else {
               // The item doesn't exist, create a new one and add it to section's children
               const updatedId = id + `-${uuidv4()}`;
-              return {
-                ...section,
-                children: [
-                  ...section.children,
-                  {
-                    id: updatedId,
-                    type: content.type,
-                    content: content.content,
-                    over: event.over.id,
-                    style: content.style,
-                    position, // Set position for new item
-                  },
-                ],
-              };
+              console.log(id)
+              if(id==="image"){
+                console.log("asdfdf")
+                return {
+                  ...section,
+                  children: [
+                    ...section.children,
+                    {
+                      id: updatedId,
+                      type: content.type,
+                      src:" ",
+                      over: event.over.id,
+                      style: content.style,
+                      position, // Set position for new item
+                    },
+                  ],
+                };
+              }else{
+                return {
+                  ...section,
+                  children: [
+                    ...section.children,
+                    {
+                      id: updatedId,
+                      type: content.type,
+                      content: content.content,
+                      over: event.over.id,
+                      style: content.style,
+                      position, // Set position for new item
+                    },
+                  ],
+                };
+              }
             }
         });
     
