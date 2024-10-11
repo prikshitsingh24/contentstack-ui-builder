@@ -2,7 +2,7 @@
 import Canvas from "./components/canvas/canvas";
 import Leftsidebar from "./components/leftsidebar/leftsidebar";
 import Rightsidebar from "./components/rightsidebar/rightsidebar";
-import data from "../../data.json";
+import data from "../../data.json"
 import { useEffect, useRef, useState } from "react";
 import {DndContext} from '@dnd-kit/core';
 import { v4 as uuidv4 } from 'uuid';

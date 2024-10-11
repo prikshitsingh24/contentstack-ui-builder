@@ -13,6 +13,11 @@ import pagesLogo from "../../images/pagesLogo.png";
 import exportLogo from "../../images/exportLogo.png";
 import addSectionLogo from "../../images/addSectionLogo.png"
 import Image from "next/image";
+import textLogo from "../../images/textLogo.png";
+import buttonLogo from "../../images/buttonLogo.png";
+import inputLogo from "../../images/inputLogo.png";
+import imageLogo from "../../images/imageLogo.png";
+
 
 export default function Leftsidebar({data}:any){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -21,7 +26,6 @@ export default function Leftsidebar({data}:any){
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
-
 
     async function fetchData() {
       try {
@@ -90,20 +94,33 @@ export default function Leftsidebar({data}:any){
         <div className="grid grid-rows-[3fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
             <div className=" h-full grid grid-rows-[0.5fr_3fr]" >
             <div className="pl-3 pr-3 pt-5">
-                <div className="text-3xl font-sans font-semibold ">
+                <div className="text-3xl font-sans font-bold ">
                 Add elements
                 </div>
                 <div className="mt-5">
                 <input type="text" className="border border-gray-500 rounded-xl p-2 focus:outline-none" placeholder="Search" />
                 </div>
             </div>
-            <div className="flex flex-col overflow-y-scroll  border-gray-400 mt-2   h-full pl-3 pt-3">
-              <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col overflow-y-scroll  border-gray-400 mt-2  h-full pl-3 pt-3">
+              <div className="grid grid-cols-2 gap-x-4">
             {data.map((item:any)=>{
                 return (
-                    <div className="mb-3 hover:cursor-pointer w-full " key={item.id}><Draggable id={item.id} data={item}><div className="w-full h-28 border-2 border-gray-500 p-2 rounded-md shadow-md flex flex-col items-start">
-                      <div className="w-full h-20 border-2 rounded-xl">hi</div>
-                     <div className="flex flex-row w-full justify-center items-center font-sans"> {item.type}</div>
+                    <div className="mb-3 hover:cursor-pointer w-full " key={item.data.id}><Draggable id={item.data.id} data={item.data}><div className="w-full h-24 border-2 border-gray-500 p-2 rounded-md shadow-md flex flex-col items-start">
+                      <div className="w-full h-14 flex items-center justify-center">
+                        {item.icon==="text"&&(
+                          <Image src={textLogo} alt={"icon"} className="w-14 h-14"/>
+                        )}
+                         {item.icon==="button"&&(
+                          <Image src={buttonLogo} alt={"icon"} className="w-14 h-14"/>
+                        )}
+                         {item.icon==="input"&&(
+                          <Image src={inputLogo} alt={"icon"} className="w-14 h-14"/>
+                        )}
+                         {item.icon==="image"&&(
+                          <Image src={imageLogo} alt={"icon"} className="w-14 h-14"/>
+                        )}
+                      </div>
+                     <div className="flex flex-row w-full justify-center items-center font-sans"> {item.data.type}</div>
                       </div></Draggable></div>
                 )
             })}
