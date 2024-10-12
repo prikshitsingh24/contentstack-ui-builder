@@ -13,6 +13,7 @@ import AddPages from "./components/addPages/addPages";
 import addPage from "./states/addPage";
 import pageState from "./states/pageState";
 import sectionState from "./states/sectionState";
+import builderState from "./states/builderState";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -30,6 +31,8 @@ export default function Home() {
   const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
   const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+  const [preview,setPreview]=useRecoilState(builderState.previewState)
+  const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   
     const [
       mousePosition,
@@ -303,24 +306,44 @@ export default function Home() {
       
     }, [headerBackgroundColor,contentBackgroundColor,footerBackgroundColor])
     
-  return (
-    <DndContext onDragEnd={handleDragEnd} >
-      <div className="grid grid-cols-[1fr_6fr_1.5fr] gap-3 h-screen overflow-hidden">
-        {/* Left sidebar with draggable items */}
-        <div>
-          <Leftsidebar data={ui}/>
-          {addPagePanel &&(
-            <div className="h-full fixed bottom-0 left-60 z-20 "><AddPages></AddPages></div>
-          )}
-        </div>
-        {/* Canvas to drop the item */}
-        <div className="mt-2 w-full max-h-fit overflow-hidden">
-          <Canvas/>
-        </div>
-        <div>
-          <Rightsidebar />
-        </div>
-      </div>
-      </DndContext>
-  );
+    const handleBackToEditorClick=()=>{
+      setPreview(false);
+      setGridVisibility(true);
+    }
+
+    if (preview) {
+      return (
+        <DndContext onDragEnd={handleDragEnd}>
+          <div className="h-screen overflow-hidden">
+            <div className="flex flex-row justify-end">
+              <div className="mr-10 text-blue-600 pt-2 cursor-pointer" onClick={handleBackToEditorClick}>Back to editor</div>
+            </div>
+            <div className="mt-2 w-full h-full overflow-hidden">
+              <Canvas />
+            </div>
+          </div>
+        </DndContext>
+      );
+    } else {
+      return (
+        <DndContext onDragEnd={handleDragEnd}>
+          <div className="grid grid-cols-[1fr_6fr_1.5fr] gap-3 h-screen overflow-hidden">
+            <div className="transition-all duration-300 ease-in-out">
+              <Leftsidebar data={ui} />
+              {addPagePanel && (
+                <div className="h-full fixed bottom-0 left-60 z-20 transition-all duration-300 ease-in-out">
+                  <AddPages />
+                </div>
+              )}
+            </div>
+            <div className="mt-2 w-full max-h-fit overflow-hidden transition-all duration-300 ease-in-out">
+              <Canvas />
+            </div>
+            <div className="transition-all duration-300 ease-in-out">
+              <Rightsidebar />
+            </div>
+          </div>
+        </DndContext>
+      );
+    }
 }

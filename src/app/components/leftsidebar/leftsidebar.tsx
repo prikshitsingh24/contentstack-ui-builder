@@ -17,7 +17,8 @@ import textLogo from "../../images/textLogo.png";
 import buttonLogo from "../../images/buttonLogo.png";
 import inputLogo from "../../images/inputLogo.png";
 import imageLogo from "../../images/imageLogo.png";
-
+import previewLogo from "../../images/previewLogo.png";
+import builderState from "@/app/states/builderState";
 
 export default function Leftsidebar({data}:any){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -26,6 +27,9 @@ export default function Leftsidebar({data}:any){
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
+    const [preview,setPreview]=useRecoilState(builderState.previewState)
+    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+    const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
 
     async function fetchData() {
       try {
@@ -91,8 +95,14 @@ export default function Leftsidebar({data}:any){
         // Cleanup: Revoke the object URL after the download
         URL.revokeObjectURL(url);
       };
+
+      const handlePreviewClick=()=>{
+        setSelectedSection({});
+        setGridVisibility(false);
+        setPreview(!preview);
+      }
     return(
-        <div className="grid grid-rows-[3fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
+        <div className="grid grid-rows-[2fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
             <div className=" h-full grid grid-rows-[0.5fr_3fr]" >
             <div className="pl-3 pr-3 pt-5">
                 <div className="text-3xl font-sans font-bold ">
@@ -140,6 +150,10 @@ export default function Leftsidebar({data}:any){
                 <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-red-700/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={exportToJson}>
                 <div className="mr-4"><Image src={exportLogo} alt="cross" className="w-7"></Image></div>
                   Export
+                  </div>
+                  <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-blue-700/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={handlePreviewClick}>
+                <div className="mr-4"><Image src={previewLogo} alt="cross" className="w-7"></Image></div>
+                  Preview
                   </div>
             </div>
         </div>

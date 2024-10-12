@@ -33,6 +33,8 @@ export default function Canvas() {
   const [positionY,setPositionY]=useState(0);
   const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
 
+
+
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
     // Prevent deselection if clicking on an actual item
     setBackgroundColorPicker(false);
@@ -170,7 +172,7 @@ useEffect(() => {
           </div>
       )}
      <div className='h-full w-full'>
-     <div className='h-24 grid grid-cols-[0.5fr_3fr_0.5fr]'>
+     <div className='min-h-24 grid grid-cols-[0.5fr_3fr_0.5fr]'>
           <div className={` ${gridVisibility?`border-r-2 border-b-2 border-dashed`:''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`header-column-1`} key={selectedPage.id}>
            {selectedPage?.header?.map((item: any) => (
