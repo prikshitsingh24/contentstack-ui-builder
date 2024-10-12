@@ -6,15 +6,17 @@ import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from 'uuid';
 import Image from "next/image";
 import addLogo from "../../images/addLogo.png";
+import builderState from "@/app/states/builderState";
 
 export default function AddPages(){
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [input,setInput]=useState(false);
     const [pageName,setPageName]=useState("");
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
-
+    const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
+    
     const handleAddPageClick=()=>{
-       setInput(true);
+       setNewPage(true);
     }
 
     const handleAddPageName=(e:any)=>{
@@ -46,7 +48,7 @@ export default function AddPages(){
         setSelectedPage(page)
     }
     return(
-        <div className="bg-white w-96 h-full border-2 rounded-xl shadow-md grid grid-rows-[0fr_0.2fr_4fr]">
+        <div className="bg-white w-72 h-full border-2 rounded-xl shadow-md grid grid-rows-[0fr_0.2fr_4fr]">
             <div className="p-2 border-b-2 pt-2 pb-2 font-sans font-semibold">
                 Site pages and menu
             </div>

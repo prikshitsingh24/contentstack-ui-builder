@@ -14,6 +14,7 @@ import addPage from "./states/addPage";
 import pageState from "./states/pageState";
 import sectionState from "./states/sectionState";
 import builderState from "./states/builderState";
+import AddPageContainer from "./components/addPageContainer/addPageContainer";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -34,6 +35,7 @@ export default function Home() {
   const [preview,setPreview]=useRecoilState(builderState.previewState)
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
+  const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
     const [
       mousePosition,
       setMousePosition
@@ -253,25 +255,9 @@ export default function Home() {
       }
     };
 
+
+
     useEffect(()=>{
-      if(pages.length==0){
-        const updatedSection = {
-          id: "section-"+`${uuidv4()}`,
-          contentBackgroundColor:contentBackgroundColor,
-          children: droppedItems,
-        };
-      
-        const updatedPage={
-          id:"page-"+"home",
-          headerBackgroundColor:headerBackgroundColor,
-          footerBackgroundColor:footerBackgroundColor,
-          header:droppedItems,
-          footer:droppedItems,
-          children:[updatedSection]
-        }
-        setPages([updatedPage])
-        setSelectedPage(updatedPage);
-      }else{
         const updatedSection= selectedPage.children?.map((section,index)=>{
           if(section.id===selectedSection.id){
             return {
@@ -302,7 +288,7 @@ export default function Home() {
           headerBackgroundColor:headerBackgroundColor,
           children: updatedSection, // Update the selectedPage's children with the updated section
         });
-      }
+  
       
     }, [headerBackgroundColor,contentBackgroundColor,footerBackgroundColor])
     
@@ -345,8 +331,8 @@ export default function Home() {
     if (preview) {
       return (
           <div className="h-screen overflow-hidden">
-            <div className="flex flex-row justify-end shadow-[1px_1px_5px_grey]">
-              <div className="mr-10 mb-2 text-blue-600 pt-2 cursor-pointer " onClick={handleBackToEditorClick}>Back to editor</div>
+            <div className="flex h-12 pt-3 flex-row justify-end shadow-[1px_1px_5px_grey]">
+              <div className="mr-10 text-blue-600  cursor-pointer " onClick={handleBackToEditorClick}>Back to editor</div>
             </div>
             <div className="mt-2 ml-2 pr-2 w-full h-full overflow-hidden">
               <Canvas />
@@ -357,6 +343,9 @@ export default function Home() {
     } else if( !selectedSection.id && !selected.id ){
       return (
        <div className="h-screen overflow-hidden">
+        {newPage && (
+          <AddPageContainer></AddPageContainer>
+        )}
         <div className="w-full h-12 pt-3 shadow-[1px_3px_10px_grey]">
           <div className="flex flex-row justify-end mr-20 font-sans">
           <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
@@ -369,7 +358,7 @@ export default function Home() {
             <div className="fixed w-52 left-0 z-30 bg-white bottom-0 top-14 transition-all duration-300 ease-in-out">
             <Leftsidebar data={ui} />
             {addPagePanel && (
-              <div className="h-full fixed bottom-0 left-60 z-20 transition-all duration-300 ease-in-out">
+              <div className="h-full fixed bottom-20 top-14 left-52 z-20 transition-all duration-300 ease-in-out">
                 <AddPages />
               </div>
             )}
@@ -385,7 +374,7 @@ export default function Home() {
     }else {
       return (
         <div className="h-screen overflow-hidden">
-        <div className="w-full h-12 z-20 pt-2 shadow-[1px_3px_10px_grey]">
+        <div className="w-full h-12 z-20 pt-3 shadow-[1px_3px_10px_grey]">
           <div className="flex flex-row justify-end mr-20 font-sans cursor-pointer">
           <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
             <div className="mr-5 cursor-pointer" onClick={handlePreviewClick}>Preview</div>

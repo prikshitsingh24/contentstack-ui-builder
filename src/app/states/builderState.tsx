@@ -6,5 +6,9 @@ const previewState = atom({
     default: false,  // Set an empty array as the default state
   });
 
+const newPageState=atom({
+  key:'newPageState',
+  default:true
+})
 
-export default {previewState}
+export default {previewState,newPageState}
