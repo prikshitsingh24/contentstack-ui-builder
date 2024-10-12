@@ -31,20 +31,6 @@ export default function Leftsidebar({data}:any){
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
     const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
 
-    async function fetchData() {
-      try {
-        const response = await getAllEntries("components");
-        if (!response) throw new Error('Status code 404');
-        console.log(response)
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  
-    useEffect(() => {
-      fetchData();
-    }, []);
-
     const handleAddSectionClick = () => {
         // Create a new section with a unique id
         const sectionId="section-"+`${uuidv4()}-`;
@@ -58,8 +44,6 @@ export default function Leftsidebar({data}:any){
             if(page.id === selectedPage.id){
               return{
                 ...page,
-                headerBackgroundColor:  "#FFFFFF",
-                footerBackgroundColor: "#FFFFFF",
                 children:[...page.children || [], newSection]
               }
             }
@@ -76,59 +60,36 @@ export default function Leftsidebar({data}:any){
       const handleAddPageClick=()=>{
         setAddPagePanel(!addPagePanel);
       }
-      const exportToJson = () => {
-        // Step 1: Convert the `pages` array to a JSON string
-        const jsonString = JSON.stringify(pages, null, 2);  // `null, 2` is used for pretty-printing the JSON
-      
-        // Step 2: Create a Blob containing the JSON string
-        const blob = new Blob([jsonString], { type: 'application/json' });
-      
-        // Step 3: Create a download link (anchor element)
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'pages.json';  // Name the file "pages.json" when downloading
-      
-        // Step 4: Programmatically trigger the download by clicking the anchor element
-        a.click();
-      
-        // Cleanup: Revoke the object URL after the download
-        URL.revokeObjectURL(url);
-      };
 
-      const handlePreviewClick=()=>{
-        setSelectedSection({});
-        setGridVisibility(false);
-        setPreview(!preview);
-      }
+  
     return(
         <div className="grid grid-rows-[2fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
             <div className=" h-full grid grid-rows-[0.5fr_3fr]" >
             <div className="pl-3 pr-3 pt-5">
-                <div className="text-3xl font-sans font-bold ">
+                <div className="text-2xl font-sans font-bold ">
                 Add elements
                 </div>
                 <div className="mt-5">
-                <input type="text" className="border border-gray-500 rounded-xl p-2 focus:outline-none" placeholder="Search" />
+                <input type="text" className="border border-gray-500 rounded-xl w-full p-2 focus:outline-none" placeholder="Search" />
                 </div>
             </div>
-            <div className="flex flex-col overflow-y-scroll  border-gray-400 mt-2  h-full pl-3 pt-3">
+            <div className="flex flex-col overflow-y-scroll w-fit border-gray-400 mt-2 h-full pl-3 pt-3">
               <div className="grid grid-cols-2 gap-x-4">
             {data.map((item:any)=>{
                 return (
-                    <div className="mb-3 hover:cursor-pointer w-full " key={item.data.id}><Draggable id={item.data.id} data={item.data}><div className="w-full h-24 border-2 border-gray-500 p-2 rounded-md shadow-md flex flex-col items-start">
-                      <div className="w-full h-14 flex items-center justify-center">
+                    <div className="mb-3 hover:cursor-pointer w-20" key={item.data.id}><Draggable id={item.data.id} data={item.data}><div className="w-full  border-2 border-gray-500 p-1 rounded-md shadow-md flex flex-col items-start">
+                      <div className="w-full flex items-center justify-center">
                         {item.icon==="text"&&(
-                          <Image src={textLogo} alt={"icon"} className="w-14 h-14"/>
+                          <Image src={textLogo} alt={"icon"} className="w-10 h-10"/>
                         )}
                          {item.icon==="button"&&(
-                          <Image src={buttonLogo} alt={"icon"} className="w-14 h-14"/>
+                          <Image src={buttonLogo} alt={"icon"} className="w-10 h-10"/>
                         )}
                          {item.icon==="input"&&(
-                          <Image src={inputLogo} alt={"icon"} className="w-14 h-14"/>
+                          <Image src={inputLogo} alt={"icon"} className="w-10 h-10"/>
                         )}
                          {item.icon==="image"&&(
-                          <Image src={imageLogo} alt={"icon"} className="w-14 h-14"/>
+                          <Image src={imageLogo} alt={"icon"} className="w-10 h-10"/>
                         )}
                       </div>
                      <div className="flex flex-row w-full justify-center items-center font-sans"> {item.data.type}</div>
@@ -147,14 +108,8 @@ export default function Leftsidebar({data}:any){
                   <div className="mr-4"><Image src={pagesLogo} alt="cross" className="w-7"></Image></div>
                   Pages
                   </div>
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-red-700/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={exportToJson}>
-                <div className="mr-4"><Image src={exportLogo} alt="cross" className="w-7"></Image></div>
-                  Export
-                  </div>
-                  <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-blue-700/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={handlePreviewClick}>
-                <div className="mr-4"><Image src={previewLogo} alt="cross" className="w-7"></Image></div>
-                  Preview
-                  </div>
+          
+                
             </div>
         </div>
     );

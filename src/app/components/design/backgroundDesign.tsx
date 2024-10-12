@@ -151,7 +151,40 @@ export default function BackgroundDesign() {
   }
 
   const handleContentBackgroundChange=(e:any)=>{
-    setContentBackgroundColor(e.target.value)
+   const backgroundColor=e.target.value;
+   setSelectedSection({
+    ...selectedSection,
+    contentBackgroundColor:backgroundColor
+  });
+
+  // Update background color in the selectedPage state
+  const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+    if(selectedSection.id == section.id){
+      return {
+        ...section,
+        contentBackgroundColor:backgroundColor
+      }
+    }
+    return section
+  });
+
+  setSelectedPage({
+    ...selectedPage,
+    children: updatedSelectedPage,
+  });
+
+  // Update pages if selectedPage exists
+  const updatedPages = pages.map((page: any) => {
+    if (page.id === selectedPage.id) {
+      return {
+        ...page,
+        children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+      };
+    }
+    return page;
+  });
+
+  setPages(updatedPages);
   }
 
   const handleHeaderBackgroundChange=(e:any)=>{
@@ -170,12 +203,12 @@ export default function BackgroundDesign() {
         <div className="fixed right-20 mt-10 z-10" id="picker-1"><SketchPicker color={headerBackgroundColor} onChangeComplete={(color) => handleHeaderBackgroundColorChange(color.hex)}/></div>
       )}
     <div>  
-        <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
+        <div className="w-28 h-8 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selectedPage?.headerBackgroundColor || 'white'}} onClick={handleHeaderBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedPage?.headerBackgroundColor || ""} onChange={handleHeaderBackgroundChange}/>
+                <input type="text" className="w-full h-full focus:outline-none font-sans font-normal" value={selectedPage?.headerBackgroundColor || ""} onChange={handleHeaderBackgroundChange}/>
             </div>
         </div>
         </div>
@@ -186,12 +219,12 @@ export default function BackgroundDesign() {
         <div className="fixed right-20 mt-10 z-10" id="picker-2"><SketchPicker color={contentBackgroundColor} onChangeComplete={(color) => handleContentBackgroundColorChange(color.hex)}/></div>
       )}
      <div>  
-        <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
+        <div className="w-28 h-8 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-2" style={{backgroundColor:selectedSection?.contentBackgroundColor || "white"}} onClick={handleContentBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedSection?.contentBackgroundColor} onChange={handleContentBackgroundChange}/>
+                <input type="text" className="w-full h-full  focus:outline-none font-sans font-normal" value={selectedSection?.contentBackgroundColor} onChange={handleContentBackgroundChange}/>
             </div>
         </div>
         </div>
@@ -202,12 +235,12 @@ export default function BackgroundDesign() {
         <div className="fixed right-20 mt-10 z-10" id="picker-3"><SketchPicker color={footerBackgroundColor} onChangeComplete={(color) => handleFooterBackgroundColorChange(color.hex)}/></div>
       )}
       <div>  
-        <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
+        <div className="w-28 h-8 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:selectedPage?.footerBackgroundColor || "white"}} onClick={handleFooterBackgroundColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selectedPage?.footerBackgroundColor || ""} onChange={handleFooterBackgroundChange}/>
+                <input type="text" className="w-full h-full  focus:outline-none font-sans font-normal" value={selectedPage?.footerBackgroundColor || ""} onChange={handleFooterBackgroundChange}/>
             </div>
         </div>
         </div>
@@ -241,12 +274,12 @@ export default function BackgroundDesign() {
         <div className="fixed right-20 mt-10 z-10" id="picker-3"><SketchPicker color={gridColor} onChangeComplete={(color) => handleGridColorChange(color.hex)}/></div>
       )}
       <div>  
-        <div className="w-32 h-9 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
+        <div className="w-28 h-8 rounded-md border-2 flex flex-row p-1 items-center border-gray-500">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:gridColor }} onClick={handleGridColorPicker}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={gridColor} onChange={handleGridChange}/>
+                <input type="text" className="w-full h-full  focus:outline-none font-sans font-normal" value={gridColor} onChange={handleGridChange}/>
             </div>
         </div>
         </div>

@@ -10,7 +10,8 @@ import ButtonDesign from "../design/buttonDesign";
 import ImageDesign from "../design/imageDesign";
 import InputDesign from "../design/inputDesign";
 import TextDesign from "../design/textDesign";
-
+import crossLogo from "../../images/crossLogo.png"
+import Image from "next/image";
 
 export default function Rightsidebar(){
     const [selected,setSelected]=useRecoilState(canvasState.selectedItemState);
@@ -19,6 +20,7 @@ export default function Rightsidebar(){
     const [content,setContent]=useState<any>();
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
+    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
 
     async function fetchContentTypes() {
         try {
@@ -266,11 +268,19 @@ export default function Rightsidebar(){
         }
     }
 
+    const handleCrossClick=()=>{
+      setSelected({});
+      setSelectedSection({})
+    }
+
     return(
         <div className="grid grid-rows-[1fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
             <div className="h-full border-gray-400">
-            <div className="pl-3 pr-3 pt-5">
-                <div className="text-2xl font-sans font-semibold">
+            <div className="pl-3 pr-3 pt-5 relative">
+              <div className="absolute right-5 top-5" onClick={handleCrossClick}>
+                <Image src={crossLogo} alt={"cross Logo"} width={25} height={25}></Image>
+              </div>
+                <div className="text-2xl font-sans font-bold">
                  Design
                 </div>
                 <div className="mt-4">
@@ -294,7 +304,7 @@ export default function Rightsidebar(){
             </div>
             <div className="h-full">
             <div className="pl-3 pr-3 pt-5 h-full">
-                <div className="text-2xl font-sans font-semibold ">
+                <div className="text-2xl font-sans font-bold ">
                  Data
                 </div>
                 <div className="mt-2">

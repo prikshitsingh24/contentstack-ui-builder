@@ -1185,7 +1185,7 @@ export default function InputDesign() {
         <select
           value={selected.style?.fontSize || "16px"}  // Default value if fontSize is undefined
           onChange={handleFontSizeChange}
-          className="border-2 p-1 rounded w-20 font-sans font-normal border-gray-500"
+          className="border-2 h-8 rounded w-20 font-sans font-normal border-gray-500"
         >
           {/* Define font size options */}
           <option value="12px">12px</option>
@@ -1198,7 +1198,7 @@ export default function InputDesign() {
       </div>
       <div>
       <div className="text-sm mb-2 font-sans font-light">Font style</div>
-      <div className="flex flex-row border-2 border-gray-500 w-14 rounded-lg overflow-hidden">
+      <div className="flex flex-row h-8 border-2 border-gray-500 w-14 rounded-lg overflow-hidden">
         <button
           className={`flex-1 py-1 transition-colors duration-200 ease-in-out ${
             selected.style?.fontStyle === "normal" 
@@ -1226,7 +1226,7 @@ export default function InputDesign() {
         <select
           value={selected.style?.fontWeight || "400"}  // Default value if fontSize is undefined
           onChange={handleFontWeightChange}
-          className="border-2 p-1 rounded w-28 font-sans font-normal  border-gray-500"
+          className="border-2 h-8 rounded w-28 font-sans font-normal  border-gray-500"
         >
           {/* Define font size options */}
         <option value="100">Thin</option>
@@ -1244,12 +1244,12 @@ export default function InputDesign() {
         <div className="fixed right-20 mt-10" id="picker-1"><SketchPicker color={color} onChangeComplete={(color) => handleColorChange(color.hex)}/></div>
       )}
         <div>  
-        <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
+        <div className="w-28 h-8 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selected.style?.color}} onClick={handleColorPickerClick}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selected.style?.color} onChange={handleColorTextChange}/>
+                <input type="text" className="w-full h-full focus:outline-none font-sans font-normal" value={selected.style?.color} onChange={handleColorTextChange}/>
             </div>
         </div>
         </div>
@@ -1260,19 +1260,19 @@ export default function InputDesign() {
         <div className="fixed right-20 mt-10" id="picker-2"><SketchPicker color={color} onChangeComplete={(color) => handleBackgroundColorChange(color.hex)}/></div>
       )}
        <div>  
-        <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
+        <div className="w-28 h-8 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-2" style={{backgroundColor:selected.style?.backgroundColor}} onClick={handleBackgroundColorPickerClick}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selected.style?.backgroundColor} onChange={handleBackgroundColorTextChange}/>
+                <input type="text" className="w-full h-full  focus:outline-none font-sans font-normal" value={selected.style?.backgroundColor} onChange={handleBackgroundColorTextChange}/>
             </div>
         </div>
         </div>
       </div>
       <div>
       <div className="text-sm mb-2 font-sans font-light">Border radius</div>
-      <input type="text" className="w-28 h-9 border-2 focus:outline-none rounded-md font-sans font-normal border-gray-500 px-2 placeholder-black"  value={selected.style?.borderRadius}  onChange={handleBorderRadiusChange}/>
+      <input type="text" className="w-28 h-8 border-2 focus:outline-none rounded-md font-sans font-normal border-gray-500 px-2 placeholder-black"  value={selected.style?.borderRadius}  onChange={handleBorderRadiusChange}/>
       </div>
       <div>
       <div className="text-sm mb-2 font-sans font-light">Border color</div>
@@ -1280,12 +1280,12 @@ export default function InputDesign() {
         <div className="fixed right-20 mt-10" id="picker-3"><SketchPicker color={color} onChangeComplete={(color) => handleBorderColorChange(color.hex)}/></div>
       )}
        <div>  
-        <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
+        <div className="w-28 h-8 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-3" style={{backgroundColor:selected.style?.borderColor}} onClick={handleBorderColorPickerClick}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selected.style?.borderColor} onChange={handleBorderColorTextChange}/>
+                <input type="text" className="w-full h-full  focus:outline-none font-sans font-normal" value={selected.style?.borderColor} onChange={handleBorderColorTextChange}/>
             </div>
         </div>
         </div>

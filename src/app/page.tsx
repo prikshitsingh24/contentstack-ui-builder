@@ -33,7 +33,7 @@ export default function Home() {
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const [preview,setPreview]=useRecoilState(builderState.previewState)
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
-  
+  const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
     const [
       mousePosition,
       setMousePosition
@@ -310,40 +310,107 @@ export default function Home() {
       setPreview(false);
       setGridVisibility(true);
     }
+    const [isZoomedOut, setIsZoomedOut] = useState(false);
+
+    const toggleZoom = () => {
+      setIsZoomedOut((prev) => !prev); // Toggle between true (50%) and false (100%)
+    };
+
+    const handlePreviewClick=()=>{
+      setSelectedSection({});
+      setGridVisibility(false);
+      setPreview(!preview);
+    }
+
+    const exportToJson = () => {
+      // Step 1: Convert the `pages` array to a JSON string
+      const jsonString = JSON.stringify(pages, null, 2);  // `null, 2` is used for pretty-printing the JSON
+    
+      // Step 2: Create a Blob containing the JSON string
+      const blob = new Blob([jsonString], { type: 'application/json' });
+    
+      // Step 3: Create a download link (anchor element)
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'pages.json';  // Name the file "pages.json" when downloading
+    
+      // Step 4: Programmatically trigger the download by clicking the anchor element
+      a.click();
+    
+      // Cleanup: Revoke the object URL after the download
+      URL.revokeObjectURL(url);
+    };
 
     if (preview) {
       return (
-        <DndContext onDragEnd={handleDragEnd}>
           <div className="h-screen overflow-hidden">
-            <div className="flex flex-row justify-end">
-              <div className="mr-10 text-blue-600 pt-2 cursor-pointer" onClick={handleBackToEditorClick}>Back to editor</div>
+            <div className="flex flex-row justify-end shadow-[1px_1px_5px_grey]">
+              <div className="mr-10 mb-2 text-blue-600 pt-2 cursor-pointer " onClick={handleBackToEditorClick}>Back to editor</div>
             </div>
-            <div className="mt-2 w-full h-full overflow-hidden">
+            <div className="mt-2 ml-2 pr-2 w-full h-full overflow-hidden">
               <Canvas />
             </div>
           </div>
-        </DndContext>
+    
       );
-    } else {
+    } else if( !selectedSection.id && !selected.id ){
       return (
-        <DndContext onDragEnd={handleDragEnd}>
-          <div className="grid grid-cols-[1fr_6fr_1.5fr] gap-3 h-screen overflow-hidden">
-            <div className="transition-all duration-300 ease-in-out">
-              <Leftsidebar data={ui} />
-              {addPagePanel && (
-                <div className="h-full fixed bottom-0 left-60 z-20 transition-all duration-300 ease-in-out">
-                  <AddPages />
-                </div>
-              )}
+       <div className="h-screen overflow-hidden">
+        <div className="w-full h-12 pt-3 shadow-[1px_3px_10px_grey]">
+          <div className="flex flex-row justify-end mr-20 font-sans">
+          <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
+            <div className="mr-5 cursor-pointer" onClick={handlePreviewClick}>Preview</div>
+            <div className="cursor-pointer" onClick={exportToJson}>Export</div>
+          </div>
+        </div>
+         <DndContext onDragEnd={handleDragEnd}>
+          <div className="h-screen overflow-hidden">
+            <div className="fixed w-52 left-0 z-30 bg-white bottom-0 top-14 transition-all duration-300 ease-in-out">
+            <Leftsidebar data={ui} />
+            {addPagePanel && (
+              <div className="h-full fixed bottom-0 left-60 z-20 transition-all duration-300 ease-in-out">
+                <AddPages />
+              </div>
+            )}
+
             </div>
-            <div className="mt-2 w-full max-h-fit overflow-hidden transition-all duration-300 ease-in-out">
+            <div className="h-full mt-2 w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.5 : 1})`,   transformOrigin: "center center"  }} >
               <Canvas />
-            </div>
-            <div className="transition-all duration-300 ease-in-out">
-              <Rightsidebar />
             </div>
           </div>
         </DndContext>
+       </div>
+      );
+    }else {
+      return (
+        <div className="h-screen overflow-hidden">
+        <div className="w-full h-12 z-20 pt-2 shadow-[1px_3px_10px_grey]">
+          <div className="flex flex-row justify-end mr-20 font-sans cursor-pointer">
+          <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
+            <div className="mr-5 cursor-pointer" onClick={handlePreviewClick}>Preview</div>
+            <div className="cursor-pointer" onClick={exportToJson}>Export</div>
+          </div>
+        </div>
+          <DndContext onDragEnd={handleDragEnd}>
+        <div className="h-screen overflow-hidden">
+          <div className=" fixed w-52 left-0 z-30 bg-white bottom-0 top-14 transition-all duration-300 ease-in-out">
+            <Leftsidebar data={ui} />
+            {addPagePanel && (
+              <div className="h-full fixed bottom-0 left-60 z-20 transition-all duration-300 ease-in-out">
+                <AddPages />
+              </div>
+            )}
+          </div>
+          <div className="h-full mt-2  w-full max-h-fit overflow-hidden transition-all duration-300 ease-in-out"   style={{  transform: `scale(${isZoomedOut ? 0.5 : 1})`, transformOrigin: "center center" }}>
+            <Canvas />
+          </div>
+          <div className="w-[270px] fixed z-20 bg-white bottom-0 top-14 right-0 transition-all duration-300 ease-in-out">
+            <Rightsidebar />
+          </div>
+        </div>
+      </DndContext>
+      </div>
       );
     }
 }

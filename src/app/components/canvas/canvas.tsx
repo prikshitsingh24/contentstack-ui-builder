@@ -75,6 +75,7 @@ export default function Canvas() {
     
         // Clear the selected item state
         setSelected({});
+        setSelectedSection({})
       }
   
 
@@ -165,53 +166,17 @@ useEffect(() => {
   }
 
   return (
-    <div className='w-full h-full overflow-y-scroll border-2 rounded-md '>
+    <div className='w-full h-full overflow-hidden relative border-2 rounded-md'>
+           {gridVisibility && <div className='absolute z-20 right-56 h-full border-r-2 border-dashed' style={{borderColor:gridColor}}></div> }
+           {gridVisibility && <div className='absolute z-20 left-44 h-full border-r-2 border-dashed'  style={{borderColor:gridColor}}></div>}
       {contextMenu && (
         <div style={{position:'fixed',left:`${positionX}px`,top:`${positionY}px`,zIndex:'100'}}>
           <ContextMenu onDelete={handleDelete} onResize={handleResizeClick} ></ContextMenu>
           </div>
       )}
-     <div className='h-full w-full'>
-     <div className='min-h-24 grid grid-cols-[0.5fr_3fr_0.5fr]'>
-          <div className={` ${gridVisibility?`border-r-2 border-b-2 border-dashed`:''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`header-column-1`} key={selectedPage.id}>
-           {selectedPage?.header?.map((item: any) => (
-                 item.over==`header-column-1` && (
-                   <div
-                 key={item.id}
-                 style={{
-                   position: 'absolute',
-                   zIndex:10,
-                   left: `${item.position?.x}px`,
-                   top: `${item.position?.y}px`,
-                   transform: 'translate(-50%, -50%)',
-                 }}
-                 className="draggable-item"
-               >
-                 <CanvasDraggable id={item.id} data={item}>
-                   {item.type=="Text" &&(
-                     <div style={item.style}>
-                     {item.content}
-                     </div>
-                   )}
-                   {item.type=="Button" &&(
-                     <button style={item.style}>
-                     {item.content}
-                     </button>
-                   )}
-                   {item.type=="Input" &&(
-                     <input style={item.style} placeholder={item.placeholder} value={item.value}/>
-                   )}
-                     {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
-                   )}
-                 </CanvasDraggable>
-               </div>
-                 )
-             ))}
-           </Droppable>
-           </div>
-           <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
+     <div className='h-full w-full overflow-y-scroll'>
+     <div className='h-20 w-full'>
+           <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`header-column-2`} key={selectedPage.id}>
            {selectedPage?.header?.map((item: any) => (
                  item.over==`header-column-2` && (
@@ -249,87 +214,11 @@ useEffect(() => {
              ))}
            </Droppable>
            </div>
-           <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`header-column-3`} key={selectedPage.id}>
-           {selectedPage?.header?.map((item: any) => (
-                 item.over==`header-column-3` && (
-                   <div
-                 key={item.id}
-                 style={{
-                   position: 'absolute',
-                   zIndex:10,
-                   left: `${item.position?.x}px`,
-                   top: `${item.position?.y}px`,
-                   transform: 'translate(-50%, -50%)',
-                 }}
-                 className="draggable-item"
-               >
-                 <CanvasDraggable id={item.id} data={item}>
-                   {item.type=="Text" &&(
-                     <div style={item.style}>
-                     {item.content}
-                     </div>
-                   )}
-                   {item.type=="Button" &&(
-                     <button style={item.style}>
-                     {item.content}
-                     </button>
-                   )}
-                   {item.type=="Input" &&(
-                     <input style={item.style} placeholder={item.placeholder} value={item.value}/>
-                   )}
-                     {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
-                   )}
-                 </CanvasDraggable>
-               </div>
-                 )
-             ))}
-           </Droppable>
-           </div>
           </div>
        {selectedPage?.children?.map((section:any) => (
-         <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-4 border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
-           <div className='h-full w-full grid grid-cols-[0.5fr_3fr_0.5fr]'>
-           <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`} style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`${section.id}-content-column-1`} key={section.id}>
-           {section.children.length > 0 && section.children.map((item: any) => (
-                 item.over==`${section.id}-content-column-1` && (
-                   <div
-                 key={item.id}
-                 style={{
-                   position: 'absolute',
-                   zIndex:10,
-                   left: `${item.position?.x}px`,
-                   top: `${item.position?.y}px`,
-                   transform: 'translate(-50%, -50%)',
-                 }}
-                 className="draggable-item"
-               >
-                 <CanvasDraggable id={item.id} data={item}>
-                   {item.type=="Text" &&(
-                     <div style={item.style}>
-                     {item.content}
-                     </div>
-                   )}
-                   {item.type=="Button" &&(
-                     <button style={item.style}>
-                     {item.content}
-                     </button>
-                   )}
-                   {item.type=="Input" &&(
-                     <input style={item.style} placeholder={item.placeholder} value={item.value}/>
-                   )}
-                     {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
-                   )}
-                 </CanvasDraggable>
-               </div>
-                 )
-             ))}
-           </Droppable>
-           </div>
-           <div className={` ${gridVisibility?'border-r-2 border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
+         <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-2 border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
+           <div className='h-full w-full'>
+           <div className={`w-full h-full ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`${section.id}-content-column-2`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}-content-column-2` && (
@@ -367,88 +256,12 @@ useEffect(() => {
              ))}
            </Droppable>
            </div>
-           <div className={` ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`${section.id}-content-column-3`} key={section.id}>
-           {section.children.length > 0 && section.children.map((item: any) => (
-                 item.over==`${section.id}-content-column-3` && (
-                   <div
-                 key={item.id}
-                 style={{
-                   position: 'absolute',
-                   zIndex:10,
-                   left: `${item.position?.x}px`,
-                   top: `${item.position?.y}px`,
-                   transform: 'translate(-50%, -50%)',
-                 }}
-                 className="draggable-item"
-               >
-                 <CanvasDraggable id={item.id} data={item}>
-                   {item.type=="Text" &&(
-                     <div style={item.style}>
-                     {item.content}
-                     </div>
-                   )}
-                   {item.type=="Button" &&(
-                     <button style={item.style}>
-                     {item.content}
-                     </button>
-                   )}
-                   {item.type=="Input" &&(
-                     <input style={item.style} placeholder={item.placeholder} value={item.value}/>
-                   )}
-                    {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
-                   )}
-                 </CanvasDraggable>
-               </div>
-                 )
-             ))}
-           </Droppable>
-           </div>
            </div>
            
        </div>
       ))}
-      <div className='h-32 w-full grid grid-cols-[0.5fr_3fr_0.5fr] '>
-           <div className={` ${gridVisibility?'border-r-2  border-dashed':''} relative`}  style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`footer-column-1`} key={selectedPage.id}>
-           {selectedPage?.footer?.map((item: any) => (
-                 item.over==`footer-column-1` && (
-                   <div
-                 key={item.id}
-                 style={{
-                   position: 'absolute',
-                   zIndex:10,
-                   left: `${item.position?.x}px`,
-                   top: `${item.position?.y}px`,
-                   transform: 'translate(-50%, -50%)',
-                 }}
-                 className="draggable-item"
-               >
-                 <CanvasDraggable id={item.id} data={item}>
-                   {item.type=="Text" &&(
-                     <div style={item.style}>
-                     {item.content}
-                     </div>
-                   )}
-                   {item.type=="Button" &&(
-                     <button style={item.style}>
-                     {item.content}
-                     </button>
-                   )}
-                   {item.type=="Input" &&(
-                     <input style={item.style} placeholder={item.placeholder} value={item.value}/>
-                   )}
-                     {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
-                   )}
-                 </CanvasDraggable>
-               </div>
-                 )
-             ))}
-           </Droppable>
-           </div>
-           <div className={` ${gridVisibility?'border-r-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
+      <div className='h-32 w-full'>
+           <div className={` ${gridVisibility?'border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`footer-column-2`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
                  item.over==`footer-column-2` && (
@@ -456,44 +269,6 @@ useEffect(() => {
                  key={item.id}
                  style={{
                    position: 'absolute',
-                   left: `${item.position?.x}px`,
-                   top: `${item.position?.y}px`,
-                   transform: 'translate(-50%, -50%)',
-                 }}
-                 className="draggable-item"
-               >
-                 <CanvasDraggable id={item.id} data={item}>
-                   {item.type=="Text" &&(
-                     <div style={item.style}>
-                     {item.content}
-                     </div>
-                   )}
-                   {item.type=="Button" &&(
-                     <button style={item.style}>
-                     {item.content}
-                     </button>
-                   )}
-                   {item.type=="Input" &&(
-                     <input style={item.style} placeholder={item.placeholder} value={item.value}/>
-                   )}
-                     {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
-                   )}
-                 </CanvasDraggable>
-               </div>
-                 )
-             ))}
-           </Droppable>
-           </div>
-           <div className='relative' style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`footer-column-3`} key={selectedPage.id}>
-           {selectedPage?.footer?.map((item: any) => (
-                 item.over==`footer-column-3` && (
-                   <div
-                 key={item.id}
-                 style={{
-                   position: 'absolute',
-                   zIndex:10,
                    left: `${item.position?.x}px`,
                    top: `${item.position?.y}px`,
                    transform: 'translate(-50%, -50%)',

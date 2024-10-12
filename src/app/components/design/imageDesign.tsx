@@ -607,19 +607,19 @@ export default function ImageDesign() {
         <div className="fixed right-20 mt-10" id="picker-1"><SketchPicker color={color} onChangeComplete={(color) => handleBackgroundColorChange(color.hex)}/></div>
       )}
       <div>  
-        <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
+        <div className="w-28 h-8 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-1" style={{backgroundColor:selected.style?.backgroundColor}} onClick={handleBackgroundColorPickerClick}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selected.style?.backgroundColor || "#FFFFFF"} onChange={handleBackgroundColorTextChange}/>
+                <input type="text" className="w-full h-full focus:outline-none font-sans font-normal" value={selected.style?.backgroundColor || "#FFFFFF"} onChange={handleBackgroundColorTextChange}/>
             </div>
         </div>
         </div>
       </div>
       <div>
       <div className="text-sm mb-2 font-sans font-light">Border radius</div>
-      <input type="text" className="w-28 border-2 h-9 focus:outline-none rounded-md border-gray-500 font-sans font-normal px-2 placeholder-black"  value={selected.style?.borderRadius}  onChange={handleBorderRadiusChange}/>
+      <input type="text" className="w-28 border-2 h-8 focus:outline-none rounded-md border-gray-500 font-sans font-normal px-2 placeholder-black"  value={selected.style?.borderRadius}  onChange={handleBorderRadiusChange}/>
       </div>
       <div>
       <div className="text-sm mb-2 font-sans font-light">Border color</div>
@@ -627,12 +627,12 @@ export default function ImageDesign() {
         <div className="fixed right-20 mt-10" id="picker-2"><SketchPicker color={color} onChangeComplete={(color) => handleBorderColorChange(color.hex)}/></div>
       )}
       <div>  
-        <div className="w-32 h-9 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
+        <div className="w-28 h-8 rounded-md border-2 border-gray-500 flex flex-row p-1 items-center">
             <div className="border-2 mr-1 w-12 h-full rounded-md cursor-pointer" id="picker-2" style={{backgroundColor:selected.style?.borderColor }} onClick={handleBorderColorPickerClick}>
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full px-1 py-1 focus:outline-none font-sans font-normal" value={selected.style?.borderColor} onChange={handleBorderColorTextChange}/>
+                <input type="text" className="w-full h-full focus:outline-none font-sans font-normal" value={selected.style?.borderColor} onChange={handleBorderColorTextChange}/>
             </div>
         </div>
         </div>
