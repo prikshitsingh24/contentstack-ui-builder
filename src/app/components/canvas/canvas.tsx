@@ -149,7 +149,7 @@ useEffect(() => {
       const x = event.clientX;
       const y = event.clientY;
       const zoomScale = isZoomedOut ? 0.7 : 0;
-      const adjustedX = (x)-zoomScale*100;
+      const adjustedX = (x)-zoomScale*200;
       const adjustedY = (y-50)-zoomScale*100;
       setPositionX(adjustedX);
       setPositionY(adjustedY);
