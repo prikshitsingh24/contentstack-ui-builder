@@ -11,4 +11,10 @@ const newPageState=atom({
   default:true
 })
 
-export default {previewState,newPageState}
+const newSectionState=atom({
+  key:'newSectionState',
+  default:false
+})
+
+
+export default {previewState,newPageState,newSectionState}

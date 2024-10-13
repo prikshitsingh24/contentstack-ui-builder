@@ -30,33 +30,10 @@ export default function Leftsidebar({data}:any){
     const [preview,setPreview]=useRecoilState(builderState.previewState)
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
     const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
-
-    const handleAddSectionClick = () => {
-        // Create a new section with a unique id
-        const sectionId="section-"+`${uuidv4()}-`;
-        const newSection = {
-            id: sectionId,
-          contentBackgroundColor: "#FFFFFF",
-          children: [],  // Empty children array, can be filled later
-        };
-      
-        const updatedPage=pages.map((page,index)=>{
-            if(page.id === selectedPage.id){
-              return{
-                ...page,
-                children:[...page.children || [], newSection]
-              }
-            }
-            return page;
-          });
-          setPages(updatedPage)
-          setSelectedPage({
-            ...selectedPage,
-            children: [...selectedPage.children || [], newSection] // Append the new section to selectedPage children
-          });
-          
-
-      };
+    const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
+    const handleAddSectionClick = () => { 
+      setNewSection(true);
+    };
       const handleAddPageClick=()=>{
         setAddPagePanel(!addPagePanel);
       }

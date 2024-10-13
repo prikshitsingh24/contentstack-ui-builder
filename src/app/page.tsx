@@ -15,6 +15,7 @@ import pageState from "./states/pageState";
 import sectionState from "./states/sectionState";
 import builderState from "./states/builderState";
 import AddPageContainer from "./components/addPageContainer/addPageContainer";
+import AddSectionContainer from "./components/addSectionContainer/addSectionContainer";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -36,6 +37,7 @@ export default function Home() {
   const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
+  const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
     const [
       mousePosition,
       setMousePosition
@@ -346,6 +348,9 @@ export default function Home() {
         {newPage && (
           <AddPageContainer></AddPageContainer>
         )}
+        {newSection && (
+          <AddSectionContainer></AddSectionContainer>
+        )}
         <div className="w-full h-12 pt-3 shadow-[1px_3px_10px_grey]">
           <div className="flex flex-row justify-end mr-20 font-sans">
           <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
@@ -376,6 +381,9 @@ export default function Home() {
         <div className="h-screen overflow-hidden">
           {newPage && (
           <AddPageContainer></AddPageContainer>
+        )}
+          {newSection && (
+          <AddSectionContainer></AddSectionContainer>
         )}
         <div className="w-full h-12 z-20 pt-3 shadow-[1px_3px_10px_grey]">
           <div className="flex flex-row justify-end mr-20 font-sans cursor-pointer">
