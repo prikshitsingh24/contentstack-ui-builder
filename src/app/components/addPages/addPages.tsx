@@ -53,7 +53,7 @@ export default function AddPages(){
         setSelectedPage(page)
     }
     return(
-        <div className="bg-white w-72 h-full border-2 rounded-xl shadow-md grid grid-rows-[0fr_0.2fr_4fr]">
+        <div className="bg-white w-72 h-full border-2 grid grid-rows-[0fr_0.2fr_4fr]">
             <div className="p-2 border-b-2 pt-2 pb-2 font-sans font-semibold">
                 Site pages and menu
             </div>

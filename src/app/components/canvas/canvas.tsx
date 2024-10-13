@@ -15,6 +15,7 @@ import colorPickerState from '@/app/states/colorPickerState';
 import contextMenuState from '@/app/states/contextMenuState';
 import ContextMenu from '../contextMenu/contextMenu';
 import addPage from '@/app/states/addPage';
+import builderState from '@/app/states/builderState';
 
 export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -34,6 +35,7 @@ export default function Canvas() {
   const [positionY,setPositionY]=useState(0);
   const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
   const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
+  const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
 
 
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
@@ -144,9 +146,13 @@ export default function Canvas() {
 useEffect(() => {
     const handleRightClick = (event: MouseEvent) => {
       event.preventDefault(); // Prevent the browser's default right-click menu
-      console.log('Right click detected at', event.clientX, event.clientY);
-      setPositionX(event.clientX);
-      setPositionY(event.clientY);
+      const x = event.clientX;
+      const y = event.clientY;
+      const zoomScale = isZoomedOut ? 0.7 : 0;
+      const adjustedX = (x)-zoomScale*100;
+      const adjustedY = (y-50)-zoomScale*100;
+      setPositionX(adjustedX);
+      setPositionY(adjustedY);
       setContextMenu(true)
       // You can handle the context menu here, such as showing a custom menu
     };

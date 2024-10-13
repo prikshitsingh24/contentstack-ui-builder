@@ -16,6 +16,8 @@ import sectionState from "./states/sectionState";
 import builderState from "./states/builderState";
 import AddPageContainer from "./components/addPageContainer/addPageContainer";
 import AddSectionContainer from "./components/addSectionContainer/addSectionContainer";
+import arrowForwardLogo from "./images/arrowForwardLogo.png";
+import Image from "next/image";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -38,6 +40,13 @@ export default function Home() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
   const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
+  const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
+  const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState)
+
+  const toggleZoom = () => {
+    setIsZoomedOut((prev) => !prev); // Toggle between true (50%) and false (100%)
+  };
+
     const [
       mousePosition,
       setMousePosition
@@ -58,11 +67,10 @@ export default function Home() {
 
     const handleDragEnd = (event: any) => {
       const { active, over } = event;
-    console.log(event)
       if (over) {
-        // Calculate the drop position relative to the section
-        const x = mousePosition.x - event.over.rect.left;
-        const y = mousePosition.y - event.over.rect.top;
+        const zoom=isZoomedOut?0.7:1
+        const x = (mousePosition.x - event.over.rect.left)/zoom;
+        const y = (mousePosition.y - event.over.rect.top)/zoom;
         const position = { x, y };
     
         // Get the content and id of the dragged item
@@ -298,12 +306,7 @@ export default function Home() {
       setPreview(false);
       setGridVisibility(true);
     }
-    const [isZoomedOut, setIsZoomedOut] = useState(false);
-
-    const toggleZoom = () => {
-      setIsZoomedOut((prev) => !prev); // Toggle between true (50%) and false (100%)
-    };
-
+   
     const handlePreviewClick=()=>{
       setSelectedSection({});
       setGridVisibility(false);
@@ -336,13 +339,13 @@ export default function Home() {
             <div className="flex h-12 pt-3 flex-row justify-end shadow-[1px_1px_5px_grey]">
               <div className="mr-10 text-blue-600  cursor-pointer " onClick={handleBackToEditorClick}>Back to editor</div>
             </div>
-            <div className="mt-2 ml-2 pr-2 w-full h-full overflow-hidden">
+            <div className="mt-2 pl-2 pb-16 pr-2 w-full h-full overflow-hidden">
               <Canvas />
             </div>
           </div>
     
       );
-    } else if( !selectedSection.id && !selected.id ){
+    } else{
       return (
        <div className="h-screen overflow-hidden">
         {newPage && (
@@ -353,64 +356,44 @@ export default function Home() {
         )}
         <div className="w-full h-12 pt-3 shadow-[1px_3px_10px_grey]">
           <div className="flex flex-row justify-end mr-20 font-sans">
-          <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
+          <div className="mr-5 cursor-pointer" onClick={toggleZoom}>  {isZoomedOut ? "Zoom in" : "Zoom out"}</div>
             <div className="mr-5 cursor-pointer" onClick={handlePreviewClick}>Preview</div>
             <div className="cursor-pointer" onClick={exportToJson}>Export</div>
           </div>
         </div>
          <DndContext onDragEnd={handleDragEnd}>
           <div className="h-screen overflow-hidden">
-            <div className="fixed w-52 left-0 z-30 bg-white bottom-0 top-14 transition-all duration-300 ease-in-out">
-            <Leftsidebar data={ui} />
-            {addPagePanel && (
-              <div className="h-full fixed bottom-20 top-14 left-52 z-20 transition-all duration-300 ease-in-out">
+            {leftSidebarCollapsed?(
+              <div className={`fixed w-12 left-0 z-30 bottom-0 pb-2 top-14 transition-all duration-300 ease-in-out`}>
+                <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative">
+                  <div className="absolute right-2 top-2" onClick={()=>setLeftSidebarCollapsed(false)}><Image src={arrowForwardLogo} alt={"arrow back"} width={25}></Image></div>
+                </div>
+              </div>
+            ):(
+              <div className={`fixed w-52 left-0 z-30 bottom-0 pb-2 top-14 transition-all duration-300 ease-in-out`}>
+              <Leftsidebar data={ui} />
+              {addPagePanel && (
+              <div className="fixed bottom-0 pb-2 top-14 left-52 z-20 transition-all duration-300 ease-in-out">
                 <AddPages />
               </div>
             )}
 
             </div>
-            <div className="h-full mt-2 w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.5 : 1})`,   transformOrigin: "center center"  }} >
+            )}
+            
+            <div className="h-full mt-2 pl-14 pb-16 pr-5 w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
               <Canvas />
             </div>
+            {selectedSection.id || selected.id ? (
+              <div className="w-[270px] fixed z-20 bg-white bottom-0 pb-2 top-14 right-0 transition-all duration-300 ease-in-out">
+              <Rightsidebar />
+            </div>
+            ):(
+              <></>
+            )}
           </div>
         </DndContext>
        </div>
-      );
-    }else {
-      return (
-        <div className="h-screen overflow-hidden">
-          {newPage && (
-          <AddPageContainer></AddPageContainer>
-        )}
-          {newSection && (
-          <AddSectionContainer></AddSectionContainer>
-        )}
-        <div className="w-full h-12 z-20 pt-3 shadow-[1px_3px_10px_grey]">
-          <div className="flex flex-row justify-end mr-20 font-sans cursor-pointer">
-          <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
-            <div className="mr-5 cursor-pointer" onClick={handlePreviewClick}>Preview</div>
-            <div className="cursor-pointer" onClick={exportToJson}>Export</div>
-          </div>
-        </div>
-          <DndContext onDragEnd={handleDragEnd}>
-        <div className="h-screen overflow-hidden">
-          <div className=" fixed w-52 left-0 z-30 bg-white bottom-0 top-14 transition-all duration-300 ease-in-out">
-            <Leftsidebar data={ui} />
-            {addPagePanel && (
-              <div className="h-full fixed bottom-20 top-14 left-52 z-20 transition-all duration-300 ease-in-out">
-                <AddPages />
-              </div>
-            )}
-          </div>
-          <div className="h-full mt-2  w-full max-h-fit overflow-hidden transition-all duration-300 ease-in-out"   style={{  transform: `scale(${isZoomedOut ? 0.5 : 1})`, transformOrigin: "center center" }}>
-            <Canvas />
-          </div>
-          <div className="w-[270px] fixed z-20 bg-white bottom-0 top-14 right-0 transition-all duration-300 ease-in-out">
-            <Rightsidebar />
-          </div>
-        </div>
-      </DndContext>
-      </div>
       );
     }
 }

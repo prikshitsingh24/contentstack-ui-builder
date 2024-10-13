@@ -6,6 +6,7 @@ import canvasState from '@/app/states/canvasState';
 import { Resizable } from 're-resizable';
 import pageState from '@/app/states/pageState';
 import contextMenuState from '@/app/states/contextMenuState';
+import builderState from '@/app/states/builderState';
 
 const ResizeHandle = ({ className }:any) => (
   <div className={`resize-handle ${className}`} />
@@ -21,7 +22,8 @@ export function CanvasDraggable(props: any) {
   const [height, setHeight] = useState(numericHeight || 200);
   const [selectedPage, setSelectedPage] = useRecoilState(canvasState.selectedPageState);
   const [pages, setPages] = useRecoilState(pageState.pageState);
-  const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
+  const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState);
+  const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
 
   // Event listener for the "R" key to toggle resizing mode
   useEffect(() => {
@@ -52,13 +54,29 @@ export function CanvasDraggable(props: any) {
       type: 'items',
       data: { content: props.data },
     },
-  });
+  }); 
+  
+  const zoomScale = isZoomedOut ? 0.7 : 1; // Apply 0.7 scaling if isZoomedOut is true, else 1
+
+// Adjust the position based on the zoom level
+const adjustedTransform = transform
+  ? {
+      x: transform.x / zoomScale, // Adjust for scaling on the X axis
+      y: transform.y / zoomScale, // Adjust for scaling on the Y axis
+      scaleX: zoomScale,          // Apply scaling on the X axis
+      scaleY: zoomScale,          // Apply scaling on the Y axis
+    }
+  : { x: 0, y: 0, scaleX: zoomScale, scaleY: zoomScale };
+
+// Construct the `transform` property including both translation and scaling
+const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransform.y}px)`;
+
 
   const dragstyle = {
     cursor: isResizingMode ? 'nwse-resize' : isDragging ? 'grabbing' : 'grab',
     opacity: isResizingMode ? 0.7 : isDragging ? 0.5 : 1,
     borderRadius: selected && selected.id === props.id ? '3px' : '0',
-    transform: CSS.Translate.toString(transform),
+    transform: draggableTransform,
     border: '2px solid blue',
     zIndex: 1,
   };

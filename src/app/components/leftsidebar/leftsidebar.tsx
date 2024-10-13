@@ -19,6 +19,7 @@ import inputLogo from "../../images/inputLogo.png";
 import imageLogo from "../../images/imageLogo.png";
 import previewLogo from "../../images/previewLogo.png";
 import builderState from "@/app/states/builderState";
+import arrowBackLogo from "../../images/arrowBackLogo.png";
 
 export default function Leftsidebar({data}:any){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -31,6 +32,7 @@ export default function Leftsidebar({data}:any){
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
     const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
     const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
+    const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState)
     const handleAddSectionClick = () => { 
       setNewSection(true);
     };
@@ -40,9 +42,12 @@ export default function Leftsidebar({data}:any){
 
   
     return(
-        <div className="grid grid-rows-[2fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
-            <div className=" h-full grid grid-rows-[0.5fr_3fr]" >
-            <div className="pl-3 pr-3 pt-5">
+        <div className="bg-white grid grid-rows-[2fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
+            <div className=" h-full grid grid-rows-[0.5fr_3fr] relative" >
+              <div className="absolute right-2 top-2" onClick={()=>setLeftSidebarCollapsed(true)}>
+              <Image src={arrowBackLogo} alt={"arrow back"} width={25}></Image>
+                </div>
+            <div className="pl-3 pr-3 pt-10">
                 <div className="text-2xl font-sans font-bold ">
                 Add elements
                 </div>
