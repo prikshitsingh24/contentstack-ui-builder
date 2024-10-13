@@ -7,44 +7,49 @@ import { v4 as uuidv4 } from 'uuid';
 import Image from "next/image";
 import addLogo from "../../images/addLogo.png";
 import builderState from "@/app/states/builderState";
+import addPage from "@/app/states/addPage";
 
 export default function AddPages(){
     const [pages,setPages]=useRecoilState(pageState.pageState);
-    const [input,setInput]=useState(false);
+    const [input,setInput]=useRecoilState(addPage.inputState)
     const [pageName,setPageName]=useState("");
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
-    
+    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+
     const handleAddPageClick=()=>{
        setNewPage(true);
+       setInput(true);
     }
+
 
     const handleAddPageName=(e:any)=>{
-        setPageName(e.target.value);
+        const pageName=e.target.value;
+        const newPage = {
+            id: 'page-' + `${pageName}`,
+            // Add any other properties here as needed
+          };
+      
+          // Update the selectedPage state
+          setSelectedPage({
+            ...selectedPage,
+            id:newPage.id
+          });
+
     }
 
-    const handleDoneClick=()=>{
-        if(pageName){
-            const newSection = {
-                id: "section-"+`${uuidv4()}`,
-                contentBackgroundColor: "#FFFFFF",
-                children: [], // Assumed to be an array of dropped items
-              };
-              
-              // Create a new page object
-              const newPage = {
-                id: "page-" + pageName, // Modify if you need unique IDs
-                headerBackgroundColor: "#FFFFFF", // Optional
-                footerBackgroundColor: "#FFFFFF",
-                children: [newSection], // Add the newly created section to the children
-              };
-              
-              // Update the pages state by appending the new page to the existing pages
-              setPages(prevPages => [...prevPages, newPage]);
-              setInput(false);
-        }
-    }
+    const handleDoneClick = () => {
+     
+         
+        setPages(prevPages => [...prevPages, selectedPage]);
+        
+          // Close the input if required
+          setInput(false);
+     
+    };
+
     const handlePageClick=(page:any)=>{
+        setSelectedSection({})
         setSelectedPage(page)
     }
     return(
@@ -62,7 +67,7 @@ export default function AddPages(){
             <div className="flex flex-col border-2 border-gray-500 rounded-md mr-2 ml-2 p-2 overflow-y-scroll mb-10">
                 {pages.map((page,index)=>{
                     return(
-                        <div className={`border-2 p-2 rounded-xl mb-2  cursor-pointer ${selectedPage.id==page.id?'bg-blue-400 text-white':''}`}  onClick={()=>handlePageClick(page)}>{page.id?.slice(5,)}</div>
+                        <div className={`border-2 p-2 rounded-xl mb-2  cursor-pointer ${selectedPage.id==page.id?'bg-blue-400 text-white':''}`} key={page.id}  onClick={()=>handlePageClick(page)}>{page.id?.slice(5,)}</div>
                     )
                 })}
                {input &&(

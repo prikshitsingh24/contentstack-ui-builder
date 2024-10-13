@@ -7,6 +7,7 @@ import canvasState from "@/app/states/canvasState";
 import { v4 as uuidv4 } from 'uuid';
 import pageState from "@/app/states/pageState";
 import builderState from "@/app/states/builderState";
+import addPage from "@/app/states/addPage";
 
 
 export default function AddPageContainer(){
@@ -17,29 +18,33 @@ export default function AddPageContainer(){
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
+    const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
+    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
     
     const addBlankPage=()=>{
-        const updatedSection = {
+          const updatedSection = {
             id: "section-"+`${uuidv4()}`,
-            contentBackgroundColor:contentBackgroundColor,
-            children: droppedItems,
+            contentBackgroundColor:"#FFFFFF",
+            children: [],
           };
         
           const updatedPage={
-            id:"page-"+"home",
-            headerBackgroundColor:headerBackgroundColor,
-            footerBackgroundColor:footerBackgroundColor,
-            header:droppedItems,
-            footer:droppedItems,
+            id:"",
+            headerBackgroundColor:"#FFFFFF",
+            footerBackgroundColor:"#FFFFFF",
+            header:[],
+            footer:[],
             children:[updatedSection]
           }
-          setPages([updatedPage])
           setSelectedPage(updatedPage);
+          setSelectedSection({})
+          
     }
 
     const handleBlankPageClick=()=>{
         addBlankPage();
         setNewPage(false);
+        setAddPagePanel(true);
     }
 
     return(
@@ -51,9 +56,9 @@ export default function AddPageContainer(){
          <hr />
          <div className="w-full h-full pb-14 grid grid-cols-[1fr_5fr]">
           <div className="p-2 border-r-2 grid grid-rows-[0.1fr_1fr]">
-            <div className="bg-blue-500 h-10 text-white flex rounded-xl p-1 justify-center items-center cursor-pointer">
+            <div className="bg-blue-500 h-10 text-white flex rounded-xl p-1 justify-center items-center cursor-pointer" onClick={handleBlankPageClick}>
               <div className="mr-2"><Image src={whiteAddLogo} alt={"add logo"} width={25} height={25}></Image></div>
-              <div onClick={handleBlankPageClick}>Blank Page</div>
+              <div >Blank Page</div>
               </div>
               <div>
               <div className="font-sans cursor-pointer">About us</div>

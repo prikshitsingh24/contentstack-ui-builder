@@ -91,9 +91,6 @@ export default function BackgroundDesign() {
 
   const handleFooterBackgroundColorChange = (newColor: string) => {
     setFooterBackgroundColor(newColor);
-    setSelectedSection({
-      ...selectedSection,
-    });
   
     setSelectedPage({
       ...selectedPage,

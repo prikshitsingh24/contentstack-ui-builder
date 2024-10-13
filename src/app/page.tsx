@@ -374,6 +374,9 @@ export default function Home() {
     }else {
       return (
         <div className="h-screen overflow-hidden">
+          {newPage && (
+          <AddPageContainer></AddPageContainer>
+        )}
         <div className="w-full h-12 z-20 pt-3 shadow-[1px_3px_10px_grey]">
           <div className="flex flex-row justify-end mr-20 font-sans cursor-pointer">
           <div className="mr-5 cursor-pointer" onClick={toggleZoom}>Zoom Out</div>
@@ -386,7 +389,7 @@ export default function Home() {
           <div className=" fixed w-52 left-0 z-30 bg-white bottom-0 top-14 transition-all duration-300 ease-in-out">
             <Leftsidebar data={ui} />
             {addPagePanel && (
-              <div className="h-full fixed bottom-0 left-60 z-20 transition-all duration-300 ease-in-out">
+              <div className="h-full fixed bottom-20 top-14 left-52 z-20 transition-all duration-300 ease-in-out">
                 <AddPages />
               </div>
             )}

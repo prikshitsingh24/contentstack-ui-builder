@@ -14,6 +14,7 @@ import pageState from '@/app/states/pageState';
 import colorPickerState from '@/app/states/colorPickerState';
 import contextMenuState from '@/app/states/contextMenuState';
 import ContextMenu from '../contextMenu/contextMenu';
+import addPage from '@/app/states/addPage';
 
 export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -32,7 +33,7 @@ export default function Canvas() {
   const [positionX,setPositionX]=useState(0);
   const [positionY,setPositionY]=useState(0);
   const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
-
+  const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
 
 
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
@@ -43,6 +44,7 @@ export default function Canvas() {
     setContentBackgroundColorPicker(false);
     setFooterBackgroundColorPicker(false);
     setheaderBackgroundColorPicker(false);
+    setAddPagePanel(false)
     if ((e.target as HTMLElement).closest('.draggable-item')) return;
     setSelectedSection(section);
     console.log(selectedPage)
@@ -261,7 +263,7 @@ useEffect(() => {
        </div>
       ))}
       <div className='h-32 w-full'>
-           <div className={` ${gridVisibility?'border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
+           <div className={`h-full w-full ${gridVisibility?'border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`footer-column-2`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
                  item.over==`footer-column-2` && (
