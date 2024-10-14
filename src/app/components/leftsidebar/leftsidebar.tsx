@@ -33,6 +33,7 @@ export default function Leftsidebar({data}:any){
     const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
     const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
     const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState)
+    
     const handleAddSectionClick = () => { 
       setNewSection(true);
     };

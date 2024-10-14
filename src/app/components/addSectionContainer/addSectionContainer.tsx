@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import pageState from "@/app/states/pageState";
 import builderState from "@/app/states/builderState";
 import addPage from "@/app/states/addPage";
-
+import crossLogo from "../../images/crossLogo.png"
 
 export default function AddSectionContainer(){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -23,7 +23,10 @@ export default function AddSectionContainer(){
     const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
     
     const addBlankSection=()=>{
-        const sectionId="section-"+`${uuidv4()}-`;
+      if(selectedPage.children?.length){
+        const id = selectedPage?.children?.length+1;
+        const sectionId="section-"+`${id}`;
+        console.log(sectionId)
         const newSection = {
             id: sectionId,
           contentBackgroundColor: "#FFFFFF",
@@ -44,6 +47,7 @@ export default function AddSectionContainer(){
             ...selectedPage,
             children: [...selectedPage.children || [], newSection] // Append the new section to selectedPage children
           });
+      }
           
     }
 
@@ -52,9 +56,15 @@ export default function AddSectionContainer(){
         setNewSection(false);
     }
 
+    const handleCrossClick=()=>{
+      setNewSection(false);
+    }
     return(
         <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center z-[9999] backdrop-blur-sm">
-       <div className="h-5/6 w-7/12 bg-white z-10">
+       <div className="h-5/6 w-7/12 bg-white z-10 relative">
+        <div className="absolute right-5 top-2" onClick={handleCrossClick}>
+        <Image src={crossLogo} alt={"cross Logo"} width={25} height={25}></Image>
+        </div>
          <div className="font-sans text-xl font-bold p-3">
           Add Section
          </div>

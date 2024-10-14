@@ -77,7 +77,7 @@ export default function Home() {
         const content = active.data.current.data.content;
         const id = active.id; // The item's id
     
-        if (over.id === "header-column-1" || over.id === "header-column-2" || over.id === "header-column-3") {
+        if (over.id === "header-row") {
           // Step 1: Find the index of the item in the header
           const existingItemIndex:any = selectedPage?.header?.findIndex((item: any) => item.id === id);
         
@@ -135,7 +135,7 @@ export default function Home() {
             setPages(updatedPages);
           }
         
-        }else if(over.id === "footer-column-1" || over.id === "footer-column-2" || over.id === "footer-column-3"){
+        }else if(over.id === "footer-row"){
           const existingItemIndex:any = selectedPage?.footer?.findIndex((item: any) => item.id === id);
         
           if (existingItemIndex !== -1) {
@@ -365,8 +365,8 @@ export default function Home() {
           <div className="h-screen overflow-hidden">
             {leftSidebarCollapsed?(
               <div className={`fixed w-12 left-0 z-30 bottom-0 pb-2 top-14 transition-all duration-300 ease-in-out`}>
-                <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative">
-                  <div className="absolute right-2 top-2" onClick={()=>setLeftSidebarCollapsed(false)}><Image src={arrowForwardLogo} alt={"arrow back"} width={25}></Image></div>
+                <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative" onClick={()=>setLeftSidebarCollapsed(false)}>
+                  <div className="absolute right-2 top-2" ><Image src={arrowForwardLogo} alt={"arrow back"} width={25}></Image></div>
                 </div>
               </div>
             ):(

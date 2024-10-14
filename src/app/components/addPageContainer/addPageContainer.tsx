@@ -23,7 +23,7 @@ export default function AddPageContainer(){
     
     const addBlankPage=()=>{
           const updatedSection = {
-            id: "section-"+`${uuidv4()}`,
+            id: "section-"+`${1}`,
             contentBackgroundColor:"#FFFFFF",
             children: [],
           };
