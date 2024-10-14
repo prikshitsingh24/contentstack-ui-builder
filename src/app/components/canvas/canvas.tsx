@@ -49,14 +49,12 @@ export default function Canvas() {
     setAddPagePanel(false)
     if ((e.target as HTMLElement).closest('.draggable-item')) return;
     setSelectedSection(section);
-    console.log(selectedPage)
     setSelected({});
   };
 
  
 
   const handleDelete = () => {
-    console.log(selected.id?.slice(0,6))
     if (selected.id?.slice(0,6)=="header") {
    
         const updatedChildren = selectedPage?.header?.filter((item: any) => item.id !== selected.id);

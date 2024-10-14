@@ -26,7 +26,6 @@ export default function AddSectionContainer(){
       if(selectedPage.children?.length){
         const id = selectedPage?.children?.length+1;
         const sectionId="section-"+`${id}`;
-        console.log(sectionId)
         const newSection = {
             id: sectionId,
           contentBackgroundColor: "#FFFFFF",

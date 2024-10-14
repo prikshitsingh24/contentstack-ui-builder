@@ -13,6 +13,5 @@ export const getAllEntries = async (contentType:string): Promise<any> => {
 
   export const getAllContentTypes = async () => {
     const response=await getContentTypes();
-    console.log(response)
     return response;
   };

@@ -3,9 +3,6 @@ import { Config, Region, LivePreview, Stack } from "contentstack";
 // Initialize the Contentstack Stack
 // const Stack = Contentstack.Stack(`${process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY}`, `${process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN}`,`${process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT}`);
 export const isBasicConfigValid = () => {
-    console.log(process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY)
-    console.log(process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN)
-    console.log(process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT)
     return (
       !!process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY &&
       !!process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN &&

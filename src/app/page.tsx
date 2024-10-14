@@ -156,7 +156,6 @@ export default function Home() {
         
           if (existingItemIndex !== -1) {
             // Step 2: Item exists, update its position
-            console.log("Updating position for item with id:", id);
             const updatedFooter = [...selectedPage.footer || []]; // Clone the header to update
             updatedFooter[existingItemIndex] = {
               ...updatedFooter[existingItemIndex],

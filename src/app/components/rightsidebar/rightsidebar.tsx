@@ -27,7 +27,6 @@ export default function Rightsidebar(){
           const response = await getAllContentTypes();
           if (!response) throw new Error('Status code 404');
           if(response){
-            console.log(response)
             setContentTypes(response.content_types);
 
           }
@@ -48,7 +47,6 @@ export default function Rightsidebar(){
         try {
           const response = await getAllEntries(contentType);
           if (!response) throw new Error('Status code 404');
-          console.log(response)
           setContent(response)
         } catch (error) {
           console.error(error);

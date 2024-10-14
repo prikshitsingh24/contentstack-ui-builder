@@ -7,7 +7,7 @@ import { Draggable } from "../draggable/draggable";
 import { v4 as uuidv4 } from 'uuid';
 import pageState from "@/app/states/pageState";
 import addPage from "@/app/states/addPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllEntries } from "@/app/helper/indext";
 import pagesLogo from "../../images/pagesLogo.png";
 import exportLogo from "../../images/exportLogo.png";
@@ -32,7 +32,8 @@ export default function Leftsidebar({data}:any){
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
     const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
     const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
-    const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState)
+    const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState);
+    const [searchTerm, setSearchTerm] = useState<string>("");
     
     const handleAddSectionClick = () => { 
       setNewSection(true);
@@ -40,7 +41,17 @@ export default function Leftsidebar({data}:any){
       const handleAddPageClick=()=>{
         setAddPagePanel(!addPagePanel);
       }
-
+    
+      const handleSearchChange = (e: any) => {
+        setSearchTerm(e.target.value.toLowerCase());
+      };
+    
+      const filteredData = data.filter((item: any) => {
+        return (
+          item.data.type.toLowerCase().includes(searchTerm) ||
+          item.data.id.toLowerCase().includes(searchTerm)
+        );
+      });
   
     return(
         <div className="bg-white grid grid-rows-[2fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
@@ -53,31 +64,37 @@ export default function Leftsidebar({data}:any){
                 Add elements
                 </div>
                 <div className="mt-5">
-                <input type="text" className="border border-gray-500 rounded-xl w-full p-2 focus:outline-none" placeholder="Search" />
+                <input type="text" className="border border-gray-500 rounded-xl w-full p-2 focus:outline-none" placeholder="Search" onChange={handleSearchChange}/>
                 </div>
             </div>
-            <div className="flex flex-col overflow-y-scroll w-fit border-gray-400 mt-2 h-full pl-3 pt-3">
+            <div className="flex flex-col overflow-y-scroll overflow-x-hidden w-fit border-gray-400 mt-2 h-full pl-3 pt-3">
               <div className="grid grid-cols-2 gap-x-4">
-            {data.map((item:any)=>{
-                return (
-                    <div className="mb-3 hover:cursor-pointer w-20" key={item.data.id}><Draggable id={item.data.id} data={item.data}><div className="w-full  border-2 border-gray-500 p-1 rounded-md shadow-md flex flex-col items-start">
+              {filteredData.map((item: any) => {
+              return (
+                <div className="mb-3 hover:cursor-pointer w-20" key={item.data.id}>
+                  <Draggable id={item.data.id} data={item.data}>
+                    <div className="w-full border-2 border-gray-500 p-1 rounded-md shadow-md flex flex-col items-start">
                       <div className="w-full flex items-center justify-center">
-                        {item.icon==="text"&&(
-                          <Image src={textLogo} alt={"icon"} className="w-10 h-10"/>
+                        {item.icon === "text" && (
+                          <Image src={textLogo} alt={"icon"} className="w-10 h-10" />
                         )}
-                         {item.icon==="button"&&(
-                          <Image src={buttonLogo} alt={"icon"} className="w-10 h-10"/>
+                        {item.icon === "button" && (
+                          <Image src={buttonLogo} alt={"icon"} className="w-10 h-10" />
                         )}
-                         {item.icon==="input"&&(
-                          <Image src={inputLogo} alt={"icon"} className="w-10 h-10"/>
+                        {item.icon === "input" && (
+                          <Image src={inputLogo} alt={"icon"} className="w-10 h-10" />
                         )}
-                         {item.icon==="image"&&(
-                          <Image src={imageLogo} alt={"icon"} className="w-10 h-10"/>
+                        {item.icon === "image" && (
+                          <Image src={imageLogo} alt={"icon"} className="w-10 h-10" />
                         )}
                       </div>
-                     <div className="flex flex-row w-full justify-center items-center font-sans"> {item.data.type}</div>
-                      </div></Draggable></div>
-                )
+                      <div className="flex flex-row w-full justify-center items-center font-sans">
+                        {item.data.type}
+                      </div>
+                    </div>
+                  </Draggable>
+                </div>
+              );
             })}
             </div>
             </div>

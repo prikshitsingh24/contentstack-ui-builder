@@ -85,7 +85,6 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
     if (selected && selected.id === props.id) {
       setSelected({ id: '', type: '', content: '' });
     } else {
-      console.log((props.id).slice(0,5))
       if((props.id).slice(0,5)==="image"){
         setSelected({
           id: props.id,
