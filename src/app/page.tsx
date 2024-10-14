@@ -388,19 +388,19 @@ export default function Home() {
               <div className={`fixed w-52 left-0 z-30 bottom-0 pb-2 top-14 transition-all duration-300 ease-in-out`}>
               <Leftsidebar data={ui} />
               {addPagePanel && (
-              <div className="fixed bottom-0 pb-2 top-14 left-52 z-20 transition-all duration-300 ease-in-out">
-                <AddPages />
-              </div>
+                <div className={`fixed bottom-0 pb-2 top-14 left-52 z-20 transition-transform duration-300 ease-in-out`}>
+                  <AddPages />
+                </div>
             )}
 
             </div>
             )}
             
-            <div className="h-full mt-2 pl-14 pb-16 pr-5 w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
+            <div className="h-full mt-2  pb-16  w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
               <Canvas />
             </div>
             {selectedSection.id || selected.id ? (
-              <div className="w-[270px] fixed z-20 bg-white bottom-0 pb-2 top-14 right-0 transition-all duration-300 ease-in-out">
+              <div className="w-[250px] fixed z-20 bg-white bottom-0 pb-2 top-14 right-0 transition-all duration-300 ease-in-out">
               <Rightsidebar />
             </div>
             ):(

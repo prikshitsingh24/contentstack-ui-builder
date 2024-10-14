@@ -60,7 +60,7 @@ export default function Leftsidebar({data}:any){
               <div className="absolute right-2 top-2" onClick={()=>setLeftSidebarCollapsed(true)}>
               <Image src={arrowBackLogo} alt={"arrow back"} width={25}></Image>
                 </div>
-            <div className="pl-3 pr-3 pt-10">
+            <div className="pl-3 pr-3 pt-8">
                 <div className="text-2xl font-sans font-bold ">
                 Add elements
                 </div>

@@ -196,7 +196,7 @@ useEffect(() => {
   return (
     <div className='w-full h-full overflow-hidden relative border-2 border-black rounded-md'>
            {gridVisibility && <div className='absolute z-20 right-56 h-full border-r-2 border-dashed' style={{borderColor:gridColor}}></div> }
-           {gridVisibility && <div className='absolute z-20 left-44 h-full border-r-2 border-dashed'  style={{borderColor:gridColor}}></div>}
+           {gridVisibility && <div className='absolute z-20 left-56 h-full border-r-2 border-dashed'  style={{borderColor:gridColor}}></div>}
       {contextMenu && (
         <div style={{position:'fixed',left:`${positionX}px`,top:`${positionY}px`,zIndex:'100'}}>
           <ContextMenu onDelete={handleDelete} onResize={handleResizeClick} ></ContextMenu>
