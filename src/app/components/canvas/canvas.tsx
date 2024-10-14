@@ -185,9 +185,9 @@ useEffect(() => {
      <div className='h-full w-full overflow-y-scroll'>
      <div className='h-20 w-full'>
            <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`header-column-2`} key={selectedPage.id}>
+           <Droppable id={`header-row`} key={selectedPage.id}>
            {selectedPage?.header?.map((item: any) => (
-                 item.over==`header-column-2` && (
+                 item.over==`header-row` && (
                    <div
                  key={item.id}
                  style={{
@@ -227,9 +227,9 @@ useEffect(() => {
          <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-2 border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
            <div className='h-full w-full'>
            <div className={`w-full h-full ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`${section.id}-content-column-2`} key={section.id}>
+           <Droppable id={`${section.id}-content-row`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
-                 item.over==`${section.id}-content-column-2` && (
+                 item.over==`${section.id}-content-row` && (
                    <div
                  key={item.id}
                  style={{
@@ -270,9 +270,9 @@ useEffect(() => {
       ))}
       <div className='h-32 w-full'>
            <div className={`h-full w-full ${gridVisibility?'border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`footer-column-2`} key={selectedPage.id}>
+           <Droppable id={`footer-row`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
-                 item.over==`footer-column-2` && (
+                 item.over==`footer-row` && (
                    <div
                  key={item.id}
                  style={{
