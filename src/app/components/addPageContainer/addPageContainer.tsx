@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import pageState from "@/app/states/pageState";
 import builderState from "@/app/states/builderState";
 import addPage from "@/app/states/addPage";
-
+import crossLogo from "../../images/crossLogo.png"
 
 export default function AddPageContainer(){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -20,6 +20,7 @@ export default function AddPageContainer(){
     const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
     const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+    const [input,setInput]=useRecoilState(addPage.inputState)
     
     const addBlankPage=()=>{
           const updatedSection = {
@@ -47,9 +48,19 @@ export default function AddPageContainer(){
         setAddPagePanel(true);
     }
 
+    const handleCrossClick=()=>{
+      setNewPage(false);
+      setInput(false)
+    }
+
     return(
         <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center z-[9999] backdrop-blur-sm">
-       <div className="h-5/6 w-7/12 bg-white z-10">
+       <div className="h-5/6 w-7/12 bg-white z-10 relative">
+      {pages.length>0 && (
+         <div className="absolute right-5 top-2" onClick={handleCrossClick}>
+         <Image src={crossLogo} alt={"cross Logo"} width={25} height={25}></Image>
+         </div>
+      )}
          <div className="font-sans text-xl font-bold p-3">
           Add Page
          </div>
