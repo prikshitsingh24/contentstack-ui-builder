@@ -79,11 +79,18 @@ export default function Home() {
     
         if (over.id === "header-row") {
           // Step 1: Find the index of the item in the header
+          const existingItemInSection = selectedPage.children?.some((section: any) => {
+            // Find the item in the section's children
+            return section.children.findIndex((item: any) => item.id === id) !== -1;
+          });
+          
+          if (existingItemInSection) {
+            return; // Item exists, so exit the function
+          }
           const existingItemIndex:any = selectedPage?.header?.findIndex((item: any) => item.id === id);
         
           if (existingItemIndex !== -1) {
             // Step 2: Item exists, update its position
-            console.log("Updating position for item with id:", id);
             const updatedHeader = [...selectedPage.header || []]; // Clone the header to update
             updatedHeader[existingItemIndex] = {
               ...updatedHeader[existingItemIndex],
@@ -136,6 +143,15 @@ export default function Home() {
           }
         
         }else if(over.id === "footer-row"){
+
+          const existingItemInSection = selectedPage.children?.some((section: any) => {
+            // Find the item in the section's children
+            return section.children.findIndex((item: any) => item.id === id) !== -1;
+          });
+          
+          if (existingItemInSection) {
+            return; // Item exists, so exit the function
+          }
           const existingItemIndex:any = selectedPage?.footer?.findIndex((item: any) => item.id === id);
         
           if (existingItemIndex !== -1) {
