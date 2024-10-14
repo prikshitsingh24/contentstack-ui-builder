@@ -12,6 +12,7 @@ import InputDesign from "../design/inputDesign";
 import TextDesign from "../design/textDesign";
 import crossLogo from "../../images/crossLogo.png"
 import Image from "next/image";
+import BoxDesign from "../design/boxDesign";
 
 export default function Rightsidebar(){
     const [selected,setSelected]=useRecoilState(canvasState.selectedItemState);
@@ -296,6 +297,9 @@ export default function Rightsidebar(){
                     )}
                      {selected.type=="Image"&&(
                         <ImageDesign></ImageDesign>
+                    )}
+                    {selected.type=="Box"&&(
+                        <BoxDesign></BoxDesign>
                     )}
                 </div>
                 </div>

@@ -72,5 +72,20 @@
         "borderRadius": "5px"
     }
     }
+  },
+  {
+    "icon":"box",
+    "data":{
+      "id": "box",
+      "type": "Box",
+      "style": {
+        "width": "300px",
+        "height": "200px",
+        "borderColor": "#000000",
+        "borderWidth": "1px",
+        "borderRadius": "5px",
+        "backgroundColor": "#FFFFFFF"
+    }
+    }
   }
 ]

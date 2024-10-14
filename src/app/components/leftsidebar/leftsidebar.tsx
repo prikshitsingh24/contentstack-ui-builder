@@ -20,6 +20,7 @@ import imageLogo from "../../images/imageLogo.png";
 import previewLogo from "../../images/previewLogo.png";
 import builderState from "@/app/states/builderState";
 import arrowBackLogo from "../../images/arrowBackLogo.png";
+import boxLogo from  "../../images/boxLogo.png";
 
 export default function Leftsidebar({data}:any){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -86,6 +87,9 @@ export default function Leftsidebar({data}:any){
                         )}
                         {item.icon === "image" && (
                           <Image src={imageLogo} alt={"icon"} className="w-10 h-10" />
+                        )}
+                         {item.icon === "box" && (
+                          <Image src={boxLogo} alt={"icon"} className="w-10 h-10" />
                         )}
                       </div>
                       <div className="flex flex-row w-full justify-center items-center font-sans">

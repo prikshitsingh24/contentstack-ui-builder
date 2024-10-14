@@ -240,8 +240,8 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
             style={{
               cursor: 'nwse-resize',
             }}
-            minWidth={50} // Minimum width to prevent the box from resizing too small
-            minHeight={50} // Minimum height to prevent the box from resizing too small
+            minWidth={20} // Minimum width to prevent the box from resizing too small
+            minHeight={20} // Minimum height to prevent the box from resizing too small
             handleStyles={{
               topRight: { zIndex: 10 },
               bottomRight: { zIndex: 10 },

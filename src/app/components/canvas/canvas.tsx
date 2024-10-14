@@ -180,7 +180,7 @@ useEffect(() => {
           <ContextMenu onDelete={handleDelete} onResize={handleResizeClick} ></ContextMenu>
           </div>
       )}
-     <div className='h-full w-full overflow-y-scroll'>
+     <div className='h-full w-full overflow-x-hidden overflow-y-scroll'>
      <div className='h-20 w-full'>
            <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`header-row`} key={selectedPage.id}>
@@ -213,6 +213,9 @@ useEffect(() => {
                    )}
                      {item.type=="Image" &&(
                     <img src={item.src} style={item.style}></img>
+                   )}
+                   {item.type=="Box" &&(
+                    <div style={item.style}></div>
                    )}
                  </CanvasDraggable>
                </div>
@@ -256,6 +259,9 @@ useEffect(() => {
                    {item.type=="Image" &&(
                     <img src={item.src} style={item.style}></img>
                    )}
+                    {item.type=="Box" &&(
+                    <div style={item.style}></div>
+                   )}
                  </CanvasDraggable>
                </div>
                  )
@@ -297,6 +303,9 @@ useEffect(() => {
                    )}
                      {item.type=="Image" &&(
                     <img src={item.src} style={item.style}></img>
+                   )}
+                    {item.type=="Box" &&(
+                    <div style={item.style}></div>
                    )}
                  </CanvasDraggable>
                </div>
