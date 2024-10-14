@@ -194,7 +194,7 @@ useEffect(() => {
   }
 
   return (
-    <div className='w-full h-full overflow-hidden relative border-2 rounded-md'>
+    <div className='w-full h-full overflow-hidden relative border-4 border-black rounded-md'>
            {gridVisibility && <div className='absolute z-20 right-56 h-full border-r-2 border-dashed' style={{borderColor:gridColor}}></div> }
            {gridVisibility && <div className='absolute z-20 left-44 h-full border-r-2 border-dashed'  style={{borderColor:gridColor}}></div>}
       {contextMenu && (
@@ -247,7 +247,7 @@ useEffect(() => {
            </div>
           </div>
        {selectedPage?.children?.map((section:any) => (
-         <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-2 border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
+         <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-4 border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
            <div className='h-full w-full'>
            <div className={`w-full h-full ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`${section.id}-content`} key={section.id}>
