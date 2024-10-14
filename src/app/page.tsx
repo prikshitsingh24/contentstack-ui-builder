@@ -77,7 +77,7 @@ export default function Home() {
         const content = active.data.current.data.content;
         const id = active.id; // The item's id
     
-        if (over.id === "header-row") {
+        if (over.id === "header") {
           // Step 1: Find the index of the item in the header
           const existingItemInSection = selectedPage.children?.some((section: any) => {
             // Find the item in the section's children
@@ -142,7 +142,7 @@ export default function Home() {
             setPages(updatedPages);
           }
         
-        }else if(over.id === "footer-row"){
+        }else if(over.id === "footer"){
 
           const existingItemInSection = selectedPage.children?.some((section: any) => {
             // Find the item in the section's children

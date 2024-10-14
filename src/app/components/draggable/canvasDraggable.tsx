@@ -80,8 +80,9 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
     border: '2px solid blue',
     zIndex: 1,
   };
-
+  const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const handleItemSelected = () => {
+    setSelectedSection({});
     if (selected && selected.id === props.id) {
       setSelected({ id: '', type: '', content: '' });
     } else {

@@ -55,6 +55,28 @@ export default function Canvas() {
  
 
   const handleDelete = () => {
+    if(selectedSection.id && selectedPage.children && selectedPage.children.length>1){
+      const updatedChildren = selectedPage?.children?.filter((section) => 
+       section.id !== selectedSection.id
+      );
+
+      // Step 2: Update the selectedPage with the new children array
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedChildren,  // Set the updated children list
+      });
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            children:updatedChildren
+          };
+        }
+        return page;
+      });
+      setPages(updatedPages);
+      return;
+    }
     if (selected.id?.slice(0,6)=="header") {
    
         const updatedChildren = selectedPage?.header?.filter((item: any) => item.id !== selected.id);
@@ -155,7 +177,7 @@ useEffect(() => {
       // You can handle the context menu here, such as showing a custom menu
     };
     // Attach the right-click event listener
-    if(selected && selected.id){
+    if(selected && selected.id || selectedSection.id){
       window.addEventListener('contextmenu', handleRightClick);
     }
     setContextMenu(false)
@@ -183,9 +205,9 @@ useEffect(() => {
      <div className='h-full w-full overflow-x-hidden overflow-y-scroll'>
      <div className='h-20 w-full'>
            <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`header-row`} key={selectedPage.id}>
+           <Droppable id={`header`} key={selectedPage.id}>
            {selectedPage?.header?.map((item: any) => (
-                 item.over==`header-row` && (
+                 item.over==`header` && (
                    <div
                  key={item.id}
                  style={{
@@ -228,9 +250,9 @@ useEffect(() => {
          <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-2 border-blue-700':''} `}  onClick={(e) => handleCanvasClick(e, section)}>
            <div className='h-full w-full'>
            <div className={`w-full h-full ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`${section.id}-content-row`} key={section.id}>
+           <Droppable id={`${section.id}-content`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
-                 item.over==`${section.id}-content-row` && (
+                 item.over==`${section.id}-content` && (
                    <div
                  key={item.id}
                  style={{
@@ -274,9 +296,9 @@ useEffect(() => {
       ))}
       <div className='h-32 w-full'>
            <div className={`h-full w-full ${gridVisibility?'border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
-           <Droppable id={`footer-row`} key={selectedPage.id}>
+           <Droppable id={`footer`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
-                 item.over==`footer-row` && (
+                 item.over==`footer` && (
                    <div
                  key={item.id}
                  style={{
