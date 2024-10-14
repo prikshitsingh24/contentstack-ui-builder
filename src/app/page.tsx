@@ -396,7 +396,7 @@ export default function Home() {
             </div>
             )}
             
-            <div className="h-full mt-2  pb-16  w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
+            <div className="h-full mt-2  pl-2 pr-2 pb-16  w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
               <Canvas />
             </div>
             {selectedSection.id || selected.id ? (
