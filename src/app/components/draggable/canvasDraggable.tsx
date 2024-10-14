@@ -25,6 +25,7 @@ export function CanvasDraggable(props: any) {
   const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState);
   const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
 
+
   // Event listener for the "R" key to toggle resizing mode
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -56,7 +57,7 @@ export function CanvasDraggable(props: any) {
     },
   }); 
   
-  const zoomScale = isZoomedOut ? 0.7 : 1; // Apply 0.7 scaling if isZoomedOut is true, else 1
+const zoomScale = isZoomedOut ? 0.7 : 1; // Apply 0.7 scaling if isZoomedOut is true, else 1
 
 // Adjust the position based on the zoom level
 const adjustedTransform = transform
@@ -69,7 +70,7 @@ const adjustedTransform = transform
   : { x: 0, y: 0, scaleX: zoomScale, scaleY: zoomScale };
 
 // Construct the `transform` property including both translation and scaling
-const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransform.y}px)`;
+const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransform.y}px) scale(${adjustedTransform.scaleX}, ${adjustedTransform.scaleY})`;
 
 
   const dragstyle = {
@@ -228,12 +229,12 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
   return (
     <>
       {selected.id !== props.id ? (
-        <button onClick={handleItemSelected}>
+        <button onClick={handleItemSelected} style={{transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"}}>
           {props.children}
         </button>
       ) : (
         isResizingMode ? (
-          <div style={{border:'2px solid red',height:height+3,width:width+3}}>
+          <div style={{border:'2px solid red',height:height+3,width:width+3,transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"}}>
             <Resizable
             size={{ width: width, height: height }}
             onResize={onResize} // Real-time resize handler

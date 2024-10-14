@@ -204,7 +204,7 @@ useEffect(() => {
       )}
      <div className='h-full w-full overflow-x-hidden overflow-y-scroll'>
      <div className='h-20 w-full'>
-           <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
+           <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative `} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
            <Droppable id={`header`} key={selectedPage.id}>
            {selectedPage?.header?.map((item: any) => (
                  item.over==`header` && (
