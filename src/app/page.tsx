@@ -80,14 +80,62 @@ export default function Home() {
         const id = active.id; // The item's id
     
         if (over.id === "header") {
-          // Step 1: Find the index of the item in the header
-          const existingItemInSection = selectedPage.children?.some((section: any) => {
-            // Find the item in the section's children
-            return section.children.findIndex((item: any) => item.id === id) !== -1;
+          let existingItemInSection: any;
+          let sectionIndex: number = -1;
+        
+          // Find the item in sections
+          selectedPage.children?.some((section: any, index: number) => {
+            const itemIndex = section.children.findIndex((item: any) => item.id === id);
+            if (itemIndex !== -1) {
+              existingItemInSection = section.children[itemIndex];
+              sectionIndex = index;
+              return true; // Stop searching
+            }
+            return false;
           });
-          
-          if (existingItemInSection) {
-            return; // Item exists, so exit the function
+        
+          if (existingItemInSection && selectedPage.children) {
+            // Create a new array of sections
+            const updatedSections = selectedPage.children.map((section: any, index: number) => {
+              if (index === sectionIndex) {
+                // Create a new section object with filtered children
+                return {
+                  ...section,
+                  children: section.children.filter((item: any) => item.id !== id)
+                };
+              }
+              return section;
+            });
+            const updatedId = "header-" + existingItemInSection.id;
+            const newHeaderItem = {
+              ...existingItemInSection,
+              id: updatedId,
+              over: "header",
+              position, // Set position for the new item
+            };
+            const updatedHeader = [...(selectedPage.header || []), newHeaderItem];
+        
+            // Update selectedPage
+            setSelectedPage({
+              ...selectedPage,
+              children: updatedSections,
+              header: updatedHeader
+            });
+        
+            // Update pages state
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  children: updatedSections,
+                  header: updatedHeader,
+                };
+              }
+              return page;
+            });
+        
+            setPages(updatedPages);
+            return
           }
           const existingItemIndex:any = selectedPage?.header?.findIndex((item: any) => item.id === id);
         
@@ -146,13 +194,62 @@ export default function Home() {
         
         }else if(over.id === "footer"){
 
-          const existingItemInSection = selectedPage.children?.some((section: any) => {
-            // Find the item in the section's children
-            return section.children.findIndex((item: any) => item.id === id) !== -1;
+          let existingItemInSection: any;
+          let sectionIndex: number = -1;
+        
+          // Find the item in sections
+          selectedPage.children?.some((section: any, index: number) => {
+            const itemIndex = section.children.findIndex((item: any) => item.id === id);
+            if (itemIndex !== -1) {
+              existingItemInSection = section.children[itemIndex];
+              sectionIndex = index;
+              return true; // Stop searching
+            }
+            return false;
           });
-          
-          if (existingItemInSection) {
-            return; // Item exists, so exit the function
+        
+          if (existingItemInSection && selectedPage.children) {
+            const updatedSections = selectedPage.children.map((section: any, index: number) => {
+              if (index === sectionIndex) {
+                // Create a new section object with filtered children
+                return {
+                  ...section,
+                  children: section.children.filter((item: any) => item.id !== id)
+                };
+              }
+              return section;
+            });
+            const updatedId = "footer-" + existingItemInSection.id;
+            const newfooterItem = {
+              ...existingItemInSection,
+              id: updatedId,
+              over: "footer",
+              position, // Set position for the new item
+            };
+            // Add item to header
+            const updatedfooter = [...(selectedPage.header || []), newfooterItem];
+        
+            // Update selectedPage
+            setSelectedPage({
+              ...selectedPage,
+              children: updatedSections,
+              footer: updatedfooter
+            });
+        
+            // Update pages state
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  children: updatedSections,
+                  footer: updatedfooter,
+                };
+              }
+              return page;
+            });
+        
+            setPages(updatedPages);
+            return
           }
           const existingItemIndex:any = selectedPage?.footer?.findIndex((item: any) => item.id === id);
         
@@ -211,6 +308,106 @@ export default function Home() {
         }
         
         else{
+
+          const existingItemIndexHeader:any = selectedPage.header?.findIndex((item: any) => item.id === id);
+
+          if (existingItemIndexHeader !== -1 && selectedPage.header) {
+            // Item exists in header, create new arrays without the item
+            const removedItem:any = selectedPage.header[existingItemIndexHeader];
+            const updatedHeader = selectedPage.header.filter((_, index) => index !== existingItemIndexHeader);
+        
+            // Prepare item for content section
+            const updatedId = "content-" + removedItem.id.replace("header-", "");
+            const newContentItem = {
+              ...removedItem,
+              id: updatedId,
+              over: over.id,
+              position, // Set position for the new item
+            };
+            // Find the target section and add the item
+            const updatedSections = selectedPage?.children?.map((section: any) => {
+              if ((section.id+'-content') === over.id) {
+                return {
+                  ...section,
+                  children: [...section.children, newContentItem]
+                };
+              }
+              return section;
+            });
+        
+            // Update selectedPage
+            setSelectedPage({
+              ...selectedPage,
+              children: updatedSections,
+              header: updatedHeader
+            });
+        
+            // Update pages state
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  children: updatedSections,
+                  header: updatedHeader,
+                };
+              }
+              return page;
+            });
+        
+            setPages(updatedPages);
+            return
+          }
+
+
+          const existingItemIndexFooter:any = selectedPage.footer?.findIndex((item: any) => item.id === id);
+
+          if (existingItemIndexFooter !== -1 && selectedPage.footer) {
+            // Item exists in header, create new arrays without the item
+            const removedItem:any = selectedPage.footer[existingItemIndexFooter];
+            const updatedFooter = selectedPage.footer.filter((_, index) => index !== existingItemIndexFooter);
+        
+            // Prepare item for content section
+            const updatedId = "content-" + removedItem.id.replace("footer-", "");
+            const newContentItem = {
+              ...removedItem,
+              id: updatedId,
+              over: over.id,
+              position, // Set position for the new item
+            };
+            // Find the target section and add the item
+            const updatedSections = selectedPage?.children?.map((section: any) => {
+              if ((section.id+'-content') === over.id) {
+                return {
+                  ...section,
+                  children: [...section.children, newContentItem]
+                };
+              }
+              return section;
+            });
+        
+            // Update selectedPage
+            setSelectedPage({
+              ...selectedPage,
+              children: updatedSections,
+              footer: updatedFooter
+            });
+        
+            // Update pages state
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  children: updatedSections,
+                  footer: updatedFooter,
+                };
+              }
+              return page;
+            });
+        
+            setPages(updatedPages);
+            return
+          }
+
           const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
             const existingItemIndex = section.children.findIndex((item: any) => item.id === id);
     
