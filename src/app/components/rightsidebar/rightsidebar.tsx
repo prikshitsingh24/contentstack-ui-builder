@@ -13,6 +13,8 @@ import TextDesign from "../design/textDesign";
 import crossLogo from "../../images/crossLogo.png"
 import Image from "next/image";
 import BoxDesign from "../design/boxDesign";
+import arrowForwardLogo from "../../images/arrowForwardLogo.png";
+import builderState from "@/app/states/builderState";
 
 export default function Rightsidebar(){
     const [selected,setSelected]=useRecoilState(canvasState.selectedItemState);
@@ -22,7 +24,7 @@ export default function Rightsidebar(){
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
-
+    const [rightSidebarCollapsed,setRightSidebarCollapsed]=useRecoilState(builderState.rightSidebarCollapsedState)
     async function fetchContentTypes() {
         try {
           const response = await getAllContentTypes();
@@ -267,22 +269,21 @@ export default function Rightsidebar(){
         }
     }
 
-    const handleCrossClick=()=>{
-      setSelected({});
-      setSelectedSection({})
+    const handleForwardClick=()=>{
+      setRightSidebarCollapsed(true);
     }
 
     return(
         <div className="grid grid-rows-[1fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
             <div className="h-full border-gray-400">
             <div className="pl-3 pr-3 pt-5 relative">
-              <div className="absolute right-2 top-2" onClick={handleCrossClick}>
-                <Image src={crossLogo} alt={"cross Logo"} width={25} height={25}></Image>
+              <div className="absolute right-2 top-2 cursor-pointer flex justify-end w-full" onClick={handleForwardClick}>
+              <Image src={arrowForwardLogo} alt={"arrow back"} width={25}></Image>
               </div>
                 <div className="text-2xl mt-2 font-sans font-bold">
                  Design
                 </div>
-                <div className="mt-4">
+                <div className="mt-4 ">
                     {!selected.type&&(
                         <BackgroundDesign></BackgroundDesign>
                     )}

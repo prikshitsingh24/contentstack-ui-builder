@@ -18,6 +18,7 @@ import AddPageContainer from "./components/addPageContainer/addPageContainer";
 import AddSectionContainer from "./components/addSectionContainer/addSectionContainer";
 import arrowForwardLogo from "./images/arrowForwardLogo.png";
 import Image from "next/image";
+import arrowBackLogo from "./images/arrowBackLogo.png";
 
 interface DraggableItem {
   id: string; // Unique identifier for the item
@@ -42,6 +43,7 @@ export default function Home() {
   const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
   const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
   const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState)
+  const [rightSidebarCollapsed,setRightSidebarCollapsed]=useRecoilState(builderState.rightSidebarCollapsedState)
 
   const toggleZoom = () => {
     setIsZoomedOut((prev) => !prev); // Toggle between true (50%) and false (100%)
@@ -399,12 +401,16 @@ export default function Home() {
             <div className="h-full mt-2  pl-2 pr-2 pb-16  w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
               <Canvas />
             </div>
-            {selectedSection.id || selected.id ? (
+            {rightSidebarCollapsed ? (
+               <div className={`fixed w-12 right-0 z-30 bottom-0 pb-2 top-14 transition-all duration-300 ease-in-out`}>
+               <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative" onClick={()=>setRightSidebarCollapsed(false)}>
+                 <div className="absolute right-2 top-2" ><Image src={arrowBackLogo} alt={"arrow back"} width={25}></Image></div>
+               </div>
+             </div>
+            ):(
               <div className="w-[250px] fixed z-20 bg-white bottom-0 pb-2 top-14 right-0 transition-all duration-300 ease-in-out">
               <Rightsidebar />
             </div>
-            ):(
-              <></>
             )}
           </div>
         </DndContext>

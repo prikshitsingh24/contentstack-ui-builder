@@ -26,4 +26,9 @@ const leftSidebarCollapsedState=atom({
   default:false
 })
 
-export default {previewState,newPageState,newSectionState,zoomState,leftSidebarCollapsedState}
+const rightSidebarCollapsedState=atom({
+  key:'rightSidebarCollapsedState',
+  default:false
+})
+
+export default {previewState,newPageState,newSectionState,zoomState,leftSidebarCollapsedState,rightSidebarCollapsedState}

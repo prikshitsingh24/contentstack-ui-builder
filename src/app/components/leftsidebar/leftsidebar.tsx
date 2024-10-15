@@ -57,7 +57,7 @@ export default function Leftsidebar({data}:any){
     return(
         <div className="bg-white grid grid-rows-[2fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
             <div className=" h-full grid grid-rows-[0.5fr_3fr] relative" >
-              <div className="absolute right-2 top-2" onClick={()=>setLeftSidebarCollapsed(true)}>
+              <div className="absolute right-2 top-2 cursor-pointer flex justify-end w-full" onClick={()=>setLeftSidebarCollapsed(true)}>
               <Image src={arrowBackLogo} alt={"arrow back"} width={25}></Image>
                 </div>
             <div className="pl-3 pr-3 pt-8">
