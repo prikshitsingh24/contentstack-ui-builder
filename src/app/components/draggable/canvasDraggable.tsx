@@ -439,7 +439,7 @@ const adjustedTransform = transform
   : { x: 0, y: 0, scaleX: zoomScale, scaleY: zoomScale };
 
 // Construct the `transform` property including both translation and scaling
-const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransform.y}px) scale(${zoomScale}, ${zoomScale})`;
+const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransform.y}px) `;
 
 
   const dragstyle = {
@@ -603,12 +603,12 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
   return (
     <>
       {selected.id !== props.id ? (
-        <button onClick={handleItemSelected} style={{transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"}}>
+        <button onClick={handleItemSelected} >
           {props.children}
         </button>
       ) : (
         isResizingMode ? (
-          <div style={{border:'2px solid red',height:height+3,width:width+3,transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"}}>
+          <div style={{border:'2px solid red',height:height+3,width:width+3}}>
             <Resizable
             size={{ width: width, height: height }}
             onResize={onResize} // Real-time resize handler
