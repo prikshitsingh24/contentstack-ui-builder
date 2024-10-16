@@ -44,7 +44,9 @@ export default function Home() {
   const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
   const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState)
   const [rightSidebarCollapsed,setRightSidebarCollapsed]=useRecoilState(builderState.rightSidebarCollapsedState)
-
+  const [horizontalSnapLine, setHorizontalSnapLine] = useRecoilState(builderState.horizontalSnapLineState);
+  const [verticalSnapLine, setVerticalSnapLine] = useRecoilState(builderState.verticalSnapLineState);
+  const [snapPoints,setSnapPoints]=useRecoilState(builderState.snapPointsStatus)
   const toggleZoom = () => {
     setIsZoomedOut((prev) => !prev); // Toggle between true (50%) and false (100%)
   };
@@ -52,7 +54,7 @@ export default function Home() {
     const [
       mousePosition,
       setMousePosition
-    ] = React.useState({ x: 0, y: 0 });
+    ] = useRecoilState(builderState.mousePositionState);
   
     React.useEffect(() => {
       const updateMousePosition = (ev:any) => {
@@ -68,13 +70,23 @@ export default function Home() {
   
 
     const handleDragEnd = (event: any) => {
+     
       const { active, over } = event;
       if (over) {
         const zoom=isZoomedOut?0.7:1
-        const x = (mousePosition.x - event.over.rect.left)/zoom;
-        const y = (mousePosition.y - event.over.rect.top)/zoom;
+        let x,y;
+        if(snapPoints.x!=0 && snapPoints.y!=0){
+          x=snapPoints.x;
+          y=snapPoints.y;
+        }else{
+          x = (mousePosition.x - event.over.rect.left)/zoom;
+          y = (mousePosition.y - event.over.rect.top)/zoom;
+        }
+
         const position = { x, y };
-    
+        setHorizontalSnapLine([]);
+        setVerticalSnapLine([])
+        setSnapPoints({x:0,y:0})
         // Get the content and id of the dragged item
         const content = active.data.current.data.content;
         const id = active.id; // The item's id

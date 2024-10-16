@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import { useRecoilState } from 'recoil';
@@ -12,6 +12,8 @@ const ResizeHandle = ({ className }:any) => (
   <div className={`resize-handle ${className}`} />
 );
 
+const SNAP_THRESHOLD = 15;
+
 export function CanvasDraggable(props: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const widthWithUnit = props.data.style?.width;
@@ -24,8 +26,17 @@ export function CanvasDraggable(props: any) {
   const [pages, setPages] = useRecoilState(pageState.pageState);
   const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState);
   const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
+  const [horizontalSnapLines, setHorizontalSnapLines] = useRecoilState(builderState.horizontalSnapLineState);
+  const [verticalSnapLines, setVerticalSnapLines] = useRecoilState(builderState.verticalSnapLineState);
+  const elementRef=useRef<any>();
+  const [relativePos,setRelativePos]=useState<any>();
+  const [
+    mousePosition,
+    setMousePosition
+  ] = useRecoilState(builderState.mousePositionState);
+  const [snapPosition, setSnapPosition] = useState({ x: 0, y: 0 });
 
-
+  
   // Event listener for the "R" key to toggle resizing mode
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -55,11 +66,369 @@ export function CanvasDraggable(props: any) {
       type: 'items',
       data: { content: props.data },
     },
+    
   }); 
   
+
 const zoomScale = isZoomedOut ? 0.7 : 1; // Apply 0.7 scaling if isZoomedOut is true, else 1
 
-// Adjust the position based on the zoom level
+const SNAP_THRESHOLD = 15; // Adjust as needed
+
+// const checkSnapping = (x: number, y: number) => {
+//   const elementWidth:any=selected?.style?.width
+//   const elementHeight:any=selected?.style?.height
+//   const element:any = document.getElementById(selected.over || " ");
+//   const canvasWidth: number = element?.offsetWidth || 0;
+//   const canvasHeight: number = element?.offsetHeight || 0;
+//   const centerX: number = canvasWidth / 2;
+//   const centerY: number = canvasHeight / 2;
+//   const elementLeft = x;
+//   const elementRight = x + (parseFloat(elementWidth));
+//   const elementTop = y;
+//   const elementBottom = y + (parseFloat(elementHeight));
+//   const elementCenterX = (elementLeft + elementRight) / 2;
+//   const elementCenterY = (elementTop + elementBottom) / 2;
+
+//   let vLines: { position: number; selected?: string }[] = [];
+//   let hLines: { position: number; selected?: string }[] = [];
+
+//   // Check canvas center alignment
+//   if (Math.abs(elementCenterX - centerX) <= SNAP_THRESHOLD) {
+//     vLines.push({ position: centerX, selected: selected.over });
+//   }
+//   if (Math.abs(elementCenterY - centerY) <= SNAP_THRESHOLD) {
+//     hLines.push({ position: centerY, selected: selected.over });
+//   }
+
+//   // Iterate through other elements and check snapping to their boundaries
+//   selectedPage?.children?.forEach((section) => {
+//     section?.children?.forEach((item) => {
+//       if (selected.id === item.id) {
+//         return; // Skip the currently selected item
+//       }
+
+//       const itemStyle = item?.style || {};
+//       const itemLeft: number = item?.position?.x || 0;
+//       const itemWidth: number = parseFloat(itemStyle?.width || '0');
+//       const itemRight: number = itemLeft + itemWidth;
+//       const itemTop: number = item?.position?.y || 0;
+//       const itemHeight: number = parseFloat(itemStyle?.height || '0');
+//       const itemBottom: number = itemTop + itemHeight;
+//       const itemCenterX: number = itemLeft + itemWidth / 2;
+//       const itemCenterY: number = itemTop + itemHeight / 2;
+
+//       // Check left, center, and right alignment (vertical lines)
+//       if (Math.abs(elementLeft - itemLeft) <= SNAP_THRESHOLD ||
+//           Math.abs(elementRight - itemLeft) <= SNAP_THRESHOLD) {
+//         vLines.push({ position: itemLeft, selected: selected.over });
+//       }
+//       if (Math.abs(elementCenterX - itemCenterX) <= SNAP_THRESHOLD) {
+//         vLines.push({ position: itemCenterX, selected: selected.over });
+//       }
+//       // if (Math.abs(elementLeft - itemRight) <= SNAP_THRESHOLD ||
+//       //     Math.abs(elementRight - itemRight) <= SNAP_THRESHOLD) {
+//       //   vLines.push({ position: itemRight, selected: selected.over });
+//       // }
+
+//       // // Check top, center, and bottom alignment (horizontal lines)
+//       // if (Math.abs(elementTop - itemTop) <= SNAP_THRESHOLD ||
+//       //     Math.abs(elementBottom - itemTop) <= SNAP_THRESHOLD) {
+//       //   hLines.push({ position: itemTop, selected: selected.over });
+//       // }
+//       // if (Math.abs(elementCenterY - itemCenterY) <= SNAP_THRESHOLD) {
+//       //   hLines.push({ position: itemCenterY, selected: selected.over });
+//       // }
+//       // if (Math.abs(elementTop - itemBottom) <= SNAP_THRESHOLD ||
+//       //     Math.abs(elementBottom - itemBottom) <= SNAP_THRESHOLD) {
+//       //   hLines.push({ position: itemBottom, selected: selected.over });
+//       // }
+//     });
+//   });
+
+//   // Update the snap lines only if they are different from the previous ones
+//   setVerticalSnapLines((prevVLines: any) => {
+//     return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+//       ? vLines
+//       : prevVLines;
+//   });
+
+//   setHorizontalSnapLines((prevHLines: any) => {
+//     return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+//       ? hLines
+//       : prevHLines;
+//   });
+
+//   // Return the snapped position (adjust as needed)
+//   const snappedX = vLines.length > 0 ? vLines[0].position : x;
+//   const snappedY = hLines.length > 0 ? hLines[0].position : y;
+
+//   return { x: snappedX, y: snappedY };
+// };
+
+const checkSnapping = (x: number, y: number) => {
+  const elementWidth: any = selected?.style?.width;
+  const elementHeight: any = selected?.style?.height;
+  const element: any = document.getElementById(selected.over || " ");
+  const canvasWidth: number = element?.offsetWidth || 0;
+  const canvasHeight: number = element?.offsetHeight || 0;
+  const centerX: number = canvasWidth / 2;
+  const centerY: number = canvasHeight / 2;
+  const elementLeft = x;
+  const elementRight = x + (parseFloat(elementWidth));
+  const elementTop = y;
+  const elementBottom = y + (parseFloat(elementHeight));
+  const elementCenterX = (elementLeft + elementRight) / 2;
+  const elementCenterY = (elementTop + elementBottom) / 2;
+  const mouseCenterX = mousePosition.x;
+  const mouseCenterY = mousePosition.y;
+
+  let vLines: { position: number; selected?: string }[] = [];
+  let hLines: { position: number; selected?: string }[] = [];
+
+  if (Math.abs(mouseCenterX - centerX) <= SNAP_THRESHOLD) {
+    vLines = [...vLines, { position: centerX, selected: selected.over }];  // Create a new array with the new element
+
+    setVerticalSnapLines((prevVLines: any) => {
+      return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+        ? vLines
+        : prevVLines;
+    });
+
+    setHorizontalSnapLines((prevHLines: any) => {
+      return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+        ? hLines
+        : prevHLines;
+    });
+
+    const snappedX = vLines.length > 0 ? vLines[0].position : x;
+    const snappedY = hLines.length > 0 ? hLines[0].position : y;
+
+    const differntial=selected.over=="header" || selected.over=="footer"?50:130;
+
+    return { x: snappedX, y: snappedY-differntial };
+  }
+
+
+  if (Math.abs(mouseCenterY - centerY) <= SNAP_THRESHOLD) {
+    hLines = [...hLines, { position: centerY, selected: selected.over }];  // Create a new array with the new element
+
+    setVerticalSnapLines((prevVLines: any) => {
+      return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+        ? vLines
+        : prevVLines;
+    });
+
+    setHorizontalSnapLines((prevHLines: any) => {
+      return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+        ? hLines
+        : prevHLines;
+    });
+
+    const snappedX = vLines.length > 0 ? vLines[0].position : x;
+    const snappedY = hLines.length > 0 ? hLines[0].position : y;
+
+    return { x: snappedX, y: snappedY};
+  }
+
+  // Iterate through other elements and check snapping to their boundaries
+  if (selected.over === "header") {
+    selectedPage?.header?.forEach((item) => {
+      if (selected.id === item.id) {
+        return; // Skip the currently selected item
+      }
+
+      const itemStyle = item?.style || {};
+      const itemLeft: number = item?.position?.x || 0;
+      const itemWidth: number = parseFloat(itemStyle?.width || '0');
+      const itemRight: number = itemLeft + itemWidth;
+      const itemTop: number = item?.position?.y || 0;
+      const itemHeight: number = parseFloat(itemStyle?.height || '0');
+      const itemBottom: number = itemTop + itemHeight;
+
+      // Vertical snap check (left and right)
+      if (Math.abs(elementLeft - itemLeft) <= SNAP_THRESHOLD ||
+          Math.abs(elementRight - itemLeft) <= SNAP_THRESHOLD) {
+        vLines = [...vLines, { position: itemLeft, selected: selected.over }];  // Create a new array with the new element
+
+        setVerticalSnapLines((prevVLines: any) => {
+          return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+            ? vLines
+            : prevVLines;
+        });
+
+        setHorizontalSnapLines((prevHLines: any) => {
+          return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+            ? hLines
+            : prevHLines;
+        });
+
+        const snappedX = vLines.length > 0 ? vLines[0].position : x;
+        const snappedY = hLines.length > 0 ? hLines[0].position : y;
+        
+        return { x: snappedX, y: snappedY-50 };
+      }
+
+      // Horizontal snap check (top and bottom)
+      if (Math.abs(elementTop - itemTop - 40) <= SNAP_THRESHOLD ||
+          Math.abs(elementBottom - itemTop - 40) <= SNAP_THRESHOLD) {
+        hLines = [...hLines, { position: itemTop, selected: selected.over }];  // Create a new array with the new element
+
+        setVerticalSnapLines((prevVLines: any) => {
+          return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+            ? vLines
+            : prevVLines;
+        });
+
+        setHorizontalSnapLines((prevHLines: any) => {
+          return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+            ? hLines
+            : prevHLines;
+        });
+
+        const snappedX = vLines.length > 0 ? vLines[0].position : x;
+        const snappedY = hLines.length > 0 ? hLines[0].position : y;
+
+        return { x: snappedX, y: snappedY };
+      }
+    });
+  } else if (selected.over === "footer") {
+    selectedPage?.footer?.forEach((item) => {
+      if (selected.id === item.id) {
+        return; // Skip the currently selected item
+      }
+
+      const itemStyle = item?.style || {};
+      const itemLeft: number = item?.position?.x || 0;
+      const itemWidth: number = parseFloat(itemStyle?.width || '0');
+      const itemRight: number = itemLeft + itemWidth;
+      const itemTop: number = item?.position?.y || 0;
+      const itemHeight: number = parseFloat(itemStyle?.height || '0');
+      const itemBottom: number = itemTop + itemHeight;
+
+      // Vertical snap check (left and right)
+      if (Math.abs(elementLeft - itemLeft) <= SNAP_THRESHOLD ||
+          Math.abs(elementRight - itemLeft) <= SNAP_THRESHOLD) {
+        vLines = [...vLines, { position: itemLeft, selected: selected.over }];  // Create a new array with the new element
+
+        setVerticalSnapLines((prevVLines: any) => {
+          return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+            ? vLines
+            : prevVLines;
+        });
+
+        setHorizontalSnapLines((prevHLines: any) => {
+          return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+            ? hLines
+            : prevHLines;
+        });
+
+        const snappedX = vLines.length > 0 ? vLines[0].position : x;
+        const snappedY = hLines.length > 0 ? hLines[0].position : y;
+
+        return { x: snappedX, y: snappedY-130 };
+      }
+
+      // Horizontal snap check (top and bottom)
+      if (Math.abs(elementTop - itemTop - 130) <= SNAP_THRESHOLD ||
+          Math.abs(elementBottom - itemTop - 130) <= SNAP_THRESHOLD) {
+        hLines = [...hLines, { position: itemTop, selected: selected.over }];  // Create a new array with the new element
+
+        setVerticalSnapLines((prevVLines: any) => {
+          return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+            ? vLines
+            : prevVLines;
+        });
+
+        setHorizontalSnapLines((prevHLines: any) => {
+          return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+            ? hLines
+            : prevHLines;
+        });
+
+        const snappedX = vLines.length > 0 ? vLines[0].position : x;
+        const snappedY = hLines.length > 0 ? hLines[0].position : y;
+
+        return { x: snappedX, y: snappedY};
+      }
+    });
+  }else{
+    selectedPage?.children?.forEach((section) => {
+      section?.children?.map((item)=>{
+        if (selected.id === item.id) {
+          return; // Skip the currently selected item
+        }
+  
+        const itemStyle = item?.style || {};
+        const itemLeft: number = item?.position?.x || 0;
+        const itemWidth: number = parseFloat(itemStyle?.width || '0');
+        const itemRight: number = itemLeft + itemWidth;
+        const itemTop: number = item?.position?.y || 0;
+        const itemHeight: number = parseFloat(itemStyle?.height || '0');
+        const itemBottom: number = itemTop + itemHeight;
+  
+        // Vertical snap check (left and right)
+        if (Math.abs(elementLeft - itemLeft) <= SNAP_THRESHOLD ||
+            Math.abs(elementRight - itemLeft) <= SNAP_THRESHOLD) {
+          vLines = [...vLines, { position: itemLeft, selected: selected.over }];  // Create a new array with the new element
+  
+          setVerticalSnapLines((prevVLines: any) => {
+            return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+              ? vLines
+              : prevVLines;
+          });
+  
+          setHorizontalSnapLines((prevHLines: any) => {
+            return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+              ? hLines
+              : prevHLines;
+          });
+  
+          const snappedX = vLines.length > 0 ? vLines[0].position : x;
+          const snappedY = hLines.length > 0 ? hLines[0].position : y;
+  
+          return { x: snappedX, y: snappedY-130 };
+        }
+  
+        // Horizontal snap check (top and bottom)
+        if (Math.abs(elementTop - itemTop - 130) <= SNAP_THRESHOLD ||
+            Math.abs(elementBottom - itemTop - 130) <= SNAP_THRESHOLD) {
+          hLines = [...hLines, { position: itemTop, selected: selected.over }];  // Create a new array with the new element
+  
+          setVerticalSnapLines((prevVLines: any) => {
+            return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+              ? vLines
+              : prevVLines;
+          });
+  
+          setHorizontalSnapLines((prevHLines: any) => {
+            return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+              ? hLines
+              : prevHLines;
+          });
+  
+          const snappedX = vLines.length > 0 ? vLines[0].position : x;
+          const snappedY = hLines.length > 0 ? hLines[0].position : y;
+  
+          return { x: snappedX, y: snappedY};
+        }
+      });
+      })
+      
+  }
+
+    return { x:0, y:0 };
+  
+};
+
+const [snapPoints,setSnapPoints]=useRecoilState(builderState.snapPointsStatus)
+
+useEffect(() => {
+  if(isDragging){
+    const { x: newX, y: newY } = checkSnapping(mousePosition.x, mousePosition.y);
+    setSnapPoints({x:newX,y:newY})
+  }
+}, [mousePosition]);
+
 const adjustedTransform = transform
   ? {
       x: transform.x / zoomScale, // Adjust for scaling on the X axis
@@ -70,7 +439,7 @@ const adjustedTransform = transform
   : { x: 0, y: 0, scaleX: zoomScale, scaleY: zoomScale };
 
 // Construct the `transform` property including both translation and scaling
-const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransform.y}px) scale(${adjustedTransform.scaleX}, ${adjustedTransform.scaleY})`;
+const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransform.y}px) scale(${zoomScale}, ${zoomScale})`;
 
 
   const dragstyle = {
@@ -80,6 +449,8 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
     transform: draggableTransform,
     border: '2px solid blue',
     zIndex: 1,
+    height:'100%',
+    width:'100%'
   };
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const handleItemSelected = () => {
@@ -93,6 +464,7 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
           type: props.data.type,
           src:props.src,
           style: props.data.style,
+          over:props.data.over
         });
       }else{
         setSelected({
@@ -100,6 +472,7 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
           type: props.data.type,
           content: props.data.content,
           style: props.data.style,
+          over:props.data.over
         });
       }
     }
@@ -226,6 +599,7 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
     }
     const handleClasses = "absolute w-3 h-3 bg-white border-2 border-red-400 rounded-full";
 
+
   return (
     <>
       {selected.id !== props.id ? (
@@ -269,7 +643,10 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
           
         ) : (
           <div
-            ref={setNodeRef}
+          ref={(node) => {
+            setNodeRef(node);
+            elementRef.current = node;
+          }}
             style={dragstyle}
             {...listeners}
             {...attributes}

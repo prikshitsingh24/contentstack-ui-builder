@@ -31,4 +31,29 @@ const rightSidebarCollapsedState=atom({
   default:false
 })
 
-export default {previewState,newPageState,newSectionState,zoomState,leftSidebarCollapsedState,rightSidebarCollapsedState}
+const horizontalSnapLineState = atom<number[]>({
+  key: 'horizontalSnapLineState',
+  default: [],
+});
+
+const verticalSnapLineState = atom({
+  key: 'verticalSnapLineState',
+  default: [],
+});
+
+const mousePositionState=atom({
+  key:'mousePositionState',
+  default:{ x: 0, y: 0 }
+})
+
+const snapPointsStatus=atom({
+  key:'snapPointsState',
+  default:{x:0,y:0}
+})
+
+export default {previewState,newPageState,newSectionState,zoomState,leftSidebarCollapsedState,rightSidebarCollapsedState,
+  horizontalSnapLineState,
+  verticalSnapLineState,
+  mousePositionState,
+  snapPointsStatus
+}

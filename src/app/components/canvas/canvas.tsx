@@ -36,6 +36,7 @@ export default function Canvas() {
   const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
   const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
   const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
+  
 
 
   const handleCanvasClick = (e: React.MouseEvent,section:any) => {
@@ -193,6 +194,11 @@ useEffect(() => {
     setContextMenu(false);
   }
 
+  const [horizontalSnapLines, setHorizontalSnapLines] = useRecoilState(builderState.horizontalSnapLineState);
+  const [verticalSnapLines, setVerticalSnapLines] = useRecoilState(builderState.verticalSnapLineState);
+
+
+
   return (
     <div className='w-full h-full overflow-hidden relative border-2 border-black rounded-md'>
            {gridVisibility && <div className='absolute z-20 right-56 h-full border-r-2 border-dashed' style={{borderColor:gridColor}}></div> }
@@ -204,7 +210,44 @@ useEffect(() => {
       )}
      <div className='h-full w-full overflow-x-hidden overflow-y-scroll'>
      <div className='h-20 w-full'>
-           <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative `} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
+           <div className={`h-full w-full ${gridVisibility?'border-b-2 border-dashed':''} relative `} id={`header`} style={{backgroundColor:selectedPage.headerBackgroundColor,borderColor:gridColor}}>
+           {horizontalSnapLines
+            .filter((line:any) => line.selected === "header") // Filter lines where `selected` is "header"
+            .map((line:any, index:any) => (
+              <div
+                key={`h-${index}`}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: `${line.position}px`, // Assuming `line.position` holds the snap line position
+                  width: '100%',
+                  height: '1px',
+                  backgroundColor: 'red',
+                  pointerEvents: 'none',
+                  zIndex: '9999',
+                }}
+              />
+            ))}
+
+          {/* Vertical snap lines */}
+          {verticalSnapLines
+            .filter((line:any) => line.selected === "header") // Filter lines where `selected` is "header"
+            .map((line:any, index) => (
+              <div
+                key={`v-${index}`}
+                style={{
+                  position: 'absolute',
+                  left: `${line.position}px`, // Assuming `line.position` holds the snap line position
+                  top: 0,
+                  width: '1px',
+                  height: '100%',
+                  backgroundColor: 'red',
+                  pointerEvents: 'none',
+                  zIndex: '9999',
+                }}
+              />
+            ))}
+           
            <Droppable id={`header`} key={selectedPage.id}>
            {selectedPage?.header?.map((item: any) => (
                  item.over==`header` && (
@@ -248,8 +291,44 @@ useEffect(() => {
           </div>
        {selectedPage?.children?.map((section:any) => (
          <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-4 border-blue-700':''} `} key={section.id}  onClick={(e) => handleCanvasClick(e, section)}>
-           <div className='h-full w-full'>
-           <div className={`w-full h-full ${gridVisibility?'border-b-2 border-dashed':''} relative`}  style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
+           <div className='h-full w-full '>
+           <div className={`w-full h-full ${gridVisibility?'border-b-2 border-dashed':''} relative`} id={`${section.id}-content`} style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
+           {horizontalSnapLines
+            .filter((line:any) => line.selected === `${section.id}-content`) // Filter lines where `selected` is "header"
+            .map((line:any, index:any) => (
+              <div
+                key={`h-${index}`}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: `${line.position}px`, // Assuming `line.position` holds the snap line position
+                  width: '100%',
+                  height: '1px',
+                  backgroundColor: 'red',
+                  pointerEvents: 'none',
+                  zIndex: '9999',
+                }}
+              />
+            ))}
+
+          {/* Vertical snap lines */}
+          {verticalSnapLines
+            .filter((line:any) => line.selected === `${section.id}-content`) // Filter lines where `selected` is "header"
+            .map((line:any, index) => (
+              <div
+                key={`v-${index}`}
+                style={{
+                  position: 'absolute',
+                  left: `${line.position}px`, // Assuming `line.position` holds the snap line position
+                  top: 0,
+                  width: '1px',
+                  height: '100%',
+                  backgroundColor: 'red',
+                  pointerEvents: 'none',
+                  zIndex: '9999',
+                }}
+              />
+            ))}
            <Droppable id={`${section.id}-content`} key={section.id}>
            {section.children.length > 0 && section.children.map((item: any) => (
                  item.over==`${section.id}-content` && (
@@ -295,7 +374,43 @@ useEffect(() => {
        </div>
       ))}
       <div className='h-32 w-full'>
-           <div className={`h-full w-full ${gridVisibility?'border-dashed':''} relative`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
+           <div className={`h-full w-full ${gridVisibility?'border-dashed':''} relative`} id={`footer`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
+           {horizontalSnapLines
+            .filter((line:any) => line.selected === 'footer') // Filter lines where `selected` is "header"
+            .map((line:any, index:any) => (
+              <div
+                key={`h-${index}`}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: `${line.position}px`, // Assuming `line.position` holds the snap line position
+                  width: '100%',
+                  height: '1px',
+                  backgroundColor: 'red',
+                  pointerEvents: 'none',
+                  zIndex: '9999',
+                }}
+              />
+            ))}
+
+          {/* Vertical snap lines */}
+          {verticalSnapLines
+            .filter((line:any) => line.selected === "footer") // Filter lines where `selected` is "header"
+            .map((line:any, index) => (
+              <div
+                key={`v-${index}`}
+                style={{
+                  position: 'absolute',
+                  left: `${line.position}px`, // Assuming `line.position` holds the snap line position
+                  top: 0,
+                  width: '1px',
+                  height: '100%',
+                  backgroundColor: 'red',
+                  pointerEvents: 'none',
+                  zIndex: '9999',
+                }}
+              />
+            ))}
            <Droppable id={`footer`} key={selectedPage.id}>
            {selectedPage?.footer?.map((item: any) => (
                  item.over==`footer` && (
