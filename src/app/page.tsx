@@ -591,7 +591,7 @@ export default function Home() {
           <div className="h-screen overflow-hidden">
             {leftSidebarCollapsed?(
               <div className={`fixed w-12 left-0 z-30 bottom-0 pb-2 top-14 transition-all duration-300 ease-in-out`}>
-                <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative" onClick={()=>setLeftSidebarCollapsed(false)}>
+                <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative cursor-pointer" onClick={()=>setLeftSidebarCollapsed(false)}>
                   <div className="absolute right-2 top-2" ><Image src={arrowForwardLogo} alt={"arrow back"} width={25}></Image></div>
                 </div>
               </div>
@@ -607,12 +607,12 @@ export default function Home() {
             </div>
             )}
             
-            <div className="h-full mt-2  pl-2 pr-2 pb-16  w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
+            <div className="h-full mt-2 pl-2 pr-2 pb-16  w-full overflow-hidden transition-all duration-300 ease-in-out" style={{  transform: `scale(${isZoomedOut ? 0.7 : 1})`,   transformOrigin: "center center"  }} >
               <Canvas />
             </div>
             {rightSidebarCollapsed ? (
                <div className={`fixed w-12 right-0 z-30 bottom-0 pb-2 top-14 transition-all duration-300 ease-in-out`}>
-               <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative" onClick={()=>setRightSidebarCollapsed(false)}>
+               <div className="h-full w-full bg-white shadow-[1px_3px_10px_grey] relative cursor-pointer" onClick={()=>setRightSidebarCollapsed(false)}>
                  <div className="absolute right-2 top-2" ><Image src={arrowBackLogo} alt={"arrow back"} width={25}></Image></div>
                </div>
              </div>
