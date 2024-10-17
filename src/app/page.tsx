@@ -487,6 +487,7 @@ export default function Home() {
           }
 
           const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+            if ((section.id + "-content") === over.id) {
             const existingItemIndex = section.children.findIndex((item: any) => item.id === id);
     
             if (existingItemIndex !== -1) {
@@ -535,6 +536,8 @@ export default function Home() {
                 };
               }
             }
+          }
+          return section; 
         });
     
         if (updatedSelectedPage) {
