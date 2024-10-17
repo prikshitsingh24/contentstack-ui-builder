@@ -50,7 +50,9 @@ export default function Rightsidebar(){
         try {
           const response = await getAllEntries(contentType);
           if (!response) throw new Error('Status code 404');
+          console.log(response)
           setContent(response)
+          setFilteredContent(response);
         } catch (error) {
           console.error(error);
         }
@@ -273,8 +275,47 @@ export default function Rightsidebar(){
       setRightSidebarCollapsed(true);
     }
 
+    const [searchTerm,setSearchTerm]=useState("");
+    const [filteredContent,setFilteredContent]=useState();
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const searchValue = event.target.value;
+      console.log(searchValue)
+      setSearchTerm(searchValue);
+      
+  
+      // Filter the content based on the search term
+      if (searchValue === "") {
+        setFilteredContent(content); // Reset to full content if the search field is empty
+      } else {
+        // Filter the content based on the search term
+        if (filteredContent) {
+          const filtered = Object.entries(filteredContent).reduce((acc, [numericKey, innerContent]: any) => {
+            const filteredInnerContent = Object.entries(innerContent).filter(([key, value]: any) => {
+              // Check if the value contains the search term (check both title and content)
+              if (typeof value === "string" && value.toLowerCase().includes(searchValue.toLowerCase())) {
+                return true;
+              } else if (value?.title?.toLowerCase().includes(searchValue.toLowerCase())) {
+                return true;
+              } else if (value?.text?.toLowerCase().includes(searchValue.toLowerCase())) {
+                return true;
+              }
+              return false;
+            });
+  
+            if (filteredInnerContent.length > 0) {
+              acc[numericKey] = Object.fromEntries(filteredInnerContent);
+            }
+  
+            return acc;
+          }, {} as any);
+          setFilteredContent(filtered); // Update filtered content
+        }
+      }
+    };
+
     return(
-        <div className="grid grid-rows-[1fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
+        <div className="grid grid-rows-[0.8fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
             <div className="h-full border-gray-400">
             <div className="pl-3 pr-3 pt-5 relative">
               <div className="absolute right-2 top-2 cursor-pointer flex justify-end w-full" onClick={handleForwardClick}>
@@ -330,74 +371,85 @@ export default function Rightsidebar(){
                     <div></div>
                 )}
                 </div>
+                {filteredContent && (
+                 <div className="mt-2 mr-2">
+                 <input type="text" className="border border-gray-500 rounded-xl w-full p-1 focus:outline-none" placeholder="Search" onChange={handleSearchChange} />
+                 </div>
+             )}
             
-                {content && (
-                <div  className={`w-full mt-5 h-72 border-2 border-gray-300 overflow-y-scroll bg-white rounded-lg shadow-md transition-opacity duration-300 ease-in-out ${
-                  !selected.id ? "cursor-not-allowed bg-gray-200 text-gray-500 opacity-60 " : ""
-                }`}>
-                  {Object.entries(content).map(([key, value]: any) => {
-                    
-                    // Handle images separately (if key starts with "image")
-                    if (key.startsWith("image")) {
-                      return (
-                        <div
-                          key={key}
-                          className="border-b-2 h-auto pl-4 py-3 cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
-                          onClick={() => handleInsertImageOnClick(value.url)}
-                        >
-                          <div className="flex items-center space-x-4">
-                            {/* Image Thumbnail */}
-                            <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
-                              {value.url ? (
-                                <img src={value.url} alt="Preview" className="object-cover w-full h-full" />
-                              ) : (
-                                <span className="text-gray-400">No image available</span>
-                              )}
-                            </div>
-                            {/* Image Info */}
-                            <div className="flex flex-col">
-                              <p className="font-sans font-semibold text-base text-gray-800">Image: {(value.title).slice(0,20)}...</p>
-                              {selected.id && (
-                                <span className="text-gray-500 font-sans font-semibold  text-sm">Click to insert</span>
-                              )}
+                {filteredContent && (
+                    <div
+                      className={`w-full mt-2 h-72 border-2 border-gray-300 overflow-y-scroll overflow-x-hidden bg-white rounded-lg shadow-md transition-opacity duration-300 ease-in-out ${
+                        !selected.id ? "cursor-not-allowed bg-gray-200 text-gray-500 opacity-60" : ""
+                      }`}
+                    >
+                      {/* First Loop: Iterate through numeric keys like 0, 1 */}
+                      {Object.entries(filteredContent).map(([numericKey, innerContent]: any) => {
+
+                        // Second Loop: Iterate through the values of the inner objects
+                        return Object.entries(innerContent).map(([key, value]: any) => {
+                                // Skip rendering if the key is "uid"
+                        if (key === "uid") {
+                          return null;
+                        }
+                          if(key.startsWith("image") && value != null){
+                            if (value?.url) {
+                              return (
+                                <div
+                                  key={`${numericKey}-${key}`}
+                                  className="border-b-2 h-auto pl-4 py-3 cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+                                  onClick={() => handleInsertImageOnClick(value.url)}
+                                >
+                                  <div className="flex items-center space-x-4">
+                                    {/* Image Thumbnail */}
+                                    <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
+                                      {value.url ? (
+                                        <img src={value.url} alt="Preview" className="object-cover w-full h-full" />
+                                      ) : (
+                                        <span className="text-gray-400">No image available</span>
+                                      )}
+                                    </div>
+                                    {/* Image Info */}
+                                    <div className="flex flex-col">
+                                      <p className="font-sans font-semibold text-base text-gray-800">
+                                        Image: {(value.title || "").slice(0, 10)}...
+                                      </p>
+                                      {selected.id && (
+                                        <span className="text-gray-500 font-sans font-semibold text-sm">Click to insert</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          }
+
+                      if(value != "" && value != null){
+                            
+                        return (
+                          <div
+                            key={`${numericKey}-${key}`}
+                            className="border-b-2 h-auto pl-4 py-3 cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+                            onClick={() => handleInsertTextOnClick(value)}
+                          >
+                            <div className="flex items-center space-x-4">
+                              {/* Content Info */}
+                              <div className="flex flex-col">
+                                <p className="font-semibold font-sans text-gray-800">
+                                  {typeof value === "string" ? sliceText(value, 8) : "No preview"}
+                                </p>
+                                {selected.id && (
+                                  <span className="text-gray-500 font-sans font-semibold text-sm">Click to insert</span>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    }
-
-                    // Skip rendering if the key is "uid"
-                    if (key === "uid") {
-                      return null;
-                    }
-
-                    // For other content types (text or numbers)
-                    return (
-                      <div
-                        key={key}
-                        className="border-b-2 h-auto pl-4 py-3 cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
-                        onClick={() => handleInsertTextOnClick(value)}
-                      >
-                        <div className="flex items-center space-x-4">
-                          {/* Content Info */}
-                          <div className="flex flex-col">
-                            <p className="font-semibold font-sans text-gray-800">
-                              {typeof value === "string"
-                                ? sliceText(value, 8)
-                                : "No preview"}
-                            </p>
-                            {selected.id&&(
-                              <span className="text-gray-500 font-sans font-semibold text-sm">Click to insert</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-       
+                        );
+                      }
+                        });
+                      })}
+                    </div>
+                  )}
 
                 </div>
             </div>
@@ -405,14 +457,3 @@ export default function Rightsidebar(){
     );
 }
 
-function renderImage(value: any) {
-  if (typeof value === 'object' && value?.url) {
-      return (
-          <div className="p-2">
-              <img src={value.url} alt="image content" className="w-32 h-32" />
-          </div>
-      );
-  } else {
-      return <div className="p-2">Image URL not available</div>;
-  }
-}
