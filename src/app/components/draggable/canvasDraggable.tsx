@@ -141,7 +141,7 @@ const checkSnapping = (x: number, y: number) => {
     const snappedX = vLines.length > 0 ? vLines[0].position : x;
     const snappedY = hLines.length > 0 ? hLines[0].position : y;
 
-    return { x: snappedX, y: snappedY};
+    return { x: snappedX, y: snappedY-130};
   }
 
   // Iterate through other elements and check snapping to their boundaries
