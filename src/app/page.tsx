@@ -84,7 +84,7 @@ export default function Home() {
         setSnapPoints({x:0,y:0})
         // Get the content and id of the dragged item
         const content = active.data.current.data.content;
-        const id = active.id; // The item's id
+        const id = active.id;
     
         if (over.id === "header") {
           let existingItemInSection: any;

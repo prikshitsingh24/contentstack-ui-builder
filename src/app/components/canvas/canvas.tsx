@@ -15,6 +15,7 @@ import contextMenuState from '@/app/states/contextMenuState';
 import ContextMenu from '../contextMenu/contextMenu';
 import addPage from '@/app/states/addPage';
 import builderState from '@/app/states/builderState';
+import { idGen } from '@/app/helper/indext';
 
 export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -52,6 +53,150 @@ export default function Canvas() {
     setSelected({});
   };
 
+
+  const handleDuplicate=()=>{
+    if(selected.id !=""){
+      if(selected.over=="header"){
+        const id:any=selected.id
+        let parts = id.split("-");
+        let word = parts[1];
+        const duplicateId="header-"+word+`-${idGen()}`;
+        let duplicateItem={};
+        if(selected.type=="Image"){
+          duplicateItem={
+            id:duplicateId ,
+            type: selected.type,
+            src: selected.src,
+            over: selected.over,
+            style:  selected.style,
+            position:selected.position, // Set position for the new item
+          }
+        }else{
+          duplicateItem={
+            id:duplicateId ,
+            type: selected.type,
+            content: selected.content,
+            over: selected.over,
+            style:  selected.style,
+            position:selected.position, // Set position for the new item
+          }
+        }
+       
+        const updatedHeader = [...selectedPage.header || [], duplicateItem];
+        
+            // Step 5: Update selectedPage with the new header
+            setSelectedPage({ ...selectedPage, header: updatedHeader });
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header: updatedHeader, // Update the header for the selected page
+                };
+              }
+              return page; // Return other pages unchanged
+            });
+          
+            // Step 7: Update the pages state with the modified pages array
+            setPages(updatedPages);
+            setContextMenu(false);
+      }else if(selected.over=="footer"){
+        const id:any=selected.id
+        let parts = id.split("-");
+        let word = parts[1];
+        const duplicateId="footer-"+word+`-${idGen()}`;
+        let duplicateItem={};
+        if(selected.type=="Image"){
+          duplicateItem={
+            id:duplicateId ,
+            type: selected.type,
+            src: selected.src,
+            over: selected.over,
+            style:  selected.style,
+            position:selected.position, // Set position for the new item
+          }
+        }else{
+          duplicateItem={
+            id:duplicateId ,
+            type: selected.type,
+            content: selected.content,
+            over: selected.over,
+            style:  selected.style,
+            position:selected.position, // Set position for the new item
+          }
+        }
+       
+        const updatedHeader = [...selectedPage.footer || [], duplicateItem];
+        
+            // Step 5: Update selectedPage with the new header
+            setSelectedPage({ ...selectedPage, footer: updatedHeader });
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header: updatedHeader, // Update the header for the selected page
+                };
+              }
+              return page; // Return other pages unchanged
+            });
+          
+            // Step 7: Update the pages state with the modified pages array
+            setPages(updatedPages);
+            setContextMenu(false);
+      
+      }else{
+        const id:any=selected.id
+        let parts = id.split("-");
+        let word = parts[1];
+        const duplicateId="content-"+word+`-${idGen()}`;
+        let duplicateItem={};
+        if(selected.type=="Image"){
+          duplicateItem={
+            id:duplicateId ,
+            type: selected.type,
+            src: selected.src,
+            over: selected.over,
+            style:  selected.style,
+            position:selected.position, // Set position for the new item
+          }
+        }else{
+          duplicateItem={
+            id:duplicateId ,
+            type: selected.type,
+            content: selected.content,
+            over: selected.over,
+            style:  selected.style,
+            position:selected.position, // Set position for the new item
+          }
+        }
+        const updatedSection=selectedPage?.children?.map((section)=>{
+          if ((section.id+'-content') === selected.over){
+            return{
+              ...section,
+              children: [...section.children || [], duplicateItem]
+            }
+          }
+          return section;
+        })
+        if (updatedSection) {
+          setSelectedPage({ ...selectedPage, children: updatedSection });
+          const updatedPages = pages.map((page) => {
+            if (page.id === selectedPage.id) {
+              return {
+                ...page,
+                 children:updatedSection
+              };
+            }
+            return page; // Return other pages unchanged
+          });
+    
+          // Step 3: Update the selectedPage state with the updated sections
+          setPages(updatedPages);
+          setContextMenu(false);
+        }
+      }
+    }
+    
+  }
  
 
   const handleDelete = () => {
@@ -204,7 +349,7 @@ useEffect(() => {
            {gridVisibility && <div className='absolute z-20 left-56 h-full border-r-2 border-dashed'  style={{borderColor:gridColor}}></div>}
       {contextMenu && (
         <div style={{position:'fixed',left:`${positionX}px`,top:`${positionY}px`,zIndex:'100'}}>
-          <ContextMenu onDelete={handleDelete} onResize={handleResizeClick} ></ContextMenu>
+          <ContextMenu onDelete={handleDelete} onResize={handleResizeClick} onDuplicate={handleDuplicate} ></ContextMenu>
           </div>
       )}
      <div className='h-full w-full overflow-x-hidden overflow-y-scroll'>

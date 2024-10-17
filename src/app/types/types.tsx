@@ -21,7 +21,7 @@ export  interface Content {
     over?:string;
     style?: Style;
     src?:string;
-    
+    position?:{x:number,y:number}
   }
   
   export  interface DroppedContent {

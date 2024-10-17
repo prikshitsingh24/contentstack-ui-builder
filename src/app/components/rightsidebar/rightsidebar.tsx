@@ -50,7 +50,6 @@ export default function Rightsidebar(){
         try {
           const response = await getAllEntries(contentType);
           if (!response) throw new Error('Status code 404');
-          console.log(response)
           setContent(response)
           setFilteredContent(response);
         } catch (error) {
@@ -280,7 +279,6 @@ export default function Rightsidebar(){
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const searchValue = event.target.value;
-      console.log(searchValue)
       setSearchTerm(searchValue);
       
   
