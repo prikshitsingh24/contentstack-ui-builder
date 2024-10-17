@@ -277,7 +277,7 @@ useEffect(() => {
                    )}
                      {item.type=="Image" &&(
                      <div style={item.style}>
-                     <img src={item.src} alt={"image"} style={item.style}></img>
+                     <img src={item.src} style={item.style}></img>
                    </div>
                    )}
                    {item.type=="Box" &&(
@@ -360,7 +360,7 @@ useEffect(() => {
                    )}
                    {item.type=="Image" &&(
                     <div style={item.style}>
-                      <img src={item.src} alt={"image"} style={item.style}></img>
+                      <img src={item.src}  style={item.style}></img>
                     </div>
                       
                    )}
@@ -444,7 +444,7 @@ useEffect(() => {
                    )}
                      {item.type=="Image" &&(
                      <div style={item.style}>
-                     <img src={item.src} alt={"image"} style={item.style}></img>
+                     <img src={item.src}  style={item.style}></img>
                    </div>
                    )}
                     {item.type=="Box" &&(
