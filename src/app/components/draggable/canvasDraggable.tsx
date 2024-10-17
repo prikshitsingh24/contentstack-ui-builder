@@ -202,10 +202,15 @@ const checkSnapping = (x: number, y: number) => {
 
     const snappedX = vLines.length > 0 ? vLines[0].position : x;
     const snappedY = hLines.length > 0 ? hLines[0].position : y;
-
-    const differntial=selected.over=="header" || selected.over=="footer"?50:130;
-
-    return { x: snappedX, y: snappedY-differntial };
+    let differential=0;
+    if(selected.over=="header"){
+      differential=50;
+    }else if(selected.over=="footer"){
+      differential=690
+    }else{
+      differential=130
+    }
+    return { x: snappedX, y: snappedY-differential };
   }
 
 
@@ -306,31 +311,31 @@ const checkSnapping = (x: number, y: number) => {
       const itemBottom: number = itemTop + itemHeight;
 
       // Vertical snap check (left and right)
-      if (Math.abs(elementLeft - itemLeft) <= SNAP_THRESHOLD ||
-          Math.abs(elementRight - itemLeft) <= SNAP_THRESHOLD) {
-        vLines = [...vLines, { position: itemLeft, selected: selected.over }];  // Create a new array with the new element
+      // if (Math.abs(elementLeft - itemLeft) <= SNAP_THRESHOLD ||
+      //     Math.abs(elementRight - itemLeft) <= SNAP_THRESHOLD) {
+      //   vLines = [...vLines, { position: itemLeft, selected: selected.over }];  // Create a new array with the new element
 
-        setVerticalSnapLines((prevVLines: any) => {
-          return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
-            ? vLines
-            : prevVLines;
-        });
+      //   setVerticalSnapLines((prevVLines: any) => {
+      //     return vLines.length !== prevVLines.length || !vLines.every((line, index) => line.position === prevVLines[index].position)
+      //       ? vLines
+      //       : prevVLines;
+      //   });
 
-        setHorizontalSnapLines((prevHLines: any) => {
-          return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
-            ? hLines
-            : prevHLines;
-        });
+      //   setHorizontalSnapLines((prevHLines: any) => {
+      //     return hLines.length !== prevHLines.length || !hLines.every((line, index) => line.position === prevHLines[index].position)
+      //       ? hLines
+      //       : prevHLines;
+      //   });
 
-        const snappedX = vLines.length > 0 ? vLines[0].position : x;
-        const snappedY = hLines.length > 0 ? hLines[0].position : y;
+      //   const snappedX = vLines.length > 0 ? vLines[0].position : x;
+      //   const snappedY = hLines.length > 0 ? hLines[0].position : y;
 
-        return { x: snappedX, y: snappedY-130 };
-      }
+      //   return { x: snappedX, y: snappedY };
+      // }
 
       // Horizontal snap check (top and bottom)
-      if (Math.abs(elementTop - itemTop - 130) <= SNAP_THRESHOLD ||
-          Math.abs(elementBottom - itemTop - 130) <= SNAP_THRESHOLD) {
+      if (Math.abs(elementTop - itemTop-790 ) <= SNAP_THRESHOLD ||
+          Math.abs(elementBottom - itemTop-790) <= SNAP_THRESHOLD) {
         hLines = [...hLines, { position: itemTop, selected: selected.over }];  // Create a new array with the new element
 
         setVerticalSnapLines((prevVLines: any) => {

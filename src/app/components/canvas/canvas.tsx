@@ -276,7 +276,9 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
+                     <div style={item.style}>
+                     <img src={item.src} alt={"image"} style={item.style}></img>
+                   </div>
                    )}
                    {item.type=="Box" &&(
                     <div style={item.style}></div>
@@ -357,7 +359,10 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                    {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
+                    <div style={item.style}>
+                      <img src={item.src} alt={"image"} style={item.style}></img>
+                    </div>
+                      
                    )}
                     {item.type=="Box" &&(
                     <div style={item.style}></div>
@@ -373,7 +378,7 @@ useEffect(() => {
        </div>
       ))}
       <div className='h-32 w-full'>
-           <div className={`h-full w-full ${gridVisibility?'border-dashed':''} relative`} id={`footer`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
+           <div className={`h-32 w-full ${gridVisibility?'border-dashed':''} relative`} id={`footer`} style={{backgroundColor:selectedPage.footerBackgroundColor,borderColor:gridColor}}>
            {horizontalSnapLines
             .filter((line:any) => line.selected === 'footer') // Filter lines where `selected` is "header"
             .map((line:any, index:any) => (
@@ -438,7 +443,9 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                    <img src={item.src} style={item.style}></img>
+                     <div style={item.style}>
+                     <img src={item.src} alt={"image"} style={item.style}></img>
+                   </div>
                    )}
                     {item.type=="Box" &&(
                     <div style={item.style}></div>
