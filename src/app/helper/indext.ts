@@ -16,3 +16,9 @@ export const getAllEntries = async (contentType:string): Promise<any> => {
     const response=await getContentTypes();
     return response;
   };
+
+
+  export const idGen=()=>{
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    return randomNumber;
+  }

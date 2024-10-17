@@ -9,7 +9,6 @@ import { CanvasDraggable } from '../draggable/canvasDraggable';
 import { useRecoilState } from 'recoil';
 import canvasState from '@/app/states/canvasState';
 import sectionState from '@/app/states/sectionState';
-import { v4 as uuidv4 } from 'uuid';
 import pageState from '@/app/states/pageState';
 import colorPickerState from '@/app/states/colorPickerState';
 import contextMenuState from '@/app/states/contextMenuState';

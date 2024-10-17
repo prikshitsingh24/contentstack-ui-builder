@@ -5,7 +5,6 @@ import Rightsidebar from "./components/rightsidebar/rightsidebar";
 import data from "../../data.json"
 import { useEffect, useRef, useState } from "react";
 import {DndContext} from '@dnd-kit/core';
-import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import { useRecoilState } from "recoil";
 import canvasState from "./states/canvasState";
@@ -19,12 +18,8 @@ import AddSectionContainer from "./components/addSectionContainer/addSectionCont
 import arrowForwardLogo from "./images/arrowForwardLogo.png";
 import Image from "next/image";
 import arrowBackLogo from "./images/arrowBackLogo.png";
+import { idGen } from "./helper/indext";
 
-interface DraggableItem {
-  id: string; // Unique identifier for the item
-  content: string; // The content of the item (text, etc.)
-  position: { x: number; y: number }; // The position where the item is dropped
-}
 
 export default function Home() {
   const [ui, setUi] = useState<any>(() => data);
@@ -175,7 +170,7 @@ export default function Home() {
             setPages(updatedPages);
         
           } else {
-            const updatedId = "header-"+id + `-${uuidv4()}`;
+            const updatedId = "header-"+id + `-${idGen()}`;
             const newItem = {
               id: updatedId,
               type: content.type,
@@ -289,7 +284,7 @@ export default function Home() {
             setPages(updatedPages);
         
           } else {
-            const updatedId = "footer-"+id +`-${uuidv4()}`;
+            const updatedId = "footer-"+id +`-${idGen()}`;
             const newItem = {
               id: updatedId,
               type: content.type,
@@ -436,7 +431,7 @@ export default function Home() {
               };
             } else {
               // The item doesn't exist, create a new one and add it to section's children
-              const updatedId = id + `-${uuidv4()}`;
+              const updatedId = id + `-${idGen()}`;
               if(id==="image"){
                 return {
                   ...section,

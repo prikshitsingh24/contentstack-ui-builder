@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRecoilState } from "recoil";
 import sectionState from "@/app/states/sectionState";
 import canvasState from "@/app/states/canvasState";
-import { v4 as uuidv4 } from 'uuid';
 import pageState from "@/app/states/pageState";
 import builderState from "@/app/states/builderState";
 import addPage from "@/app/states/addPage";

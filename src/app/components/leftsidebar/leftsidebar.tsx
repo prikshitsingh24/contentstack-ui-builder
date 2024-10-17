@@ -4,7 +4,6 @@ import canvasState from "@/app/states/canvasState";
 import sectionState from "@/app/states/sectionState";
 import { useRecoilState } from "recoil";
 import { Draggable } from "../draggable/draggable";
-import { v4 as uuidv4 } from 'uuid';
 import pageState from "@/app/states/pageState";
 import addPage from "@/app/states/addPage";
 import { useEffect, useState } from "react";
