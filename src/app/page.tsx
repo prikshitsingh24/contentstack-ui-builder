@@ -234,7 +234,7 @@ export default function Home() {
               position, // Set position for the new item
             };
             // Add item to header
-            const updatedfooter = [...(selectedPage.header || []), newfooterItem];
+            const updatedfooter = [...(selectedPage.footer || []), newfooterItem];
         
             // Update selectedPage
             setSelectedPage({
