@@ -148,7 +148,6 @@ export default function Canvas() {
         const id:any=selected.id
         let parts = id.split("-");
         let word = parts[0];
-        console.log(word)
         const duplicateId=word+`-${idGen()}`;
         let duplicateItem={};
         if(selected.type=="Image"){
