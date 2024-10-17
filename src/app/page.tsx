@@ -113,7 +113,7 @@ export default function Home() {
               }
               return section;
             });
-            const updatedId = "header-" + existingItemInSection.id;
+            const updatedId = "header-" + existingItemInSection.id.replace("content-", "");
             const newHeaderItem = {
               ...existingItemInSection,
               id: updatedId,
@@ -144,6 +144,42 @@ export default function Home() {
             setPages(updatedPages);
             return
           }
+
+          const existingItemInFooter = selectedPage.footer?.find((item: any) => item.id === id);
+          if (existingItemInFooter) {
+            const updatedFooter = selectedPage?.footer?.filter((item, index) => item.id !== existingItemInFooter.id);
+            const updatedId = "header-" + existingItemInFooter?.id?.replace("footer-", "");
+            const newHeaderItem = {
+              ...existingItemInFooter,
+              id: updatedId,
+              over: "header",
+              position, // Set position for the new item
+            };
+            const updatedHeader = [...(selectedPage.header || []), newHeaderItem];
+        
+            // Update selectedPage
+            setSelectedPage({
+              ...selectedPage,
+              header: updatedHeader,
+              footer:updatedFooter
+            });
+        
+            // Update pages state
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header: updatedHeader,
+                  footer:updatedFooter
+                };
+              }
+              return page;
+            });
+        
+            setPages(updatedPages);
+            return  
+      }
+
           const existingItemIndex:any = selectedPage?.header?.findIndex((item: any) => item.id === id);
         
           if (existingItemIndex !== -1) {
@@ -226,7 +262,7 @@ export default function Home() {
               }
               return section;
             });
-            const updatedId = "footer-" + existingItemInSection.id;
+            const updatedId = "footer-" + existingItemInSection.id.replace("content-", "");
             const newfooterItem = {
               ...existingItemInSection,
               id: updatedId,
@@ -258,6 +294,41 @@ export default function Home() {
             setPages(updatedPages);
             return
           }
+
+          const existingItemInHeader = selectedPage.header?.find((item: any) => item.id === id);
+          if (existingItemInHeader) {
+            const updatedHeader = selectedPage?.header?.filter((item, index) => item.id !== existingItemInHeader.id);
+            const updatedId = "footer-" + existingItemInHeader?.id?.replace("header-", "");
+            const newFooterItem = {
+              ...existingItemInHeader,
+              id: updatedId,
+              over: "footer",
+              position, // Set position for the new item
+            };
+            const updatedFooter= [...(selectedPage.footer || []), newFooterItem];
+        
+            // Update selectedPage
+            setSelectedPage({
+              ...selectedPage,
+              header: updatedHeader,
+              footer:updatedFooter
+            });
+        
+            // Update pages state
+            const updatedPages = pages.map((page) => {
+              if (page.id === selectedPage.id) {
+                return {
+                  ...page,
+                  header: updatedHeader,
+                  footer:updatedFooter
+                };
+              }
+              return page;
+            });
+        
+            setPages(updatedPages);
+            return  
+      }
           const existingItemIndex:any = selectedPage?.footer?.findIndex((item: any) => item.id === id);
         
           if (existingItemIndex !== -1) {
@@ -324,7 +395,7 @@ export default function Home() {
             const updatedHeader = selectedPage.header.filter((_, index) => index !== existingItemIndexHeader);
         
             // Prepare item for content section
-            const updatedId = "content-" + removedItem.id.replace("header-", "");
+            const updatedId = removedItem.id.replace("header-", "");
             const newContentItem = {
               ...removedItem,
               id: updatedId,
@@ -374,7 +445,7 @@ export default function Home() {
             const updatedFooter = selectedPage.footer.filter((_, index) => index !== existingItemIndexFooter);
         
             // Prepare item for content section
-            const updatedId = "content-" + removedItem.id.replace("footer-", "");
+            const updatedId = removedItem.id.replace("footer-", "");
             const newContentItem = {
               ...removedItem,
               id: updatedId,

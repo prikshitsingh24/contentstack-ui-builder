@@ -348,11 +348,15 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
     if (selected && selected.id === props.id) {
       setSelected({ id: '', type: '', content: '' });
     } else {
-      if((props.id).slice(0,5)==="image"){
+      const id:any=props.data.id
+      let parts = id.split("-");
+      let word = parts[1];
+      console.log(props)
+      if(word==="image"){
         setSelected({
           id: props.id,
           type: props.data.type,
-          src:props.src,
+          src:props.data.src,
           style: props.data.style,
           over:props.data.over,
           position:{x:props.data.position.x,y:props.data.position.y}

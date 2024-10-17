@@ -62,6 +62,7 @@ export default function Canvas() {
         let word = parts[1];
         const duplicateId="header-"+word+`-${idGen()}`;
         let duplicateItem={};
+        console.log(selected)
         if(selected.type=="Image"){
           duplicateItem={
             id:duplicateId ,
@@ -146,8 +147,9 @@ export default function Canvas() {
       }else{
         const id:any=selected.id
         let parts = id.split("-");
-        let word = parts[1];
-        const duplicateId="content-"+word+`-${idGen()}`;
+        let word = parts[0];
+        console.log(word)
+        const duplicateId=word+`-${idGen()}`;
         let duplicateItem={};
         if(selected.type=="Image"){
           duplicateItem={
@@ -421,9 +423,9 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                     <div style={item.style}>
-                     <img src={item.src} style={item.style}></img>
-                   </div>
+                      <div style={{width:item.style.width,height:item.style.height}}>
+                      <img src={item.src}  style={item.style}></img>
+                    </div>
                    )}
                    {item.type=="Box" &&(
                     <div style={item.style}></div>
@@ -504,7 +506,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                    {item.type=="Image" &&(
-                    <div style={item.style}>
+                    <div style={{width:item.style.width,height:item.style.height}}>
                       <img src={item.src}  style={item.style}></img>
                     </div>
                       
@@ -588,7 +590,7 @@ useEffect(() => {
                      <input style={item.style} placeholder={item.placeholder} value={item.value}/>
                    )}
                      {item.type=="Image" &&(
-                     <div style={item.style}>
+                     <div style={{width:item.style.width,height:item.style.height}}>
                      <img src={item.src}  style={item.style}></img>
                    </div>
                    )}
