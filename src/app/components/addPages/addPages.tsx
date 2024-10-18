@@ -16,6 +16,7 @@ export default function AddPages() {
   const [propertiesVisible, setPropertiesVisible] = useState<string | null>(null);
   const [menuPosition, setMenuPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+  const [pageNameInput,setPageNameInput]=useState("");
 
   const handleAddPageClick = () => {
     setNewPage(true);
@@ -23,6 +24,7 @@ export default function AddPages() {
   };
 
   const handleAddPageName = (e: any) => {
+    setPageNameInput(e.target.value);
     const pageName = e.target.value;
     const newPage = {
       id: "page-" + `${pageName}`,
@@ -34,8 +36,11 @@ export default function AddPages() {
   };
 
   const handleDoneClick = () => {
-    setPages((prevPages) => [...prevPages, selectedPage]);
-    setInput(false);
+    if(pageNameInput!=""){
+      setPages((prevPages) => [...prevPages, selectedPage]);
+      setInput(false);
+    }
+ 
   };
 
   const handlePageClick = (page: any) => {

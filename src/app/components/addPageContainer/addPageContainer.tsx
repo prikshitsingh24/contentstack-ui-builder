@@ -24,14 +24,14 @@ export default function AddPageContainer(){
     const addBlankPage=()=>{
           const updatedSection = {
             id: "section-"+`${1}`,
-            contentBackgroundColor:"#FFFFFF",
+            contentBackgroundColor:"#ffffff",
             children: [],
           };
         
           const updatedPage={
             id:"",
-            headerBackgroundColor:"#FFFFFF",
-            footerBackgroundColor:"#FFFFFF",
+            headerBackgroundColor:"#ffffff",
+            footerBackgroundColor:"#ffffff",
             header:[],
             footer:[],
             children:[updatedSection]

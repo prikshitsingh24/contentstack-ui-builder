@@ -11,17 +11,17 @@ const sectionState = atom<Section[]>({
 
 const headerBackgroundColorState=atom({
 key: 'headerBackgroundColorState',
-default: "#FFFFFF"
+default: "#ffffff"
 })
 
 const contentBackgroundColorState=atom({
 key: 'contentBackgroundColorState',
-default: "#FFFFFF"
+default: "#ffffff"
 })
 
 const footerBackgroundColorState=atom({
 key: 'footerBackgroundColorState',
-default: "#FFFFFF"
+default: "#ffffff"
 })
 
   export default {sectionState,headerBackgroundColorState,contentBackgroundColorState,footerBackgroundColorState}
