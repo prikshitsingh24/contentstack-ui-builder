@@ -148,7 +148,7 @@ export default function AddPageContainer(){
               <div>
               {allTemplates?.map((item:any)=>{
                 return (
-                  <div key={item.name} className={`font-sans cursor-pointer p-2 hover:bg-blue-400 mb-4 hover:text-white rounded-xl ${item.name==selectedPageName?'bg-blue-400 text-white':''}`} onClick={()=>handlePageNameClick(item.name,item.uids)}>{item.name}</div>
+                  <div key={item.name} className={`font-sans cursor-pointer p-2 transition duration-300 ease-in-out hover:bg-blue-400 mb-4 hover:text-white rounded-xl ${item.name==selectedPageName?'bg-blue-400 text-white':''}`} onClick={()=>handlePageNameClick(item.name,item.uids)}>{item.name}</div>
                 )
               })}
               </div>
