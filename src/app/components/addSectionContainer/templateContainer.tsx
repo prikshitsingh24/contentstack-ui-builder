@@ -81,7 +81,7 @@ export default function TemplateContainer(props:any){
             <img
               src={props.thumbnailOne}
               alt="thumbnail"
-              className="h-full w-full object-cover rounded-t-xl"
+              className="h-full w-full object-cover rounded-xl"
             />
           </div>
         </div>

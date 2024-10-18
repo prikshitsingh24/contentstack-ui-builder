@@ -135,7 +135,7 @@ export default function AddSectionContainer(){
     return(
         <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center z-[9999] backdrop-blur-sm">
        <div className="h-5/6 w-7/12 bg-white z-10 relative">
-        <div className="absolute right-5 top-2" onClick={handleCrossClick}>
+        <div className="absolute right-5 top-2 cursor-pointer" onClick={handleCrossClick}>
         <Image src={crossLogo} alt={"cross Logo"} width={25} height={25}></Image>
         </div>
          <div className="font-sans text-xl font-bold p-3">

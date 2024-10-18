@@ -37,14 +37,14 @@ export default function TemplateContainer(props:any){
     }
 
     return(
-        <div className="border-2 h-48 w-56 rounded-xl border-gray-500 cursor-pointer hover:scale-110 transform transition-transform duration-300 ease-in-out" onClick={handleTemplateClick}>
+        <div className="border-2 h-64 w-52 rounded-xl border-gray-500 cursor-pointer hover:scale-110 transform transition-transform duration-300 ease-in-out" onClick={handleTemplateClick}>
         <div className="flex flex-col h-full overflow-hidden p-1">
           <div className="flex-1">
             {/* Apply object-fit to the image */}
             <img
               src={props.thumbnailOne}
               alt="thumbnail"
-              className="h-full w-full object-cover rounded-t-xl"
+              className="h-full w-full object-cover rounded-xl"
             />
           </div>
           <div className="flex-1">
@@ -52,7 +52,7 @@ export default function TemplateContainer(props:any){
             <img
               src={props.thumbnailTwo}
               alt="thumbnail"
-              className="h-full w-full object-cover rounded-b-xl"
+              className="h-full w-full object-cover rounded-xl"
             />
           </div>
         </div>

@@ -32,7 +32,7 @@ export default function Rightsidebar(){
           if(response){
             const contentTypes = response.content_types;
             for (const key in contentTypes) {
-              if (contentTypes[key].title === 'Visuals') {
+              if (contentTypes[key].title === 'Visuals' || contentTypes[key].title== 'Template') {
                 delete contentTypes[key];
               }
             }
