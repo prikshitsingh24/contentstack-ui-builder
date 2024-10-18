@@ -26,7 +26,7 @@
       "fontWeight": "400",
       "color": "#000000",
       "textAlign": "center",
-      "backgroundColor": "#FFFFFFF",
+      "backgroundColor": "#ffffff",
       "borderColor": "#000000",
       "borderWidth": "1px",
       "borderRadius": "5px",
@@ -49,7 +49,7 @@
       "fontStyle": "normal",
       "fontWeight": "400",
       "color": "#000000",
-      "backgroundColor": "#FFFFFFF",
+      "backgroundColor": "#ffffff",
       "borderColor": "#000000",
       "borderWidth": "1px",
       "borderRadius": "5px",
@@ -84,7 +84,7 @@
         "borderColor": "#000000",
         "borderWidth": "1px",
         "borderRadius": "5px",
-        "backgroundColor": "#FFFFFFF"
+        "backgroundColor": "#ffffff"
         
     }
     }

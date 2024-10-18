@@ -126,15 +126,15 @@ export default function Canvas() {
           }
         }
        
-        const updatedHeader = [...selectedPage.footer || [], duplicateItem];
+        const updatedFooter = [...selectedPage.footer || [], duplicateItem];
         
             // Step 5: Update selectedPage with the new header
-            setSelectedPage({ ...selectedPage, footer: updatedHeader });
+            setSelectedPage({ ...selectedPage, footer: updatedFooter });
             const updatedPages = pages.map((page) => {
               if (page.id === selectedPage.id) {
                 return {
                   ...page,
-                  header: updatedHeader, // Update the header for the selected page
+                  footer: updatedFooter, // Update the header for the selected page
                 };
               }
               return page; // Return other pages unchanged
