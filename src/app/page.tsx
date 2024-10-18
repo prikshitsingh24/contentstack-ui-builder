@@ -18,7 +18,7 @@ import AddSectionContainer from "./components/addSectionContainer/addSectionCont
 import arrowForwardLogo from "./images/arrowForwardLogo.png";
 import Image from "next/image";
 import arrowBackLogo from "./images/arrowBackLogo.png";
-import { idGen } from "./helper/indext";
+import { idGen } from "./helper";
 
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { getContentTypes, getEntry } from "../contentstack";
+import { getContentTypes, getEntry, getTemplate } from "../contentstack";
 
 
 
@@ -15,6 +15,16 @@ export const getAllEntries = async (contentType:string): Promise<any> => {
     const response=await getContentTypes();
     return response;
   };
+
+
+  export const getReferenceTemplate =async (templateUid:string[]): Promise <any>=>{
+    const response:any = (await getTemplate({
+      templateUid: templateUid,
+      referenceFieldPath: undefined,
+      jsonRtePath: undefined,
+    }));
+    return response[0];
+  }
 
 
   export const idGen=()=>{

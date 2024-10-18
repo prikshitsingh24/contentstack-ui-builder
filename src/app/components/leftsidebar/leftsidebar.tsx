@@ -7,7 +7,6 @@ import { Draggable } from "../draggable/draggable";
 import pageState from "@/app/states/pageState";
 import addPage from "@/app/states/addPage";
 import { useEffect, useState } from "react";
-import { getAllEntries } from "@/app/helper/indext";
 import pagesLogo from "../../images/pagesLogo.png";
 import exportLogo from "../../images/exportLogo.png";
 import addSectionLogo from "../../images/addSectionLogo.png"

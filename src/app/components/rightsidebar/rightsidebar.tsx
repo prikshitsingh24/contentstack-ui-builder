@@ -1,6 +1,6 @@
 "use client"
 
-import { getAllContentTypes, getAllEntries } from "@/app/helper/indext";
+import { getAllContentTypes, getAllEntries } from "@/app/helper";
 import canvasState from "@/app/states/canvasState";
 import pageState from "@/app/states/pageState";
 import { useEffect, useState } from "react";
@@ -27,10 +27,17 @@ export default function Rightsidebar(){
     const [rightSidebarCollapsed,setRightSidebarCollapsed]=useRecoilState(builderState.rightSidebarCollapsedState)
     async function fetchContentTypes() {
         try {
-          const response = await getAllContentTypes();
+          const response:any = await getAllContentTypes();
           if (!response) throw new Error('Status code 404');
           if(response){
-            setContentTypes(response.content_types);
+            const contentTypes = response.content_types;
+            for (const key in contentTypes) {
+              if (contentTypes[key].title === 'Visuals') {
+                delete contentTypes[key];
+              }
+            }
+            setContentTypes(contentTypes);
+        
 
           }
         } catch (error) {

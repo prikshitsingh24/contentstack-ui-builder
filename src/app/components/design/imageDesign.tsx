@@ -612,7 +612,7 @@ export default function ImageDesign() {
             </div>
             <div className="border-r-2 h-full mr-1 border-gray-500"></div>
             <div>
-                <input type="text" className="w-full h-full focus:outline-none font-sans font-normal" value={selected.style?.backgroundColor || "#FFFFFF"} onChange={handleBackgroundColorTextChange}/>
+                <input type="text" className="w-full h-full focus:outline-none font-sans font-normal" value={selected.style?.backgroundColor || "#ffffff"} onChange={handleBackgroundColorTextChange}/>
             </div>
         </div>
         </div>

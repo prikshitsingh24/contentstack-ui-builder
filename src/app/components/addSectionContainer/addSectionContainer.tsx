@@ -8,6 +8,10 @@ import pageState from "@/app/states/pageState";
 import builderState from "@/app/states/builderState";
 import addPage from "@/app/states/addPage";
 import crossLogo from "../../images/crossLogo.png"
+import { getAllEntries, getReferenceTemplate } from "@/app/helper";
+import { useEffect, useState } from "react";
+import AddPageContainer from "../addPageContainer/addPageContainer";
+import TemplateContainer from "./templateContainer";
 
 export default function AddSectionContainer(){
     const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
@@ -27,7 +31,7 @@ export default function AddSectionContainer(){
         const sectionId="section-"+`${id}`;
         const newSection = {
             id: sectionId,
-          contentBackgroundColor: "#FFFFFF",
+          contentBackgroundColor: "#ffffff",
           children: [],  // Empty children array, can be filled later
         };
       
@@ -57,6 +61,77 @@ export default function AddSectionContainer(){
     const handleCrossClick=()=>{
       setNewSection(false);
     }
+    
+
+    const [sectionTemplates,setSectionTemplates]=useState<any>([]);
+    const [sectionTemplatesName,setSectionTemplatesName]=useState<any>()
+    const [selectedSectionName,setSelectedSectionName]=useState<any>();
+    const [allTemplates,setAllTemplates]=useState<any>();
+
+    async function fetchData() {
+      try {
+        // Step 1: Fetch the response
+        const response: any = await getAllEntries("visuals");
+        if (!response) throw new Error('Status code 404');
+    
+        // Step 2: Collect all template names and uids
+        let allNames = [];
+        let templates = []; 
+    
+        
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            const template = response[key];
+    
+            if (template.name === "Section template") {
+              const names = template.template_name; // Get the template name
+              const uids = template.template_data.map((item: any) => item.uid); // Extract uids
+    
+              allNames.push(names);
+              templates.push({ name: names, uids: uids });
+            }
+          }
+        }
+    
+        // Step 3: Set the first template as selected
+        const firstTemplate = templates[0];
+    
+        setSelectedSectionName(firstTemplate.name);
+        setAllTemplates(templates)
+    
+        // Step 5: Fetch the template for the first template
+        if (firstTemplate.uids.length > 0) {
+          fetchTemplates(firstTemplate.uids); // Fetch for the first template
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    useEffect(()=>{
+      fetchData();
+    },[])
+
+    const fetchTemplates=async (templateUid:string[])=>{
+      try {
+        const response:any = await getReferenceTemplate(templateUid);
+        if (!response) throw new Error('Status code 404');
+        setSectionTemplates(response)
+        
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const handlePageNameClick = async (pageName:any,uid:string[]) => {
+  
+      if (pageName && uid) {
+          await fetchTemplates(uid);
+          setSelectedSectionName(pageName);
+        
+      }
+    };
+    
     return(
         <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center z-[9999] backdrop-blur-sm">
        <div className="h-5/6 w-7/12 bg-white z-10 relative">
@@ -74,7 +149,13 @@ export default function AddSectionContainer(){
               <div >Blank Section</div>
               </div>
               <div>
-              <div className="font-sans cursor-pointer">About us</div>
+              {allTemplates?.map((item:any)=>{
+                return (
+                  <div key={item.name} className={`font-sans cursor-pointer p-2 hover:bg-blue-400 mb-4 hover:text-white rounded-xl ${item.name==selectedSectionName?'bg-blue-400 text-white':''}`} onClick={()=>handlePageNameClick(item.name,item.uids)}>{item.name}</div>
+                )
+              })}
+              </div>
+              <div>
               </div>
           </div>
           <div className="p-2">
@@ -82,6 +163,23 @@ export default function AddSectionContainer(){
                 Start with a template
             </div>
             <div className="font-sans text-md font-thin">Choose any section template and customize it according to your needs!!</div>
+            <div className="p-4 grid grid-cols-3 gap-4">
+            {sectionTemplates.length > 0 && sectionTemplates.map((template: any) => {
+                // Check if all necessary properties are available before rendering
+                if (template.thumbnail_1?.url && template.ui_spec?.url) {
+                  return (
+                    <TemplateContainer
+                      key={template.id} // Use a unique identifier like template.id
+                      thumbnailOne={template.thumbnail_1.url}
+                      template={template.ui_spec.url}
+                    />
+                  );
+                } else {
+                  // Optionally, render a fallback if any property is missing
+                  return <div key={template.id}></div>;
+                }
+              })}
+            </div>
           </div>
          </div>
        </div>

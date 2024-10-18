@@ -15,7 +15,7 @@ import contextMenuState from '@/app/states/contextMenuState';
 import ContextMenu from '../contextMenu/contextMenu';
 import addPage from '@/app/states/addPage';
 import builderState from '@/app/states/builderState';
-import { idGen } from '@/app/helper/indext';
+import { idGen } from '@/app/helper';
 
 export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -62,7 +62,6 @@ export default function Canvas() {
         let word = parts[1];
         const duplicateId="header-"+word+`-${idGen()}`;
         let duplicateItem={};
-        console.log(selected)
         if(selected.type=="Image"){
           duplicateItem={
             id:duplicateId ,

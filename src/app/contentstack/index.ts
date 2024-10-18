@@ -7,6 +7,12 @@ type GetEntry = {
     jsonRtePath: string[] | undefined;
   };
 
+  type GetTemplate = {
+    templateUid: string[];
+    referenceFieldPath: string[] | undefined;
+    jsonRtePath: string[] | undefined;
+  };
+
  const Stack = initializeContentStackSdk();
 
 export const getEntry = ({
@@ -20,6 +26,35 @@ export const getEntry = ({
       query
       .except(["ACL","created_at","created_by","locale","locale","publish_details","tags","updated_at","updated_by","_in_progress","_version"])
         .toJSON()
+        .find()
+        .then(
+          (result) => {
+            jsonRtePath &&
+              Utils.jsonToHTML({
+                entry: result,
+                paths: jsonRtePath,
+              });
+            resolve(result);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  };
+
+  export const getTemplate = ({
+    templateUid,
+    referenceFieldPath,
+    jsonRtePath,
+  }: GetTemplate) => {
+    return new Promise((resolve, reject) => {
+      const query = Stack.ContentType("template").Query();
+      if (referenceFieldPath) query.includeReference(referenceFieldPath);
+      query
+      .except(["ACL","created_at","created_by","locale","locale","publish_details","tags","updated_at","updated_by","_in_progress","_version"])
+        .toJSON()
+        .containedIn("uid",templateUid)
         .find()
         .then(
           (result) => {
