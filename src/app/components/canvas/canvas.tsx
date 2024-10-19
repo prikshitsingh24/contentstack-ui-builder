@@ -438,7 +438,7 @@ useEffect(() => {
        {selectedPage?.children?.map((section:any) => (
          <div  className={`w-full h-full  ${selectedSection.id==section.id?'border-4 border-blue-700':''} `} key={section.id}  onClick={(e) => handleCanvasClick(e, section)}>
            <div className='h-full w-full '>
-           <div className={`w-full h-full overflow-x-hidden ${gridVisibility?'border-b-2 border-dashed':''} relative`} id={`${section.id}-content`} style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
+           <div className={`w-full h-full  ${gridVisibility?'border-b-2 border-dashed':''} relative`} id={`${section.id}-content`} style={{backgroundColor:section.contentBackgroundColor,borderColor:gridColor}}>
            {horizontalSnapLines
             .filter((line:any) => line.selected === `${section.id}-content`) // Filter lines where `selected` is "header"
             .map((line:any, index:any) => (

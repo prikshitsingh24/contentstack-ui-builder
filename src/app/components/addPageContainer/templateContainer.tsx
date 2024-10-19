@@ -44,7 +44,7 @@ export default function TemplateContainer(props:any){
             <img
               src={props.thumbnailOne}
               alt="thumbnail"
-              className="h-full w-full object-cover rounded-xl"
+              className="h-full w-full object-cover rounded-t-xl"
             />
           </div>
           <div className="flex-1">
@@ -52,7 +52,7 @@ export default function TemplateContainer(props:any){
             <img
               src={props.thumbnailTwo}
               alt="thumbnail"
-              className="h-full w-full object-cover rounded-xl"
+              className="h-full w-full object-cover rounded-b-xl"
             />
           </div>
         </div>
