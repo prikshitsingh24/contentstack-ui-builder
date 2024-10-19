@@ -22,25 +22,23 @@ import { idGen } from "./helper";
 
 
 export default function Home() {
-  const [ui, setUi] = useState<any>(() => data);
-  const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
-  const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
+  const [ui, _setUi] = useState<any>(() => data);
+  const [addPagePanel,_setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
   const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
   const [pages,setPages]=useRecoilState(pageState.pageState);
-  const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
-  const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
-  const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
+  const [headerBackgroundColor,_setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
+  const [contentBackgroundColor,_setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
+  const [footerBackgroundColor,_setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const [preview,setPreview]=useRecoilState(builderState.previewState)
-  const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
-  const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
-  const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
-  const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
+  const [_gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
+  const [newPage,_setNewPage]=useRecoilState(builderState.newPageState);
+  const [newSection,_setNewSection]=useRecoilState(builderState.newSectionState);
   const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
   const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState)
   const [rightSidebarCollapsed,setRightSidebarCollapsed]=useRecoilState(builderState.rightSidebarCollapsedState)
-  const [horizontalSnapLine, setHorizontalSnapLine] = useRecoilState(builderState.horizontalSnapLineState);
-  const [verticalSnapLine, setVerticalSnapLine] = useRecoilState(builderState.verticalSnapLineState);
+  const [_horizontalSnapLine, setHorizontalSnapLine] = useRecoilState(builderState.horizontalSnapLineState);
+  const [_verticalSnapLine, setVerticalSnapLine] = useRecoilState(builderState.verticalSnapLineState);
   const [snapPoints,setSnapPoints]=useRecoilState(builderState.snapPointsStatus)
   const toggleZoom = () => {
     setIsZoomedOut((prev) => !prev); // Toggle between true (50%) and false (100%)

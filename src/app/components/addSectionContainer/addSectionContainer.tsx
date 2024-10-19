@@ -2,28 +2,18 @@
 import whiteAddLogo from "../../images/whiteAddLogo.png";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
-import sectionState from "@/app/states/sectionState";
 import canvasState from "@/app/states/canvasState";
 import pageState from "@/app/states/pageState";
 import builderState from "@/app/states/builderState";
-import addPage from "@/app/states/addPage";
 import crossLogo from "../../images/crossLogo.png"
 import { getAllEntries, getReferenceTemplate } from "@/app/helper";
 import { useEffect, useState } from "react";
-import AddPageContainer from "../addPageContainer/addPageContainer";
 import TemplateContainer from "./templateContainer";
 
 export default function AddSectionContainer(){
-    const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
-    const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.contentBackgroundColorState);
-    const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.footerBackgroundColorState);
-    const [droppedItems,setDroppedItems]=useRecoilState(canvasState.droppedItemState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
-    const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
-    const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
-    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
-    const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
+    const [_newSection,setNewSection]=useRecoilState(builderState.newSectionState);
     
     const addBlankSection=()=>{
       if(selectedPage.children?.length){

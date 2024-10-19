@@ -1,16 +1,14 @@
 import addPage from "@/app/states/addPage";
 import builderState from "@/app/states/builderState";
 import canvasState from "@/app/states/canvasState";
-import { useState } from "react";
 import { useRecoilState } from "recoil";
 
 
 export default function TemplateContainer(props:any){
-    const [selectedTemplate,setSelectedTemplate]=useState();
-    const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
-    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
-    const [newPage,setNewPage]=useRecoilState(builderState.newPageState);
-    const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
+    const [_selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
+    const [_selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+    const [_newPage,setNewPage]=useRecoilState(builderState.newPageState);
+    const [_addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
 
     const addTemplatePage=async ()=>{
       try {

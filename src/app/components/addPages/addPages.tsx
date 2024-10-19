@@ -12,10 +12,10 @@ export default function AddPages() {
   const [pages, setPages] = useRecoilState(pageState.pageState);
   const [input, setInput] = useRecoilState(addPage.inputState);
   const [selectedPage, setSelectedPage] = useRecoilState(canvasState.selectedPageState);
-  const [newPage, setNewPage] = useRecoilState(builderState.newPageState);
+  const [_newPage, setNewPage] = useRecoilState(builderState.newPageState);
   const [propertiesVisible, setPropertiesVisible] = useState<string | null>(null);
   const [menuPosition, setMenuPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
+  const [_selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const [pageNameInput,setPageNameInput]=useState("");
 
   const handleAddPageClick = () => {

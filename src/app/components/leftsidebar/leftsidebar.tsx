@@ -1,37 +1,24 @@
 "use client"
 
-import canvasState from "@/app/states/canvasState";
-import sectionState from "@/app/states/sectionState";
 import { useRecoilState } from "recoil";
 import { Draggable } from "../draggable/draggable";
-import pageState from "@/app/states/pageState";
 import addPage from "@/app/states/addPage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import pagesLogo from "../../images/pagesLogo.png";
-import exportLogo from "../../images/exportLogo.png";
 import addSectionLogo from "../../images/addSectionLogo.png"
 import Image from "next/image";
 import textLogo from "../../images/textLogo.png";
 import buttonLogo from "../../images/buttonLogo.png";
 import inputLogo from "../../images/inputLogo.png";
 import imageLogo from "../../images/imageLogo.png";
-import previewLogo from "../../images/previewLogo.png";
 import builderState from "@/app/states/builderState";
 import arrowBackLogo from "../../images/arrowBackLogo.png";
 import boxLogo from  "../../images/boxLogo.png";
 
 export default function Leftsidebar({data}:any){
-    const [headerBackgroundColor,setHeaderBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
-    const [contentBackgroundColor,setContentBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
-    const [footerBackgroundColor,setFooterBackgroundColor]=useRecoilState(sectionState.headerBackgroundColorState);
-    const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
-    const [pages,setPages]=useRecoilState(pageState.pageState);
     const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
-    const [preview,setPreview]=useRecoilState(builderState.previewState)
-    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
-    const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
-    const [newSection,setNewSection]=useRecoilState(builderState.newSectionState);
-    const [leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState);
+    const [_newSection,setNewSection]=useRecoilState(builderState.newSectionState);
+    const [_leftSidebarCollapsed,setLeftSidebarCollapsed]=useRecoilState(builderState.leftSidebarCollapsedState);
     const [searchTerm, setSearchTerm] = useState<string>("");
     
     const handleAddSectionClick = () => { 

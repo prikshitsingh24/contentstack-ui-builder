@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
 import { useRecoilState } from 'recoil';
 import canvasState from '@/app/states/canvasState';
 import { Resizable } from 're-resizable';
@@ -8,11 +7,6 @@ import pageState from '@/app/states/pageState';
 import contextMenuState from '@/app/states/contextMenuState';
 import builderState from '@/app/states/builderState';
 
-const ResizeHandle = ({ className }:any) => (
-  <div className={`resize-handle ${className}`} />
-);
-
-const SNAP_THRESHOLD = 15;
 
 export function CanvasDraggable(props: any) {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -25,16 +19,14 @@ export function CanvasDraggable(props: any) {
   const [selectedPage, setSelectedPage] = useRecoilState(canvasState.selectedPageState);
   const [pages, setPages] = useRecoilState(pageState.pageState);
   const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState);
-  const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
-  const [horizontalSnapLines, setHorizontalSnapLines] = useRecoilState(builderState.horizontalSnapLineState);
-  const [verticalSnapLines, setVerticalSnapLines] = useRecoilState(builderState.verticalSnapLineState);
+  const [isZoomedOut, _setIsZoomedOut] = useRecoilState(builderState.zoomState);
+  const [_horizontalSnapLines, setHorizontalSnapLines] = useRecoilState(builderState.horizontalSnapLineState);
+  const [_verticalSnapLines, setVerticalSnapLines] = useRecoilState(builderState.verticalSnapLineState);
   const elementRef=useRef<any>();
-  const [relativePos,setRelativePos]=useState<any>();
   const [
     mousePosition,
-    setMousePosition
+    _setMousePosition
   ] = useRecoilState(builderState.mousePositionState);
-  const [snapPosition, setSnapPosition] = useState({ x: 0, y: 0 });
 
   
   // Event listener for the "R" key to toggle resizing mode

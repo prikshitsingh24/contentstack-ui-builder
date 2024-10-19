@@ -10,7 +10,6 @@ import ButtonDesign from "../design/buttonDesign";
 import ImageDesign from "../design/imageDesign";
 import InputDesign from "../design/inputDesign";
 import TextDesign from "../design/textDesign";
-import crossLogo from "../../images/crossLogo.png"
 import Image from "next/image";
 import BoxDesign from "../design/boxDesign";
 import arrowForwardLogo from "../../images/arrowForwardLogo.png";
@@ -23,8 +22,7 @@ export default function Rightsidebar(){
     const [content,setContent]=useState<any>();
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
-    const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
-    const [rightSidebarCollapsed,setRightSidebarCollapsed]=useRecoilState(builderState.rightSidebarCollapsedState)
+    const [_rightSidebarCollapsed,setRightSidebarCollapsed]=useRecoilState(builderState.rightSidebarCollapsedState)
     async function fetchContentTypes() {
         try {
           const response:any = await getAllContentTypes();

@@ -19,7 +19,6 @@ export default function BackgroundDesign() {
     const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
     const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
     const [pages,setPages]=useRecoilState(pageState.pageState);
-    const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
   const handleBackgroundDesignClick=(e:any)=>{
     if ((e.target as HTMLElement).closest('#picker-1')) return;
     if ((e.target as HTMLElement).closest('#picker-2')) return;

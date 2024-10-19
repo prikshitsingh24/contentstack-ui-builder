@@ -1,6 +1,5 @@
-import canvasState from '@/app/states/canvasState';
+
 import { useDroppable } from '@dnd-kit/core';
-import { useRecoilState } from 'recoil';
 
 export function Droppable(props: any) {
   const { isOver, setNodeRef } = useDroppable({

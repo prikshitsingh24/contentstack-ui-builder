@@ -11,7 +11,7 @@ export default function TextDesign() {
   const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
   const [pages,setPages]=useRecoilState(pageState.pageState);
   const [color, setColor] = useState("#000000");
-  // Function to handle font size change
+
   const handleTextDesignClick=(e:any)=>{
     if ((e.target as HTMLElement).closest('#picker-1')) return;
     setColorPicker(false);

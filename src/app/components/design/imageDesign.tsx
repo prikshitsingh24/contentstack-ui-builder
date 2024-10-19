@@ -7,7 +7,7 @@ import pageState from "@/app/states/pageState";
 
 export default function ImageDesign() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
-  const [colorPicker,setColorPicker]=useRecoilState(colorPickerState.colorPickerState);
+  const [_colorPicker,setColorPicker]=useRecoilState(colorPickerState.colorPickerState);
   const [backgroundColorPicker,setBackgroundColorPicker]=useRecoilState(colorPickerState.backgroundColorPickerState);
   const [borderColorPicker,setBorderColorPicker]=useRecoilState(colorPickerState.borderColorPickerState)
   const [color, setColor] = useState("#000000");

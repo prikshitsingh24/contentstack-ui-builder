@@ -1,14 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Draggable } from "../draggable/draggable";
-import { useDroppable } from '@dnd-kit/core';
+import React, { useEffect,  useState } from 'react';
 import { Droppable } from "../droppable/droppable";
-import { DndContext } from '@dnd-kit/core';
 import { CanvasDraggable } from '../draggable/canvasDraggable';
 import { useRecoilState } from 'recoil';
 import canvasState from '@/app/states/canvasState';
-import sectionState from '@/app/states/sectionState';
 import pageState from '@/app/states/pageState';
 import colorPickerState from '@/app/states/colorPickerState';
 import contextMenuState from '@/app/states/contextMenuState';
@@ -19,23 +15,23 @@ import { idGen } from '@/app/helper';
 
 export default function Canvas() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
-  const [gridVisibility,setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
+  const [gridVisibility,_setGridVisibility]=useRecoilState(canvasState.gridVisibilityStatus)
   const [selectedSection,setSelectedSection]=useRecoilState(canvasState.selectedSectionState);
   const [selectedPage,setSelectedPage]=useRecoilState(canvasState.selectedPageState);
   const [pages,setPages]=useRecoilState(pageState.pageState);
-  const [colorPicker,setColorPicker]=useRecoilState(colorPickerState.colorPickerState);
-  const [backgroundColorPicker,setBackgroundColorPicker]=useRecoilState(colorPickerState.backgroundColorPickerState);
-  const [borderColorPicker,setBorderColorPicker]=useRecoilState(colorPickerState.borderColorPickerState)
-  const [headerbackgroundColorPicker,setheaderBackgroundColorPicker]=useRecoilState(colorPickerState.headerBackgroundColorPickerState);
-  const [contentbackgroundColorPicker,setContentBackgroundColorPicker]=useRecoilState(colorPickerState.contentBackgroundColorPickerState);
-  const [footerbackgroundColorPicker,setFooterBackgroundColorPicker]=useRecoilState(colorPickerState.footerBackgroundColorPickerState);
-  const [gridColor,setGridColor]=useRecoilState(canvasState.gridColorStatus);
+  const [_colorPicker,setColorPicker]=useRecoilState(colorPickerState.colorPickerState);
+  const [_backgroundColorPicker,setBackgroundColorPicker]=useRecoilState(colorPickerState.backgroundColorPickerState);
+  const [_borderColorPicker,setBorderColorPicker]=useRecoilState(colorPickerState.borderColorPickerState)
+  const [_headerbackgroundColorPicker,setheaderBackgroundColorPicker]=useRecoilState(colorPickerState.headerBackgroundColorPickerState);
+  const [_contentbackgroundColorPicker,setContentBackgroundColorPicker]=useRecoilState(colorPickerState.contentBackgroundColorPickerState);
+  const [_footerbackgroundColorPicker,setFooterBackgroundColorPicker]=useRecoilState(colorPickerState.footerBackgroundColorPickerState);
+  const [gridColor,_setGridColor]=useRecoilState(canvasState.gridColorStatus);
   const [contextMenu,setContextMenu]=useRecoilState(contextMenuState.contextMenuState);
   const [positionX,setPositionX]=useState(0);
   const [positionY,setPositionY]=useState(0);
-  const [isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
-  const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
-  const [isZoomedOut, setIsZoomedOut] = useRecoilState(builderState.zoomState);
+  const [_isResizingMode, setResizingMode] = useRecoilState(contextMenuState.resizingModeState)
+  const [_addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
+  const [isZoomedOut, _setIsZoomedOut] = useRecoilState(builderState.zoomState);
   
 
 
