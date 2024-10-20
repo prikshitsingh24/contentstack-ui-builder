@@ -629,8 +629,9 @@ export default function Home() {
     if (preview) {
       return (
           <div className="h-screen overflow-hidden">
-            <div className="flex h-12 pt-3 flex-row justify-end shadow-[1px_1px_5px_grey]">
-              <div className="mr-10 text-blue-600  cursor-pointer " onClick={handleBackToEditorClick}>Back to editor</div>
+           <div className="w-full h-12 shadow-[1px_3px_10px_grey] flex flex-row justify-between items-center">
+          <div className="ml-3 font-sans font-bold text-2xl text-[#2F2F2F]">Contentstack-ui-builder</div>
+              <div className="mr-10 text-blue-600 font-semibold cursor-pointer " onClick={handleBackToEditorClick}>Back to editor</div>
             </div>
             <div className="mt-2 pl-2 pb-16 pr-2 w-full h-full overflow-hidden">
               <Canvas />
@@ -647,8 +648,9 @@ export default function Home() {
         {newSection && (
           <AddSectionContainer></AddSectionContainer>
         )}
-        <div className="w-full h-12 pt-3 shadow-[1px_3px_10px_grey]">
-          <div className="flex flex-row justify-end mr-20 font-sans">
+        <div className="w-full h-12 shadow-[1px_3px_10px_grey] flex flex-row justify-between items-center">
+        <div className="ml-3 font-sans font-bold text-2xl text-[#2F2F2F]">Contentstack-ui-builder</div>
+          <div className="flex flex-row justify-end mr-3 font-sans font-semibold">
           <div className="mr-5 cursor-pointer" onClick={toggleZoom}>  {isZoomedOut ? "Zoom in" : "Zoom out"}</div>
             <div className="mr-5 cursor-pointer" onClick={handlePreviewClick}>Preview</div>
             <div className="cursor-pointer" onClick={exportToJson}>Export</div>

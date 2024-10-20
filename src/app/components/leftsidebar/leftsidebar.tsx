@@ -14,6 +14,8 @@ import imageLogo from "../../images/imageLogo.png";
 import builderState from "@/app/states/builderState";
 import arrowBackLogo from "../../images/arrowBackLogo.png";
 import boxLogo from  "../../images/boxLogo.png";
+import addSectionHoverLogo from "../../images/addSectionHoverLogo.png"
+import pagesHoverLogo from "../../images/pagesHoverLogo.png"
 
 export default function Leftsidebar({data}:any){
     const [addPagePanel,setAddPagePanel]=useRecoilState(addPage.addPagePanelState);
@@ -38,6 +40,9 @@ export default function Leftsidebar({data}:any){
           item.data.id.toLowerCase().includes(searchTerm)
         );
       });
+
+      const [isSectionHovered, setIsSectionHovered] = useState(false);
+      const [isPageHovered, setIsPageHovered] = useState(false);
   
     return(
         <div className="bg-white grid grid-rows-[2fr_1fr] items-start h-full shadow-[1px_3px_10px_grey]">
@@ -88,18 +93,36 @@ export default function Leftsidebar({data}:any){
             </div>
             </div>
             </div>
-            <div className=" h-full pl-3 pt-5 pr-3 ">
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-orange-500/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={handleAddSectionClick}>
-                <div className="mr-4"><Image src={addSectionLogo} alt="cross" className="w-7"></Image></div>
-                  Add section
-                  </div>
-                <div className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-green-500/20 p-2 hover:backdrop-blur-lg hover:rounded-lg" onClick={handleAddPageClick}>
-                  <div className="mr-4"><Image src={pagesLogo} alt="cross" className="w-7"></Image></div>
-                  Pages
-                  </div>
+            <div className=" h-full pl-1 pt-5 pr-3 ">
+            <div
+              className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-black rounded-lg hover:text-white p-2 hover:backdrop-blur-lg hover:rounded-lg"
+              onClick={handleAddSectionClick}
+              onMouseEnter={() => setIsSectionHovered(true)}
+              onMouseLeave={() => setIsSectionHovered(false)}
+            >
+              <div className="mr-2">
+                {/* Conditionally change the image on hover */}
+                <Image src={isSectionHovered ? addSectionHoverLogo : addSectionLogo} alt="section logo" className="w-7" />
+              </div>
+              Add Section
+            </div>
+
+            {/* Add Page */}
+            <div
+              className="hover:cursor-pointer mb-5 text-xl font-sans font-semibold flex flex-row transition duration-300 ease-in-out hover:bg-black rounded-lg hover:text-white p-2 hover:backdrop-blur-lg hover:rounded-lg"
+              onClick={handleAddPageClick}
+              onMouseEnter={() => setIsPageHovered(true)}
+              onMouseLeave={() => setIsPageHovered(false)}
+            >
+              <div className="mr-2">
+                {/* Conditionally change the image on hover */}
+                <Image src={isPageHovered ? pagesHoverLogo : pagesLogo} alt="page logo" className="w-7" />
+              </div>
+              Add Page
+            </div>
+          </div>
           
                 
             </div>
-        </div>
     );
 }

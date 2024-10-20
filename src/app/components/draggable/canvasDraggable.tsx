@@ -533,7 +533,7 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
       setPages(updatedPages);
     };
     }
-    const handleClasses = "absolute w-3 h-3 bg-white border-2 border-red-400 rounded-full";
+    const handleClasses = "absolute w-2 h-2 border-2 border-red-400 rounded-full";
 
 
   return (
