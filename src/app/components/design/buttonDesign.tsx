@@ -4,6 +4,13 @@ import colorPickerState from "@/app/states/colorPickerState";
 import { useState } from "react";
 import { SketchPicker } from "react-color";
 import pageState from "@/app/states/pageState";
+import alignLeftLogo from "../../images/alignLeftLogo.png"
+import alignRightLogo from "../../images/alignRightLogo.png";
+import alignCenterLogo from "../../images/alignCenterLogo.png";
+import alignLeftLogoWhite from "../../images/alignLeftLogoWhite.png"
+import alignRightLogoWhite from "../../images/alignRightLogoWhite.png";
+import alignCenterLogoWhite from "../../images/alignCenterLogoWhite.png";
+import Image from "next/image";
 
 export default function ButtonDesign() {
   const [selected, setSelected] = useRecoilState(canvasState.selectedItemState);
@@ -1177,6 +1184,342 @@ export default function ButtonDesign() {
   }
   }
 
+  const handleCenterAlignClick=()=>{
+  
+    // Update the selected item's font size
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        textAlign:"center"
+      },
+    });
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              textAlign:"center"
+            },
+        }
+      }
+        return item;
+      });
+  
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
+  
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              textAlign:"center"
+            },
+        }
+      }
+        return item;
+      });
+  
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+  
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
+      const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+        const updatedChildren = section.children.map((item: any) => {
+          if (item.id === selected.id) {
+            return {
+              ...item,
+              style: {
+                ...item.style,
+                textAlign:"center"
+              },
+            };
+          }
+          return item; // Return other items unchanged
+        });
+    
+        return {
+          ...section,
+          children: updatedChildren,  // Update section's children with modified items
+        };
+      });
+    
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedSelectedPage,
+      });
+    
+      // Update pages if selectedPage exists
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }
+  }
+  
+  const handleLeftAlignClick=()=>{
+    
+    // Update the selected item's font size
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        textAlign:"left"
+      },
+    });
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              textAlign:"left"
+            },
+        }
+      }
+        return item;
+      });
+  
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
+  
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              textAlign:"left"
+            },
+        }
+      }
+        return item;
+      });
+  
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+  
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
+      const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+        const updatedChildren = section.children.map((item: any) => {
+          if (item.id === selected.id) {
+            return {
+              ...item,
+              style: {
+                ...item.style,
+                textAlign:"left"
+              },
+            };
+          }
+          return item; // Return other items unchanged
+        });
+    
+        return {
+          ...section,
+          children: updatedChildren,  // Update section's children with modified items
+        };
+      });
+    
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedSelectedPage,
+      });
+    
+      // Update pages if selectedPage exists
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }
+  }
+  
+  const handleRightAlignClick=()=>{
+    
+    // Update the selected item's font size
+    setSelected({
+      ...selected,
+      style: {
+        ...selected.style,
+        textAlign:"right"
+      },
+    });
+    if (selected.id?.slice(0,6)=="header") {
+      const updatedSelectedPage=selectedPage?.header?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              textAlign:"right"
+            },
+        }
+      }
+        return item;
+      });
+  
+      setSelectedPage({
+        ...selectedPage,
+        header:updatedSelectedPage
+      })
+  
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            header:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    
+    }else if(selected.id?.slice(0,6)=="footer"){
+      const updatedSelectedPage=selectedPage?.footer?.map((item:any)=>{
+        if(selected.id===item.id){
+          return{
+            ...item,
+            style: {
+              ...item.style,
+              textAlign:"right"
+            },
+        }
+      }
+        return item;
+      });
+  
+      setSelectedPage({
+        ...selectedPage,
+        footer:updatedSelectedPage
+      })
+  
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            footer:updatedSelectedPage  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }else{
+      const updatedSelectedPage = selectedPage?.children?.map((section: any) => {
+        const updatedChildren = section.children.map((item: any) => {
+          if (item.id === selected.id) {
+            return {
+              ...item,
+              style: {
+                ...item.style,
+                textAlign:"right"
+              },
+            };
+          }
+          return item; // Return other items unchanged
+        });
+    
+        return {
+          ...section,
+          children: updatedChildren,  // Update section's children with modified items
+        };
+      });
+    
+      setSelectedPage({
+        ...selectedPage,
+        children: updatedSelectedPage,
+      });
+    
+      // Update pages if selectedPage exists
+      const updatedPages = pages.map((page: any) => {
+        if (page.id === selectedPage.id) {
+          return {
+            ...page,
+            children: updatedSelectedPage,  // Update this page's children with the updated selectedPage
+          };
+        }
+        return page;
+      });
+    
+      setPages(updatedPages);
+    }
+  }
+
   return (
     <div className="w-full h-full grid grid-cols-2 gap-4" onClick={(e)=>handleButtonDesignClick(e)}>
       {/* Font Size Dropdown */}
@@ -1288,6 +1631,38 @@ export default function ButtonDesign() {
                 <input type="text" className="w-full h-full focus:outline-none font-sans font-normal" value={selected.style?.borderColor} onChange={handleBorderColorTextChange}/>
             </div>
         </div>
+        </div>
+      </div>
+      <div>
+      <div className="text-sm mb-2 font-sans font-light">Text Align</div>
+        <div className="flex flex-row">
+         {selected.style?.textAlign=="left"?(
+           <div className="h-8 w-28 border-2 rounded-md mr-2 flex justify-center items-center border-gray-500 cursor-pointer bg-black">
+           <Image src={alignLeftLogoWhite} alt="alignLeftLogo"></Image>
+         </div>
+         ):(
+          <div className=" h-8 w-28 border-2 rounded-md mr-2 flex justify-center items-center border-gray-500 cursor-pointer" onClick={handleLeftAlignClick}>
+          <Image src={alignLeftLogo} alt="alignLeftLogo"></Image>
+        </div>
+         )}
+           {selected.style?.textAlign=="center"?(
+           <div className=" h-8 w-28 border-2 rounded-md mr-2 flex justify-center items-center border-gray-500 cursor-pointer bg-black">
+           <Image src={alignCenterLogoWhite} alt="alignLeftLogo"></Image>
+         </div>
+         ):(
+          <div className=" h-8 w-28 border-2 rounded-md mr-2 flex justify-center items-center border-gray-500 cursor-pointer" onClick={handleCenterAlignClick}>
+          <Image src={alignCenterLogo} alt="alignLeftLogo"></Image>
+        </div>
+         )}
+           {selected.style?.textAlign=="right"?(
+           <div className=" h-8 w-28 border-2 rounded-md mr-2 flex justify-center items-center border-gray-500 cursor-pointer bg-black">
+           <Image src={alignRightLogoWhite} alt="alignLeftLogo"></Image>
+         </div>
+         ):(
+          <div className=" h-8 w-28 border-2 rounded-md mr-2 flex justify-center items-center border-gray-500 cursor-pointer" onClick={handleRightAlignClick}>
+          <Image src={alignRightLogo} alt="alignLeftLogo"></Image>
+        </div>
+         )}
         </div>
       </div>
     </div>
