@@ -1,7 +1,7 @@
 <h3 align="center">ContentStack-ui-builder</h3>
 <p align="center">
      ·
-    <a href="contentstack-ui-builder.eu-contentstackapps.com">Website</a>
+    <a href="https://contentstack-ui-builder.eu-contentstackapps.com/">Website</a>
     ·
   </p>
 <hr/>
