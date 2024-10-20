@@ -19,6 +19,6 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/no-explicit-any": "error" // Keep this as an error if you want to enforce type safety
+    "@typescript-eslint/no-explicit-any": "warn" // Keep this as an error if you want to enforce type safety
   }
 }

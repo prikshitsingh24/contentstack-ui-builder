@@ -62,8 +62,8 @@ export default function AddPageContainer(){
         if (!response) throw new Error('Status code 404');
     
         // Step 2: Collect all template names and uids
-        let allNames = [];
-        let templates = [];
+        const allNames = [];
+        const templates = [];
     
         
         for (const key in response) {
