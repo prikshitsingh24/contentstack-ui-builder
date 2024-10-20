@@ -626,6 +626,33 @@ export default function Home() {
       URL.revokeObjectURL(url);
     };
 
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Function to check if the device is a phone
+    const checkIfMobile = () => {
+      if (typeof window !== 'undefined') {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        const isPhone =
+          /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/.test(
+            userAgent
+          );
+        setIsMobile(isPhone);
+      }
+    };
+  
+    useEffect(() => {
+      // Check if the device is mobile when the component mounts
+      checkIfMobile();
+    }, []);
+    if (isMobile) {
+      return (
+        <div className="w-full h-screen bg-gray-800 bg-opacity-50 backdrop-blur-lg flex items-center justify-center">
+          <h1 className="text-white text-xl">You need a Computer to use Contentstack-ui-builder</h1>
+        </div>
+      );
+    }
+    
+
     if (preview) {
       return (
           <div className="h-screen overflow-hidden">
