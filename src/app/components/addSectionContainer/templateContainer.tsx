@@ -69,7 +69,7 @@ export default function TemplateContainer(props:any){
     }
 
     return(
-        <div className="border-2 h-48 w-56 rounded-xl border-gray-500 cursor-pointer hover:scale-110 transform transition-transform duration-300 ease-in-out" onClick={handleTemplateClick}>
+        <div className="border-2 h-48 w-56 rounded-xl border-gray-500 cursor-pointer hover:scale-125 bg-white z-10 transform transition-transform duration-300 ease-in-out" onClick={handleTemplateClick}>
         <div className="flex flex-col h-full overflow-hidden p-1">
           <div className="flex-1">
             {/* Apply object-fit to the image */}
