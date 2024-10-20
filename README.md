@@ -25,7 +25,18 @@ To set up the **Contentstack UI Builder** locally, follow these steps:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/yourusername/contentstack-ui-builder.git
+   
+2. **Rename .example.env to .env.local**:
+   
+3. **Provide the API keys in .env.local**:
 
+4. **Install the project**:
+   ```bash
+   npm install
+5. **Run the project**
+   ```bash
+   npm run dev
+   
 ## Usage
 
 1. **Drag Components**: Select a component from the toolbar and drag it onto the canvas.
