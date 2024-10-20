@@ -54,8 +54,8 @@ export default function Canvas() {
     if(selected.id !=""){
       if(selected.over=="header"){
         const id:any=selected.id
-        let parts = id.split("-");
-        let word = parts[1];
+        const parts = id.split("-");
+        const word = parts[1];
         const duplicateId="header-"+word+`-${idGen()}`;
         let duplicateItem={};
         if(selected.type=="Image"){
@@ -97,8 +97,8 @@ export default function Canvas() {
             setContextMenu(false);
       }else if(selected.over=="footer"){
         const id:any=selected.id
-        let parts = id.split("-");
-        let word = parts[1];
+        const parts = id.split("-");
+        const word = parts[1];
         const duplicateId="footer-"+word+`-${idGen()}`;
         let duplicateItem={};
         if(selected.type=="Image"){
@@ -141,8 +141,8 @@ export default function Canvas() {
       
       }else{
         const id:any=selected.id
-        let parts = id.split("-");
-        let word = parts[0];
+        const parts = id.split("-");
+        const word = parts[0];
         const duplicateId=word+`-${idGen()}`;
         let duplicateItem={};
         if(selected.type=="Image"){

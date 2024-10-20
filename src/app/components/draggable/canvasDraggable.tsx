@@ -342,8 +342,8 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
     } else {
       if(props.data.over=="header"){
         const id:any=props.data.id;
-      let parts = id.split("-");
-      let word = parts[1];
+      const parts = id.split("-");
+      const word = parts[1];
       if(word==="image"){
         setSelected({
           id: props.id,
@@ -365,8 +365,8 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
       }
       }else if(props.data.over=="footer"){
         const id:any=props.data.id;
-      let parts = id.split("-");
-      let word = parts[1];
+      const parts = id.split("-");
+      const word = parts[1];
       if(word==="image"){
         setSelected({
           id: props.id,
@@ -388,8 +388,8 @@ const draggableTransform = `translate(${adjustedTransform.x}px, ${adjustedTransf
       }
       }else{
         const id:any=props.data.id;
-      let parts = id.split("-");
-      let word = parts[0];
+      const parts = id.split("-");
+      const word = parts[0];
       if(word==="image"){
         setSelected({
           id: props.id,
