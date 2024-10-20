@@ -132,7 +132,7 @@ export default function AddSectionContainer(){
           Add Section
          </div>
          <hr />
-         <div className="w-full h-full pb-14 grid grid-cols-[1fr_5fr]">
+         <div className="w-full h-full pb-14 grid grid-cols-[1.5fr_5fr] 2xl:grid-cols-[0.8fr_4fr] ">
           <div className="p-2 border-r-2 grid grid-rows-[0.1fr_1fr]">
             <div className="bg-blue-500 h-10 text-white flex rounded-xl p-1 justify-center items-center cursor-pointer" onClick={handleBlankPageClick}>
               <div className="mr-2"><Image src={whiteAddLogo} alt={"add logo"} width={25} height={25}></Image></div>
@@ -148,12 +148,12 @@ export default function AddSectionContainer(){
               <div>
               </div>
           </div>
-          <div className="p-2">
+          <div className="p-2 h-full">
             <div className="font-sans text-2xl font-semibold">
                 Start with a template
             </div>
             <div className="font-sans text-md font-thin">Choose any section template and customize it according to your needs!!</div>
-            <div className="p-4 grid grid-cols-3 gap-4">
+            <div className="p-4 h-full grid grid-cols-2 2xl:grid-cols-3 gap-4">
             {sectionTemplates.length > 0 && sectionTemplates.map((template: any) => {
                 // Check if all necessary properties are available before rendering
                 if (template.thumbnail_1?.url && template.ui_spec?.url) {
