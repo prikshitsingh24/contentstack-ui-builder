@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Contentstack UI Builder
 
-## Getting Started
+Contentstack UI Builder is a customizable, user-friendly interface for creating and managing content components within the Contentstack CMS. This tool provides seamless drag-and-drop functionality, snapping capabilities, and intuitive editing options, making it easier to build and structure content for your digital platforms.
 
-First, run the development server:
+![msedge_vh8KsfquJ4](https://github.com/user-attachments/assets/2e56bf5c-7ffc-4f53-abdc-459986ff0d54)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of Contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+  
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Drag-and-Drop Interface**: Easily create and move components around the canvas.
+- **Snapping Functionality**: Components snap to grids, edges, and center lines for precise alignment.
+- **Customizable Layout**: Flexibly design layouts with resizable and repositionable components.
+- **Real-Time Preview**: See real-time changes while editing.
+- **Component-based Structure**: Modular components to create reusable blocks of content.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
+To set up the **Contentstack UI Builder** locally, follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/contentstack-ui-builder.git
+   
+2. **Rename .example.env to .env.local**:
+   
+3. **Provide the API keys in .env.local**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Install the project**:
+   ```bash
+   npm install
+5. **Run the project**
+   ```bash
+   npm run dev
+   
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Drag Components**: Select a component from the toolbar and drag it onto the canvas.
+2. **Edit Components**: Click on a component to modify its properties (e.g., size, position, content).
+3. **Snapping**: Elements automatically snap to the center, edges, or grid based on proximity.
+4. **Export Layout in json format**: Once your design is complete, export the ui in json.
