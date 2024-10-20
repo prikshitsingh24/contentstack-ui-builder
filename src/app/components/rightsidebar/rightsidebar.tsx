@@ -318,7 +318,7 @@ export default function Rightsidebar(){
     };
 
     return(
-        <div className="grid grid-rows-[0.8fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
+        <div className="grid grid-rows-[0.9fr_1fr] items-start h-full shadow-[-1px_3px_10px_grey]">
             <div className="h-full border-gray-400">
             <div className="pl-3 pr-3 pt-5 relative">
               <div className="absolute right-2 top-2 cursor-pointer flex justify-end w-full" onClick={handleForwardClick}>
