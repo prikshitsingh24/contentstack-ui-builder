@@ -70,17 +70,6 @@ export default function AddPages() {
     setPropertiesVisible(null); // Hide properties after deletion
   };
 
-  const handleRenamePage = (pageId: string) => {
-    const newName = prompt("Enter new name for the page:");
-    if (newName) {
-      setPages(
-        pages.map((page) =>
-          page.id === pageId ? { ...page, id: "page-" + newName } : page
-        )
-      );
-    }
-    setPropertiesVisible(null); // Hide properties after renaming
-  };
 
   return (
     <div className="bg-white w-80 h-full border-2 grid grid-rows-[0fr_0.2fr_4fr]">
