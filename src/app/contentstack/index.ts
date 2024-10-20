@@ -29,12 +29,14 @@ export const getEntry = ({
         .find()
         .then(
           (result) => {
-            jsonRtePath &&
+            if(jsonRtePath){
               Utils.jsonToHTML({
                 entry: result,
                 paths: jsonRtePath,
               });
+            }
             resolve(result);
+             
           },
           (error) => {
             reject(error);
@@ -58,11 +60,12 @@ export const getEntry = ({
         .find()
         .then(
           (result) => {
-            jsonRtePath &&
+            if(jsonRtePath){
               Utils.jsonToHTML({
                 entry: result,
                 paths: jsonRtePath,
               });
+            }
             resolve(result);
           },
           (error) => {
