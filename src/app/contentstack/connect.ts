@@ -11,7 +11,7 @@ export const isBasicConfigValid = () => {
   };
 
   const setRegion = (): Region => {
-    let region = "EU" as keyof typeof Region;
+    const region = "EU" as keyof typeof Region;
     return Region[region];
   };
 
