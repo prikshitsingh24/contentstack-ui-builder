@@ -647,7 +647,9 @@ export default function Home() {
     if (isMobile) {
       return (
         <div className="w-full h-screen bg-gray-800 bg-opacity-50 backdrop-blur-lg flex items-center justify-center">
-          <h1 className="text-white text-xl">You need a Computer to use Contentstack-ui-builder</h1>
+          <div className=" p-2 rounded-lg bg-white text-red-900">
+            You need a Computer to use Contentstack-ui-builder
+          </div>
         </div>
       );
     }
