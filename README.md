@@ -1,4 +1,4 @@
-<h3 align="center">ContentStack-ui-builder</h3>
+<h3 align="center">Contentstack-ui-builder</h3>
 <p align="center">
      ·
     <a href="https://contentstack-ui-builder.eu-contentstackapps.com/">Website</a>
